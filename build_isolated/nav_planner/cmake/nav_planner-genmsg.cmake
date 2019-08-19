@@ -2,7 +2,7 @@
 
 message(STATUS "nav_planner: 2 messages, 1 services")
 
-set(MSG_I_FLAGS "-Inav_planner:/home/kalana/FYP/src/nav_planner/msg;-Istd_msgs:/opt/ros/kinetic/share/std_msgs/cmake/../msg")
+set(MSG_I_FLAGS "-Inav_planner:/home/kalana/FYP/src/nav_planner/msg;-Istd_msgs:/opt/ros/kinetic/share/std_msgs/cmake/../msg;-Ioctomap_msgs:/opt/ros/kinetic/share/octomap_msgs/cmake/../msg;-Igeometry_msgs:/opt/ros/kinetic/share/geometry_msgs/cmake/../msg")
 
 # Find all generators
 find_package(gencpp REQUIRED)
@@ -293,6 +293,9 @@ endif()
 if(TARGET std_msgs_generate_messages_cpp)
   add_dependencies(nav_planner_generate_messages_cpp std_msgs_generate_messages_cpp)
 endif()
+if(TARGET octomap_msgs_generate_messages_cpp)
+  add_dependencies(nav_planner_generate_messages_cpp octomap_msgs_generate_messages_cpp)
+endif()
 
 if(geneus_INSTALL_DIR AND EXISTS ${CATKIN_DEVEL_PREFIX}/${geneus_INSTALL_DIR}/nav_planner)
   # install generated code
@@ -303,6 +306,9 @@ if(geneus_INSTALL_DIR AND EXISTS ${CATKIN_DEVEL_PREFIX}/${geneus_INSTALL_DIR}/na
 endif()
 if(TARGET std_msgs_generate_messages_eus)
   add_dependencies(nav_planner_generate_messages_eus std_msgs_generate_messages_eus)
+endif()
+if(TARGET octomap_msgs_generate_messages_eus)
+  add_dependencies(nav_planner_generate_messages_eus octomap_msgs_generate_messages_eus)
 endif()
 
 if(genlisp_INSTALL_DIR AND EXISTS ${CATKIN_DEVEL_PREFIX}/${genlisp_INSTALL_DIR}/nav_planner)
@@ -315,6 +321,9 @@ endif()
 if(TARGET std_msgs_generate_messages_lisp)
   add_dependencies(nav_planner_generate_messages_lisp std_msgs_generate_messages_lisp)
 endif()
+if(TARGET octomap_msgs_generate_messages_lisp)
+  add_dependencies(nav_planner_generate_messages_lisp octomap_msgs_generate_messages_lisp)
+endif()
 
 if(gennodejs_INSTALL_DIR AND EXISTS ${CATKIN_DEVEL_PREFIX}/${gennodejs_INSTALL_DIR}/nav_planner)
   # install generated code
@@ -325,6 +334,9 @@ if(gennodejs_INSTALL_DIR AND EXISTS ${CATKIN_DEVEL_PREFIX}/${gennodejs_INSTALL_D
 endif()
 if(TARGET std_msgs_generate_messages_nodejs)
   add_dependencies(nav_planner_generate_messages_nodejs std_msgs_generate_messages_nodejs)
+endif()
+if(TARGET octomap_msgs_generate_messages_nodejs)
+  add_dependencies(nav_planner_generate_messages_nodejs octomap_msgs_generate_messages_nodejs)
 endif()
 
 if(genpy_INSTALL_DIR AND EXISTS ${CATKIN_DEVEL_PREFIX}/${genpy_INSTALL_DIR}/nav_planner)
@@ -337,4 +349,7 @@ if(genpy_INSTALL_DIR AND EXISTS ${CATKIN_DEVEL_PREFIX}/${genpy_INSTALL_DIR}/nav_
 endif()
 if(TARGET std_msgs_generate_messages_py)
   add_dependencies(nav_planner_generate_messages_py std_msgs_generate_messages_py)
+endif()
+if(TARGET octomap_msgs_generate_messages_py)
+  add_dependencies(nav_planner_generate_messages_py octomap_msgs_generate_messages_py)
 endif()

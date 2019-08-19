@@ -162,7 +162,7 @@ foreach(t ${nav_planner_EXPORTED_TARGETS})
   endif()
 endforeach()
 
-set(depends "roscpp;rospy;message_runtime")
+set(depends "roscpp;rospy;message_runtime;octomap_ros;std_msgs")
 foreach(depend ${depends})
   string(REPLACE " " ";" depend_list ${depend})
   # the package name of the dependency must be kept in a unique variable so that it is not overwritten in recursive calls

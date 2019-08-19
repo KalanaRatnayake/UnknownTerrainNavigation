@@ -11,7 +11,9 @@ find_package(catkin REQUIRED COMPONENTS
   roscpp
   rospy
   message_generation
-  octomap
+  std_msgs
+  octomap_ros
+  octomap_msgs
 )
 
 ## System dependencies are found with CMake's conventions
@@ -70,7 +72,8 @@ add_service_files(
 ## Generate added messages and services with any dependencies listed here
 generate_messages(
   DEPENDENCIES
-  std_msgs  # Or other packages containing msgs
+  std_msgs
+  octomap_msgs  # Or other packages containing msgs
 )
 
 ################################################
@@ -105,7 +108,7 @@ generate_messages(
 catkin_package(
 #  INCLUDE_DIRS include
 #  LIBRARIES nav_planner
-  CATKIN_DEPENDS roscpp rospy message_runtime
+   CATKIN_DEPENDS roscpp rospy message_runtime octomap_ros std_msgs
 #  DEPENDS system_lib
 )
 
@@ -116,10 +119,7 @@ catkin_package(
 ## Specify additional locations of header files
 ## Your package locations should be listed before other locations
 include_directories(
-  include
-  ${catkin_INCLUDE_DIRS}
-  goal_identifier
-  ${OCTOMAP_INCLUDE_DIRS}
+  include ${catkin_INCLUDE_DIRS} ${OCTOMAP_INCLUDE_DIRS} goal_identifier
 )
 
 ## Declare a C++ library

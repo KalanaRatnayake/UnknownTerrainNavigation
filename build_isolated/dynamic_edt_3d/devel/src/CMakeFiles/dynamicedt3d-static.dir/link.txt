@@ -1,0 +1,2 @@
+/usr/bin/ar qc /home/kalana/FYP/src/octomap/octomap/dynamicEDT3D/lib/libdynamicedt3d.a  CMakeFiles/dynamicedt3d-static.dir/dynamicEDT3D.cpp.o
+/usr/bin/ranlib /home/kalana/FYP/src/octomap/octomap/dynamicEDT3D/lib/libdynamicedt3d.a
