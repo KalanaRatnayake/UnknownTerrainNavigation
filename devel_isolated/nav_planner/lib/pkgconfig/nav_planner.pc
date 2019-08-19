@@ -1,0 +1,8 @@
+prefix=/home/kalana/FYP/devel_isolated/nav_planner
+
+Name: nav_planner
+Description: Description of nav_planner
+Version: 0.0.0
+Cflags: -I/home/kalana/FYP/devel_isolated/nav_planner/include
+Libs: -L/home/kalana/FYP/devel_isolated/nav_planner/lib 
+Requires: roscpp rospy message_runtime
