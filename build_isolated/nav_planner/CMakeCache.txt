@@ -332,6 +332,9 @@ nav_planner_BINARY_DIR:STATIC=/home/kalana/FYP/build_isolated/nav_planner
 //Value Computed by CMake
 nav_planner_SOURCE_DIR:STATIC=/home/kalana/FYP/src/nav_planner
 
+//The directory containing a CMake configuration file for octomap.
+octomap_DIR:PATH=octomap_DIR-NOTFOUND
+
 //The directory containing a CMake configuration file for rosconsole.
 rosconsole_DIR:PATH=/opt/ros/kinetic/share/rosconsole/cmake
 
