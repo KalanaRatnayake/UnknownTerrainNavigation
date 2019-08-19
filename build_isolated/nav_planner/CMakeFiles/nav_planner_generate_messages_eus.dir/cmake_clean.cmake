@@ -2,6 +2,7 @@ file(REMOVE_RECURSE
   "CMakeFiles/nav_planner_generate_messages_eus"
   "/home/kalana/FYP/devel_isolated/nav_planner/share/roseus/ros/nav_planner/msg/pointData.l"
   "/home/kalana/FYP/devel_isolated/nav_planner/share/roseus/ros/nav_planner/msg/pointDataArray.l"
+  "/home/kalana/FYP/devel_isolated/nav_planner/share/roseus/ros/nav_planner/srv/goalControl.l"
   "/home/kalana/FYP/devel_isolated/nav_planner/share/roseus/ros/nav_planner/manifest.l"
 )
 

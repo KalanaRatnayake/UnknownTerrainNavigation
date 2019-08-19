@@ -55,7 +55,9 @@ include CMakeFiles/nav_planner_generate_messages_py.dir/progress.make
 
 CMakeFiles/nav_planner_generate_messages_py: /home/kalana/FYP/devel_isolated/nav_planner/lib/python2.7/dist-packages/nav_planner/msg/_pointData.py
 CMakeFiles/nav_planner_generate_messages_py: /home/kalana/FYP/devel_isolated/nav_planner/lib/python2.7/dist-packages/nav_planner/msg/_pointDataArray.py
+CMakeFiles/nav_planner_generate_messages_py: /home/kalana/FYP/devel_isolated/nav_planner/lib/python2.7/dist-packages/nav_planner/srv/_goalControl.py
 CMakeFiles/nav_planner_generate_messages_py: /home/kalana/FYP/devel_isolated/nav_planner/lib/python2.7/dist-packages/nav_planner/msg/__init__.py
+CMakeFiles/nav_planner_generate_messages_py: /home/kalana/FYP/devel_isolated/nav_planner/lib/python2.7/dist-packages/nav_planner/srv/__init__.py
 
 
 /home/kalana/FYP/devel_isolated/nav_planner/lib/python2.7/dist-packages/nav_planner/msg/_pointData.py: /opt/ros/kinetic/lib/genpy/genmsg_py.py
@@ -69,16 +71,31 @@ CMakeFiles/nav_planner_generate_messages_py: /home/kalana/FYP/devel_isolated/nav
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/home/kalana/FYP/build_isolated/nav_planner/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Generating Python from MSG nav_planner/pointDataArray"
 	catkin_generated/env_cached.sh /usr/bin/python /opt/ros/kinetic/share/genpy/cmake/../../../lib/genpy/genmsg_py.py /home/kalana/FYP/src/nav_planner/msg/pointDataArray.msg -Inav_planner:/home/kalana/FYP/src/nav_planner/msg -Istd_msgs:/opt/ros/kinetic/share/std_msgs/cmake/../msg -p nav_planner -o /home/kalana/FYP/devel_isolated/nav_planner/lib/python2.7/dist-packages/nav_planner/msg
 
+/home/kalana/FYP/devel_isolated/nav_planner/lib/python2.7/dist-packages/nav_planner/srv/_goalControl.py: /opt/ros/kinetic/lib/genpy/gensrv_py.py
+/home/kalana/FYP/devel_isolated/nav_planner/lib/python2.7/dist-packages/nav_planner/srv/_goalControl.py: /home/kalana/FYP/src/nav_planner/srv/goalControl.srv
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/home/kalana/FYP/build_isolated/nav_planner/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Generating Python code from SRV nav_planner/goalControl"
+	catkin_generated/env_cached.sh /usr/bin/python /opt/ros/kinetic/share/genpy/cmake/../../../lib/genpy/gensrv_py.py /home/kalana/FYP/src/nav_planner/srv/goalControl.srv -Inav_planner:/home/kalana/FYP/src/nav_planner/msg -Istd_msgs:/opt/ros/kinetic/share/std_msgs/cmake/../msg -p nav_planner -o /home/kalana/FYP/devel_isolated/nav_planner/lib/python2.7/dist-packages/nav_planner/srv
+
 /home/kalana/FYP/devel_isolated/nav_planner/lib/python2.7/dist-packages/nav_planner/msg/__init__.py: /opt/ros/kinetic/lib/genpy/genmsg_py.py
 /home/kalana/FYP/devel_isolated/nav_planner/lib/python2.7/dist-packages/nav_planner/msg/__init__.py: /home/kalana/FYP/devel_isolated/nav_planner/lib/python2.7/dist-packages/nav_planner/msg/_pointData.py
 /home/kalana/FYP/devel_isolated/nav_planner/lib/python2.7/dist-packages/nav_planner/msg/__init__.py: /home/kalana/FYP/devel_isolated/nav_planner/lib/python2.7/dist-packages/nav_planner/msg/_pointDataArray.py
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/home/kalana/FYP/build_isolated/nav_planner/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Generating Python msg __init__.py for nav_planner"
+/home/kalana/FYP/devel_isolated/nav_planner/lib/python2.7/dist-packages/nav_planner/msg/__init__.py: /home/kalana/FYP/devel_isolated/nav_planner/lib/python2.7/dist-packages/nav_planner/srv/_goalControl.py
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/home/kalana/FYP/build_isolated/nav_planner/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Generating Python msg __init__.py for nav_planner"
 	catkin_generated/env_cached.sh /usr/bin/python /opt/ros/kinetic/share/genpy/cmake/../../../lib/genpy/genmsg_py.py -o /home/kalana/FYP/devel_isolated/nav_planner/lib/python2.7/dist-packages/nav_planner/msg --initpy
+
+/home/kalana/FYP/devel_isolated/nav_planner/lib/python2.7/dist-packages/nav_planner/srv/__init__.py: /opt/ros/kinetic/lib/genpy/genmsg_py.py
+/home/kalana/FYP/devel_isolated/nav_planner/lib/python2.7/dist-packages/nav_planner/srv/__init__.py: /home/kalana/FYP/devel_isolated/nav_planner/lib/python2.7/dist-packages/nav_planner/msg/_pointData.py
+/home/kalana/FYP/devel_isolated/nav_planner/lib/python2.7/dist-packages/nav_planner/srv/__init__.py: /home/kalana/FYP/devel_isolated/nav_planner/lib/python2.7/dist-packages/nav_planner/msg/_pointDataArray.py
+/home/kalana/FYP/devel_isolated/nav_planner/lib/python2.7/dist-packages/nav_planner/srv/__init__.py: /home/kalana/FYP/devel_isolated/nav_planner/lib/python2.7/dist-packages/nav_planner/srv/_goalControl.py
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/home/kalana/FYP/build_isolated/nav_planner/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Generating Python srv __init__.py for nav_planner"
+	catkin_generated/env_cached.sh /usr/bin/python /opt/ros/kinetic/share/genpy/cmake/../../../lib/genpy/genmsg_py.py -o /home/kalana/FYP/devel_isolated/nav_planner/lib/python2.7/dist-packages/nav_planner/srv --initpy
 
 nav_planner_generate_messages_py: CMakeFiles/nav_planner_generate_messages_py
 nav_planner_generate_messages_py: /home/kalana/FYP/devel_isolated/nav_planner/lib/python2.7/dist-packages/nav_planner/msg/_pointData.py
 nav_planner_generate_messages_py: /home/kalana/FYP/devel_isolated/nav_planner/lib/python2.7/dist-packages/nav_planner/msg/_pointDataArray.py
+nav_planner_generate_messages_py: /home/kalana/FYP/devel_isolated/nav_planner/lib/python2.7/dist-packages/nav_planner/srv/_goalControl.py
 nav_planner_generate_messages_py: /home/kalana/FYP/devel_isolated/nav_planner/lib/python2.7/dist-packages/nav_planner/msg/__init__.py
+nav_planner_generate_messages_py: /home/kalana/FYP/devel_isolated/nav_planner/lib/python2.7/dist-packages/nav_planner/srv/__init__.py
 nav_planner_generate_messages_py: CMakeFiles/nav_planner_generate_messages_py.dir/build.make
 
 .PHONY : nav_planner_generate_messages_py
