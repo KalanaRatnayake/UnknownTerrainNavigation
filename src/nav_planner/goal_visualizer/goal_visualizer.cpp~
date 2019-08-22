@@ -18,6 +18,6 @@ void goal_visualizer::update_nearest_cluster(octomap::point3d &nearestCluster){
     n->setColor(0, 255, 0); // set color to green
 }
 
-void goal_visualizer::get_tree(octomap::ColorOcTree &outTree){
+void goal_visualizer::get_tree(octomap::ColorOcTree outTree){
     outTree = tree;
 }

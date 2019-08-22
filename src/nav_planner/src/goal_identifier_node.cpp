@@ -10,6 +10,9 @@
 #include <goal_identifier.h>
 
 
+std::vector<octomap::point3d> centerArray;
+octomap::point3d goal;
+
 goal_identifier identifierObject = goal_identifier(0.75f, 10.0f, 0.05, 10.0f, 10.0f, 10.0f, 0.02f);
 
 /*  The node subscribe to topics 'Octomap' at (octomap_msgs/Octomap) and 'pose' at (nav_msgs/Odometry)
@@ -34,9 +37,18 @@ void positionCallback(const nav_msgs::Odometry::ConstPtr &msg)
 /   calculation is done upon the server request on the (execute) and response is given as a (x,y,z) cooredinates
 */
 
-// void executionCallback(const nav_msgs::Odometry::ConstPtr &msg)
-// {
-// }
+bool executionCallback(nav_planner::goalControl::Request &request, nav_planner::goalControl::Response &response)
+{
+	if (request.execute){
+		identifierObject.calculate(centerArray, goal);
+	}
+
+	response.x = goal.x();
+	response.y = goal.y();
+	response.z = goal.z();
+
+	return true;
+}
 
 
 /*  goal and centerPointArray which are returned by identifierObject is published in (nav_planner/goal) topic and 
@@ -45,8 +57,43 @@ void positionCallback(const nav_msgs::Odometry::ConstPtr &msg)
 
 int main(int argc, char **argv)
 {
-    // ros::Subscriber octree_sub = n.subscribe<octomap_msgs::Octomap>("/octomap_binary", 1, boost::bind(&octomapCallback, _1, &planner_object));
-	// ros::Subscriber odom_sub = n.subscribe<nav_msgs::Odometry>("/bebop2/odometry_sensor1/odometry", 1, boost::bind(&odomCb, _1, &planner_object));
+	ros::init (argc, argv, "Goal_Identifier");
+	ros::NodeHandle node;
+
+    ros::Subscriber octree_sub = node.subscribe("octomap", 1, mapCallback);
+	ros::Subscriber odom_sub = node.subscribe("odometry", 1, positionCallback);
+
+	ros::ServiceServer service = node.advertiseService("goalPosition", executionCallback);
+
+	ros::Publisher centerArray_pub = node.advertise<nav_planner::pointDataArray>("centerArray", 1000);
+	ros::Publisher centerPoint_pub = node.advertise<nav_planner::pointData>("goalPoint", 1);
+
+	while(ros::ok()){
+		int lenM = centerArray.size();
+		nav_planner::pointDataArray valueArray;
+		nav_planner::pointData goalMsg;
+
+		for(int i=1; i<lenM; i++){
+			nav_planner::pointData msgInstance;
+
+			msgInstance.x = centerArray[i].x();
+			msgInstance.y = centerArray[i].y();
+			msgInstance.z = centerArray[i].z();
+
+			valueArray.centerPointsArray.push_back(msgInstance);
+		}
+
+		centerArray_pub.publish(valueArray);
+
+		goalMsg.x = goal.x();
+		goalMsg.y = goal.y();
+		goalMsg.z = goal.z();
+
+		centerPoint_pub.publish(goalMsg);
+	}
+
+	ros::spin();
+	return 0;
 }
 
   
