@@ -1,2 +1,2 @@
-nav_planner
+nav_planner:testworld_gazebo
 -G Unix Makefiles -DCATKIN_DEVEL_PREFIX=/home/kalana/FYP/devel_isolated -DCMAKE_INSTALL_PREFIX=/home/kalana/FYP/install_isolated

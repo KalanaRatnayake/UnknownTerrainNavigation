@@ -6,4 +6,4 @@ if [ ! -z "$_CATKIN_SETUP_DIR" ] && [ "$_CATKIN_SETUP_DIR" != "/home/kalana/FYP/
   return 1
 fi
 
-_CATKIN_SETUP_DIR= . "/home/kalana/FYP/devel_isolated/nav_planner/setup.sh"
+_CATKIN_SETUP_DIR= . "/home/kalana/FYP/devel_isolated/testworld_gazebo/setup.sh"
