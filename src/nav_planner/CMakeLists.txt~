@@ -108,7 +108,7 @@ generate_messages(
 catkin_package(
 #  INCLUDE_DIRS include
 #  LIBRARIES nav_planner
-   CATKIN_DEPENDS roscpp rospy message_runtime octomap_ros
+   CATKIN_DEPENDS roscpp rospy message_runtime octomap_ros std_msgs
 #  DEPENDS system_lib
 )
 
@@ -119,7 +119,7 @@ catkin_package(
 ## Specify additional locations of header files
 ## Your package locations should be listed before other locations
 include_directories(
-  include ${catkin_INCLUDE_DIRS} ${OCTOMAP_INCLUDE_DIRS} goal_identifier
+  include ${catkin_INCLUDE_DIRS} ${OCTOMAP_INCLUDE_DIRS} goal_identifier goal_visualizer
 )
 
 ## Declare a C++ library
@@ -140,6 +140,11 @@ add_executable(goal_identifier_node
   goal_identifier/goal_identifier.cpp
 )
 
+add_executable(goal_visualizer_node 
+  src/goal_visualizer_node.cpp
+  goal_visualizer/goal_visualizer.cpp
+)
+
 ## Rename C++ executable without prefix
 ## The above recommended prefix causes long target names, the following renames the
 ## target back to the shorter version for ease of user use
@@ -149,9 +154,15 @@ add_executable(goal_identifier_node
 ## Add cmake target dependencies of the executable
 ## same as for the library above
 add_dependencies(goal_identifier_node ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
+add_dependencies(goal_visualizer_node ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
 
 ## Specify libraries to link a library or executable target against
 target_link_libraries(goal_identifier_node 
+  ${catkin_LIBRARIES}
+  ${OCTOMAP_LIBRARIES}
+)
+
+target_link_libraries(goal_visualizer_node 
   ${catkin_LIBRARIES}
   ${OCTOMAP_LIBRARIES}
 )

@@ -10,7 +10,7 @@
 #include <goal_visualizer.h>
 
 
-goal_visualizer visualizerObject = goal_identifier(0.05);
+goal_visualizer visualizerObject = goal_visualizer(0.05);
 
 void arrayCallback(const nav_planner::pointDataArray::ConstPtr &msg)
 {
@@ -28,13 +28,13 @@ void goalCallback(const nav_planner::pointData::ConstPtr &msg)
 {
 	octomap::point3d goal = octomap::point3d(msg->x, msg->y, msg->z);
 
-    identifierObject.update_nearest_cluster(goal);
+    visualizerObject.update_nearest_cluster(goal);
 }
 
 
 int main(int argc, char **argv)
 {
-    octomap::ColorOcTree outTree;
+    octomap::ColorOcTree* outTree;
     octomap_msgs::Octomap map_msg;
 
 	ros::init (argc, argv, "Goal_Identifier");
@@ -46,8 +46,8 @@ int main(int argc, char **argv)
 	ros::Publisher map_pub = node.advertise<octomap_msgs::Octomap>("centersMap", 1);
 
 	while(ros::ok()){
-        identifierObject.get_tree(outTree);
-        octomap_msgs::fullMapToMsg(outTree, map_msg); // (.ot)
+        visualizerObject.get_tree(outTree);
+        octomap_msgs::fullMapToMsg(*outTree, map_msg); // (.ot)
 
 		map_pub.publish(map_msg);
 	}
