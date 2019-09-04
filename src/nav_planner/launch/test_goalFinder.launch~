@@ -11,10 +11,5 @@
 		<remap from="octomap" to="/octomap_full" />
         <remap from="odometry" to="/odom" />
 	</node>
-	
-	<node pkg="nav_planner" type="goal_visualizer_node" name="goal_visualizer" output="screen">
-		<remap from="array" to="/centerArray" />
-        <remap from="goal" to="/goalPoint" />
-	</node>
 </launch>
 

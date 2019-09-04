@@ -145,6 +145,12 @@ add_executable(goal_visualizer_node
   goal_visualizer/goal_visualizer.cpp
 )
 
+add_executable(test_goalPositionClient_node 
+  src/test_goalPositionClient_node.cpp
+)
+
+
+
 ## Rename C++ executable without prefix
 ## The above recommended prefix causes long target names, the following renames the
 ## target back to the shorter version for ease of user use
@@ -155,6 +161,7 @@ add_executable(goal_visualizer_node
 ## same as for the library above
 add_dependencies(goal_identifier_node ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
 add_dependencies(goal_visualizer_node ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
+add_dependencies(test_goalPositionClient_node ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
 
 ## Specify libraries to link a library or executable target against
 target_link_libraries(goal_identifier_node 
@@ -163,6 +170,11 @@ target_link_libraries(goal_identifier_node
 )
 
 target_link_libraries(goal_visualizer_node 
+  ${catkin_LIBRARIES}
+  ${OCTOMAP_LIBRARIES}
+)
+
+target_link_libraries(test_goalPositionClient_node 
   ${catkin_LIBRARIES}
   ${OCTOMAP_LIBRARIES}
 )

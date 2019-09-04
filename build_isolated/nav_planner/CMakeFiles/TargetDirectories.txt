@@ -1,6 +1,7 @@
 /home/kalana/FYP/build_isolated/nav_planner/CMakeFiles/edit_cache.dir
 /home/kalana/FYP/build_isolated/nav_planner/CMakeFiles/install/local.dir
 /home/kalana/FYP/build_isolated/nav_planner/CMakeFiles/install/strip.dir
+/home/kalana/FYP/build_isolated/nav_planner/CMakeFiles/test_goalPositionClient_node.dir
 /home/kalana/FYP/build_isolated/nav_planner/CMakeFiles/goal_visualizer_node.dir
 /home/kalana/FYP/build_isolated/nav_planner/CMakeFiles/goal_identifier_node.dir
 /home/kalana/FYP/build_isolated/nav_planner/CMakeFiles/nav_planner_generate_messages_py.dir

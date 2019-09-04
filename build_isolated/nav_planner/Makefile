@@ -166,6 +166,19 @@ depend:
 .PHONY : depend
 
 #=============================================================================
+# Target rules for targets named test_goalPositionClient_node
+
+# Build rule for target.
+test_goalPositionClient_node: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 test_goalPositionClient_node
+.PHONY : test_goalPositionClient_node
+
+# fast build rule for target.
+test_goalPositionClient_node/fast:
+	$(MAKE) -f CMakeFiles/test_goalPositionClient_node.dir/build.make CMakeFiles/test_goalPositionClient_node.dir/build
+.PHONY : test_goalPositionClient_node/fast
+
+#=============================================================================
 # Target rules for targets named goal_visualizer_node
 
 # Build rule for target.
@@ -1248,6 +1261,33 @@ src/goal_visualizer_node.cpp.s:
 	$(MAKE) -f CMakeFiles/goal_visualizer_node.dir/build.make CMakeFiles/goal_visualizer_node.dir/src/goal_visualizer_node.cpp.s
 .PHONY : src/goal_visualizer_node.cpp.s
 
+src/test_goalPositionClient_node.o: src/test_goalPositionClient_node.cpp.o
+
+.PHONY : src/test_goalPositionClient_node.o
+
+# target to build an object file
+src/test_goalPositionClient_node.cpp.o:
+	$(MAKE) -f CMakeFiles/test_goalPositionClient_node.dir/build.make CMakeFiles/test_goalPositionClient_node.dir/src/test_goalPositionClient_node.cpp.o
+.PHONY : src/test_goalPositionClient_node.cpp.o
+
+src/test_goalPositionClient_node.i: src/test_goalPositionClient_node.cpp.i
+
+.PHONY : src/test_goalPositionClient_node.i
+
+# target to preprocess a source file
+src/test_goalPositionClient_node.cpp.i:
+	$(MAKE) -f CMakeFiles/test_goalPositionClient_node.dir/build.make CMakeFiles/test_goalPositionClient_node.dir/src/test_goalPositionClient_node.cpp.i
+.PHONY : src/test_goalPositionClient_node.cpp.i
+
+src/test_goalPositionClient_node.s: src/test_goalPositionClient_node.cpp.s
+
+.PHONY : src/test_goalPositionClient_node.s
+
+# target to generate assembly for a file
+src/test_goalPositionClient_node.cpp.s:
+	$(MAKE) -f CMakeFiles/test_goalPositionClient_node.dir/build.make CMakeFiles/test_goalPositionClient_node.dir/src/test_goalPositionClient_node.cpp.s
+.PHONY : src/test_goalPositionClient_node.cpp.s
+
 # Help Target
 help:
 	@echo "The following are some of the valid targets for this Makefile:"
@@ -1257,6 +1297,7 @@ help:
 	@echo "... edit_cache"
 	@echo "... install/local"
 	@echo "... install/strip"
+	@echo "... test_goalPositionClient_node"
 	@echo "... goal_visualizer_node"
 	@echo "... goal_identifier_node"
 	@echo "... nav_planner_generate_messages_py"
@@ -1348,6 +1389,9 @@ help:
 	@echo "... src/goal_visualizer_node.o"
 	@echo "... src/goal_visualizer_node.i"
 	@echo "... src/goal_visualizer_node.s"
+	@echo "... src/test_goalPositionClient_node.o"
+	@echo "... src/test_goalPositionClient_node.i"
+	@echo "... src/test_goalPositionClient_node.s"
 .PHONY : help
 
 

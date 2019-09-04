@@ -21,11 +21,11 @@ void goal_identifier::update_position(octomap::point3d currentPosition){
 }
         
 void goal_identifier::discover_clusters(std::vector<octomap::point3d> &outCenterPointsArray){
+
     octomap::point3d centerPointsArray [xn*yn*zn];
     std::vector<octomap::point3d> unknownPointsArray;
             
     int index = 0;
-    int counter = 0;
             
     for (int x=0; x<xn; x++){
         for (int y=0; y<yn; y++){
@@ -37,29 +37,32 @@ void goal_identifier::discover_clusters(std::vector<octomap::point3d> &outCenter
     }
             
     for (int i=0; i<index; i++){
-        float x_min = centerPointsArray[i].x()-(sideSize/2*resolution);
-        float x_max = centerPointsArray[i].x()+(sideSize/2*resolution);
-        float y_min = centerPointsArray[i].y()-(sideSize/2*resolution);
-        float y_max = centerPointsArray[i].y()+(sideSize/2*resolution);
-        float z_min = centerPointsArray[i].z()-(sideSize/2*resolution);
-        float z_max = centerPointsArray[i].z()+(sideSize/2*resolution);
+        int counter = 0;
+        
+        float x_min = centerPointsArray[i].x()-(sideSize*0.5*resolution)+(0.5*resolution);
+        float x_max = centerPointsArray[i].x()+(sideSize*0.5*resolution)+(0.5*resolution);
+        float y_min = centerPointsArray[i].y()-(sideSize*0.5*resolution)+(0.5*resolution);
+        float y_max = centerPointsArray[i].y()+(sideSize*0.5*resolution)+(0.5*resolution);
+        float z_min = centerPointsArray[i].z()-(sideSize*0.5*resolution)+(0.5*resolution);
+        float z_max = centerPointsArray[i].z()+(sideSize*0.5*resolution)+(0.5*resolution);
 
         for (float a=x_min; a<x_max; a=a+resolution){
             for (float b=y_min; b<y_max; b=b+resolution){
                 for (float c=z_min; c<z_max; c=c+resolution){
-                    if (!tree->search(a,b,c)){
+                    if (!tree->search((double)a, (double)b, (double)c)){
                         counter++;
                     }
                 }
             }
         }
 
-        if (counter<(percentage*xn*yn*zn)){
+        if (counter>=(percentage*sideSize*sideSize*sideSize)){
             unknownPointsArray.push_back(centerPointsArray[i]);
         }
     }
 
     outCenterPointsArray = unknownPointsArray;
+
 }
 
 void goal_identifier::find_nearest_cluster(std::vector<octomap::point3d>  &unknownClusterCenters, octomap::point3d &outCluster){
@@ -70,7 +73,7 @@ void goal_identifier::find_nearest_cluster(std::vector<octomap::point3d>  &unkno
 
     int len = unknownClusterCenters.size();
 
-    for(int i=1; i<len; i++){
+    for(int i=0; i<len; i++){
         octomap::point3d cluster = unknownClusterCenters[i];
 
         if (cluster.z()> height){
@@ -82,10 +85,11 @@ void goal_identifier::find_nearest_cluster(std::vector<octomap::point3d>  &unkno
 
     if (lowerClusters.size()>0){
         selectedClusters = lowerClusters;
+
     } else {
         int upperLen = upperClusters.size();
 
-        for(int i=1; i<upperLen; i++){
+        for(int i=0; i<upperLen; i++){
             octomap::point3d cluster = upperClusters[i];
             octomap::point3d newClusterX, newClusterY;
 
@@ -128,14 +132,14 @@ void goal_identifier::find_nearest_cluster(std::vector<octomap::point3d>  &unkno
             }
         }
     }
-
+        
     octomap::point3d nearestCluster = selectedClusters[0];
 
     float min_distance = sqrt(pow(position.x() - nearestCluster.x(), 2) + pow(position.y() - nearestCluster.y(), 2) + pow(position.z() - nearestCluster.z(), 2));
 
     int lenM = selectedClusters.size();
 
-    for(int i=1; i<lenM; i++){
+    for(int i=0; i<lenM; i++){
         octomap::point3d cluster = selectedClusters[i];
 
         float distance = sqrt(pow(position.x() - cluster.x(), 2) + pow(position.y() - cluster.y(), 2) + pow(position.z() - cluster.z(), 2));
@@ -151,6 +155,13 @@ void goal_identifier::find_nearest_cluster(std::vector<octomap::point3d>  &unkno
 
 void goal_identifier::calculate(std::vector<octomap::point3d> &centerPointsArray, octomap::point3d &goal){
 
+    ROS_INFO("goal_identifier : started calculating");
+
     discover_clusters(centerPointsArray);
+
+    ROS_INFO("goal_identifier : created centerpoints array");
+
     find_nearest_cluster(centerPointsArray, goal);
+
+    ROS_INFO("goal_identifier : completed calculating");
 }

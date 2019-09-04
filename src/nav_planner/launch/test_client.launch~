@@ -1,0 +1,10 @@
+<launch>
+    <node pkg="nav_planner" type="test_goalPositionClient_node" name="goalPositionClient" output="screen">
+	</node>
+	
+	<node pkg="nav_planner" type="goal_visualizer_node" name="goal_visualizer" output="screen">
+		<remap from="array" to="/centerArray" />
+        <remap from="goal" to="/goalPoint" />
+	</node>
+</launch>
+

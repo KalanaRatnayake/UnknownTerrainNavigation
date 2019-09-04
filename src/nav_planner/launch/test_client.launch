@@ -1,0 +1,5 @@
+<launch>
+    <node pkg="nav_planner" type="test_goalPositionClient_node" name="goalPositionClient" output="screen">
+	</node>
+</launch>
+

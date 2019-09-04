@@ -1,4 +1,5 @@
 #include <vector>
+#include <ros/console.h>
 #include <octomap/octomap.h>
 #include <octomap/OcTree.h>
 #include <cmath>

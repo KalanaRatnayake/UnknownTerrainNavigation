@@ -251,6 +251,7 @@ set(CMAKE_MAKEFILE_PRODUCTS
 
 # Dependency information for all targets:
 set(CMAKE_DEPEND_INFO_FILES
+  "CMakeFiles/test_goalPositionClient_node.dir/DependInfo.cmake"
   "CMakeFiles/goal_visualizer_node.dir/DependInfo.cmake"
   "CMakeFiles/goal_identifier_node.dir/DependInfo.cmake"
   "CMakeFiles/nav_planner_generate_messages_py.dir/DependInfo.cmake"

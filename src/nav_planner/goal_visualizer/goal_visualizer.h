@@ -1,4 +1,5 @@
 #include <vector>
+#include <ros/console.h>
 #include <octomap/octomap.h>
 #include <octomap/ColorOcTree.h>
 #include <cmath>
@@ -6,7 +7,6 @@
 class goal_visualizer{
     private:
         octomap::ColorOcTree* tree;
-
     
     public:
         goal_visualizer(double inputResolution);

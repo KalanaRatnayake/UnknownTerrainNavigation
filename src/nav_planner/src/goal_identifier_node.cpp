@@ -1,4 +1,6 @@
 #include <ros/ros.h>
+#include <ros/console.h>
+#include <ros/callback_queue.h>
 #include <octomap_msgs/Octomap.h>
 #include <octomap_msgs/conversions.h>
 #include <octomap/octomap.h>
@@ -10,12 +12,14 @@
 #include <goal_identifier.h>
 
 
+
 std::vector<octomap::point3d> centerArray;
 octomap::point3d goal;
 
 goal_identifier identifierObject = goal_identifier(0.75f, 10.0f, 0.05, 10.0f, 10.0f, 10.0f, 0.02f);
 
-/*  The node subscribe to topics 'Octomap' at (octomap_msgs/Octomap) and 'pose' at (nav_msgs/Odometry)
+/*
+/  The node subscribe to topics 'Octomap' at (octomap_msgs/Octomap) and 'pose' at (nav_msgs/Odometry)
 /   mapCallback and positionCallback handles incoming msgs from these two topics.  
 */
 
@@ -38,7 +42,9 @@ void positionCallback(const nav_msgs::Odometry::ConstPtr &msg)
 */
 
 bool executionCallback(nav_planner::goalControl::Request &request, nav_planner::goalControl::Response &response)
-{
+{ 
+	ROS_INFO("goal_identifier_node : request received");
+
 	if (request.execute){
 		identifierObject.calculate(centerArray, goal);
 	}
@@ -46,6 +52,8 @@ bool executionCallback(nav_planner::goalControl::Request &request, nav_planner::
 	response.x = goal.x();
 	response.y = goal.y();
 	response.z = goal.z();
+
+	ROS_INFO("goal_identifier_node : response sent");
 
 	return true;
 }
@@ -59,14 +67,22 @@ int main(int argc, char **argv)
 {
 	ros::init (argc, argv, "Goal_Identifier");
 	ros::NodeHandle node;
+	
+	ROS_INFO("Initialized the goal_identifier_node");
 
-    ros::Subscriber octree_sub = node.subscribe("octomap", 1, mapCallback);
-	ros::Subscriber odom_sub = node.subscribe("odometry", 1, positionCallback);
+    ros::Subscriber octree_sub = node.subscribe("octomap", 10, mapCallback);
+	ros::Subscriber odom_sub = node.subscribe("odometry", 10, positionCallback);
+	
+	ROS_INFO("goal_identifier_node : created subscribers");
 
-	ros::ServiceServer service = node.advertiseService("goalPosition", executionCallback);
+	ros::ServiceServer service = node.advertiseService<nav_planner::goalControlRequest, nav_planner::goalControlResponse>("goalPosition", executionCallback);
+	
+	ROS_INFO("goal_identifier_node : created service");
 
 	ros::Publisher centerArray_pub = node.advertise<nav_planner::pointDataArray>("centerArray", 1000);
-	ros::Publisher centerPoint_pub = node.advertise<nav_planner::pointData>("goalPoint", 1);
+	ros::Publisher centerPoint_pub = node.advertise<nav_planner::pointData>("goalPoint", 10);
+	
+	ROS_INFO("goal_identifier_node : created publishers");
 
 	while(ros::ok()){
 		int lenM = centerArray.size();
@@ -90,9 +106,9 @@ int main(int argc, char **argv)
 		goalMsg.z = goal.z();
 
 		centerPoint_pub.publish(goalMsg);
-	}
 
-	ros::spin();
+		ros::getGlobalCallbackQueue()->callAvailable(ros::WallDuration(0.001));
+	}
 	return 0;
 }
 
