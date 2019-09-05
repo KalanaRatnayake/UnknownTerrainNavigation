@@ -20,6 +20,19 @@ void goal_visualizer::update_nearest_cluster(octomap::point3d &nearestCluster){
     n->setColor(0, 255, 0); // set color to green
 }
 
-void goal_visualizer::get_tree(octomap::ColorOcTree* outTree){
-    outTree = tree;
+void goal_visualizer::get_tree(octomap::ColorOcTree &outTree){
+    for(octomap::ColorOcTree::leaf_iterator it = tree->begin_leafs(), end = tree->end_leafs(); it!=end; ++it){
+
+        octomap::point3d node(it.getX(), it.getY(),it.getZ());
+            
+        if(it->getValue()>0.0){
+            outTree.updateNode(node, true);
+            octomap::ColorOcTreeNode* key = outTree.search(it.getX(), it.getY(), it.getZ());
+            key->setColor(it->getColor());
+
+        }else{
+            outTree.updateNode(node, false);
+        }
+        
+    }
 }

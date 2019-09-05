@@ -11,9 +11,9 @@
 #include <nav_planner/mapControl.h>
 #include <goal_visualizer.h>
 
-
-octomap::ColorOcTree* outTree = new octomap::ColorOcTree (0.05);
 static int seq_num = 1; 
+
+octomap::ColorOcTree outTree (0.05);
 goal_visualizer visualizerObject = goal_visualizer(0.05);
 
 void arrayCallback(const nav_planner::pointDataArray::ConstPtr &msg)
@@ -55,7 +55,7 @@ int main(int argc, char **argv){
 
         octomap_msgs::Octomap map_msg;
         
-        octomap_msgs::fullMapToMsg(*outTree, map_msg); // (.ot)
+        octomap_msgs::fullMapToMsg(outTree, map_msg); // (.ot)
 
         map_msg.header.frame_id = "/odom";
         map_msg.header.stamp = ros::Time::now();
