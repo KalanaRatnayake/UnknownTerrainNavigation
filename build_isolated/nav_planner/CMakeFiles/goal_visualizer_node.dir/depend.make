@@ -36,9 +36,9 @@ CMakeFiles/goal_visualizer_node.dir/goal_visualizer/goal_visualizer.cpp.o: /opt/
 CMakeFiles/goal_visualizer_node.dir/goal_visualizer/goal_visualizer.cpp.o: /opt/ros/kinetic/include/ros/time.h
 CMakeFiles/goal_visualizer_node.dir/goal_visualizer/goal_visualizer.cpp.o: /opt/ros/kinetic/include/rosconsole/macros_generated.h
 
-CMakeFiles/goal_visualizer_node.dir/src/goal_visualizer_node.cpp.o: /home/kalana/FYP/devel_isolated/nav_planner/include/nav_planner/goalControl.h
-CMakeFiles/goal_visualizer_node.dir/src/goal_visualizer_node.cpp.o: /home/kalana/FYP/devel_isolated/nav_planner/include/nav_planner/goalControlRequest.h
-CMakeFiles/goal_visualizer_node.dir/src/goal_visualizer_node.cpp.o: /home/kalana/FYP/devel_isolated/nav_planner/include/nav_planner/goalControlResponse.h
+CMakeFiles/goal_visualizer_node.dir/src/goal_visualizer_node.cpp.o: /home/kalana/FYP/devel_isolated/nav_planner/include/nav_planner/mapControl.h
+CMakeFiles/goal_visualizer_node.dir/src/goal_visualizer_node.cpp.o: /home/kalana/FYP/devel_isolated/nav_planner/include/nav_planner/mapControlRequest.h
+CMakeFiles/goal_visualizer_node.dir/src/goal_visualizer_node.cpp.o: /home/kalana/FYP/devel_isolated/nav_planner/include/nav_planner/mapControlResponse.h
 CMakeFiles/goal_visualizer_node.dir/src/goal_visualizer_node.cpp.o: /home/kalana/FYP/devel_isolated/nav_planner/include/nav_planner/pointData.h
 CMakeFiles/goal_visualizer_node.dir/src/goal_visualizer_node.cpp.o: /home/kalana/FYP/devel_isolated/nav_planner/include/nav_planner/pointDataArray.h
 CMakeFiles/goal_visualizer_node.dir/src/goal_visualizer_node.cpp.o: /home/kalana/FYP/src/nav_planner/goal_visualizer/goal_visualizer.h

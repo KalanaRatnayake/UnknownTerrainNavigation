@@ -107,7 +107,7 @@ int main(int argc, char **argv)
 
 		centerPoint_pub.publish(goalMsg);
 
-		ros::getGlobalCallbackQueue()->callAvailable(ros::WallDuration(0.001));
+		ros::getGlobalCallbackQueue()->callAvailable(ros::WallDuration(0.01));
 	}
 	return 0;
 }

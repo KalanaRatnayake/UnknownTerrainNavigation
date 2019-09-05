@@ -1,4 +1,6 @@
 <launch>
+    <env name="ROSCONSOLE_CONFIG_FILE" value="$(find nav_planner)/custom_rosconsole.conf"/>
+
     <node pkg="octomap_server" type="octomap_server_node" name="octomap_server" output="screen">
 		<param name="resolution" value="0.05" />
 		<param name="frame_id" type="string" value="/odom" />

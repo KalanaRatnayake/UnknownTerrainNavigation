@@ -1,0 +1,8 @@
+<launch>
+    <env name="ROSCONSOLE_CONFIG_FILE" value="$(find nav_planner)/logging_debug.conf"/>
+    
+	<node pkg="nav_planner" type="goal_visualizer_node" name="goal_visualizer" output="screen">
+		<remap from="array" to="/centerArray" />
+        <remap from="goal" to="/goalPoint" />
+	</node>
+</launch>
