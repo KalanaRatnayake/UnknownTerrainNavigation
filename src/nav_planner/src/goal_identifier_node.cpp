@@ -12,11 +12,10 @@
 #include <goal_identifier.h>
 
 
-
 std::vector<octomap::point3d> centerArray;
 octomap::point3d goal;
 
-goal_identifier identifierObject = goal_identifier(0.75f, 10.0f, 0.05, 10.0f, 10.0f, 10.0f, 0.02f);
+goal_identifier identifierObject = goal_identifier(0.75f, 10.0f, 0.05, 20.0f, 20.0f, 3.0f, 0.02f);
 
 /*
 /  The node subscribe to topics 'Octomap' at (octomap_msgs/Octomap) and 'pose' at (nav_msgs/Odometry)

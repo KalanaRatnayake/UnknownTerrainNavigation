@@ -30,7 +30,7 @@ void goal_identifier::discover_clusters(std::vector<octomap::point3d> &outCenter
     for (int x=0; x<xn; x++){
         for (int y=0; y<yn; y++){
             for (int z=0; z<zn; z++){
-                centerPointsArray[index] = octomap::point3d ((sideSize/2*resolution)+(x*sideSize*resolution), (sideSize/2*resolution)+(y*sideSize*resolution), (sideSize/2*resolution)+(z*sideSize*resolution));
+                centerPointsArray[index] = octomap::point3d ((sideSize*0.5*resolution)+(x*sideSize*resolution), (sideSize*0.5*resolution)+(y*sideSize*resolution), (sideSize*0.5*resolution)+(z*sideSize*resolution));
                 index++;
             }
         }
@@ -76,7 +76,7 @@ void goal_identifier::find_nearest_cluster(std::vector<octomap::point3d>  &unkno
     for(int i=0; i<len; i++){
         octomap::point3d cluster = unknownClusterCenters[i];
 
-        if (cluster.z()> height){
+        if (cluster.z()>= height){
             upperClusters.push_back(cluster);
         } else {
             lowerClusters.push_back(cluster);
