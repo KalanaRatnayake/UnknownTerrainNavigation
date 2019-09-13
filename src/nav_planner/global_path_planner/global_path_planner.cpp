@@ -1,7 +1,11 @@
 #include "global_path_planner.h"
 
-void global_path_planner::global_path_planner(double bodyWidth){
-    pace = bodyWidth;
+void global_path_planner::global_path_planner(double bodyWidth, int botHeightBlocks, int maskSideBlocks, float resolutionValue, bool &mask [9][9] ){
+    pace = bodyWidth*0.5;
+    botHeight = botHeightBlocks;
+    maskSide = maskSideBlocks;
+    resolution = resolutionValue;
+    robotMask = mask;
 }
 
 void global_path_planner::createPath(octomap::point3d &current, octomap::point3d &next, std::vector<octomap::point3d> &outPath){

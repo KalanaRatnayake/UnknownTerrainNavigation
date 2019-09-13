@@ -1,14 +1,22 @@
 #include <ros/ros.h>
 #include <ros/console.h>
 #include <ros/callback_queue.h>
-#include <octomap_msgs/Octomap.h>
-#include <octomap_msgs/conversions.h>
+
 #include <octomap/octomap.h>
 #include <octomap/OcTree.h>
-#include <nav_msgs/Odometry.h>
+
+#include <octomap_msgs/Octomap.h>
+#include <octomap_msgs/conversions.h>
+
+#include <tf/tfMessage.h>
+#include <geometry_msgs/TransformStamped.h>
+#include <geometry_msgs/Transform.h>
+#include <geometry_msgs/Vector3.h>
+
 #include <nav_planner/pointData.h>
 #include <nav_planner/pointDataArray.h>
 #include <nav_planner/goalControl.h>
+
 #include <goal_identifier.h>
 
 
@@ -29,9 +37,9 @@ void mapCallback(const octomap_msgs::Octomap::ConstPtr &msg)
 	identifierObject.update_tree(tree_oct);
 }
 
-void positionCallback(const nav_msgs::Odometry::ConstPtr &msg)
+void currentPositionCallback(const tf::tfMessage::ConstPtr &msg)
 {
-	octomap::point3d position = octomap::point3d(msg->pose.pose.position.x, msg->pose.pose.position.y, msg->pose.pose.position.z);
+	octomap::point3d position = octomap::point3d(msg->transforms[0].transform.translation.x, msg->transforms[0].transform.translation.y, msg->transforms[0].transform.translation.z);
 	identifierObject.update_position(position);
 }
 
@@ -70,7 +78,7 @@ int main(int argc, char **argv)
 	ROS_INFO("Initialized the goal_identifier_node");
 
     ros::Subscriber octree_sub = node.subscribe("octomap", 10, mapCallback);
-	ros::Subscriber odom_sub = node.subscribe("odometry", 10, positionCallback);
+	ros::Subscriber poition_sub = node.subscribe("position", 10, currentPositionCallback);
 	
 	ROS_INFO("goal_identifier_node : created subscribers");
 

@@ -270,6 +270,19 @@ _nav_planner_generate_messages_check_deps_pointDataArray/fast:
 .PHONY : _nav_planner_generate_messages_check_deps_pointDataArray/fast
 
 #=============================================================================
+# Target rules for targets named _nav_planner_generate_messages_check_deps_baseDrive
+
+# Build rule for target.
+_nav_planner_generate_messages_check_deps_baseDrive: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 _nav_planner_generate_messages_check_deps_baseDrive
+.PHONY : _nav_planner_generate_messages_check_deps_baseDrive
+
+# fast build rule for target.
+_nav_planner_generate_messages_check_deps_baseDrive/fast:
+	$(MAKE) -f CMakeFiles/_nav_planner_generate_messages_check_deps_baseDrive.dir/build.make CMakeFiles/_nav_planner_generate_messages_check_deps_baseDrive.dir/build
+.PHONY : _nav_planner_generate_messages_check_deps_baseDrive/fast
+
+#=============================================================================
 # Target rules for targets named _nav_planner_generate_messages_check_deps_pointData
 
 # Build rule for target.
@@ -1305,6 +1318,7 @@ help:
 	@echo "... nav_planner_generate_messages_lisp"
 	@echo "... nav_planner_gencpp"
 	@echo "... _nav_planner_generate_messages_check_deps_pointDataArray"
+	@echo "... _nav_planner_generate_messages_check_deps_baseDrive"
 	@echo "... _nav_planner_generate_messages_check_deps_pointData"
 	@echo "... _nav_planner_generate_messages_check_deps_goalControl"
 	@echo "... nav_planner_generate_messages"

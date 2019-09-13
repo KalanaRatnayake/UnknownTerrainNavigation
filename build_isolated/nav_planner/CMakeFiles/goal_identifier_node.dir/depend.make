@@ -45,14 +45,10 @@ CMakeFiles/goal_identifier_node.dir/src/goal_identifier_node.cpp.o: /home/kalana
 CMakeFiles/goal_identifier_node.dir/src/goal_identifier_node.cpp.o: /opt/ros/kinetic/include/boost_161_condition_variable.h
 CMakeFiles/goal_identifier_node.dir/src/goal_identifier_node.cpp.o: /opt/ros/kinetic/include/boost_161_pthread_condition_variable.h
 CMakeFiles/goal_identifier_node.dir/src/goal_identifier_node.cpp.o: /opt/ros/kinetic/include/boost_161_pthread_condition_variable_fwd.h
-CMakeFiles/goal_identifier_node.dir/src/goal_identifier_node.cpp.o: /opt/ros/kinetic/include/geometry_msgs/Point.h
-CMakeFiles/goal_identifier_node.dir/src/goal_identifier_node.cpp.o: /opt/ros/kinetic/include/geometry_msgs/Pose.h
-CMakeFiles/goal_identifier_node.dir/src/goal_identifier_node.cpp.o: /opt/ros/kinetic/include/geometry_msgs/PoseWithCovariance.h
 CMakeFiles/goal_identifier_node.dir/src/goal_identifier_node.cpp.o: /opt/ros/kinetic/include/geometry_msgs/Quaternion.h
-CMakeFiles/goal_identifier_node.dir/src/goal_identifier_node.cpp.o: /opt/ros/kinetic/include/geometry_msgs/Twist.h
-CMakeFiles/goal_identifier_node.dir/src/goal_identifier_node.cpp.o: /opt/ros/kinetic/include/geometry_msgs/TwistWithCovariance.h
+CMakeFiles/goal_identifier_node.dir/src/goal_identifier_node.cpp.o: /opt/ros/kinetic/include/geometry_msgs/Transform.h
+CMakeFiles/goal_identifier_node.dir/src/goal_identifier_node.cpp.o: /opt/ros/kinetic/include/geometry_msgs/TransformStamped.h
 CMakeFiles/goal_identifier_node.dir/src/goal_identifier_node.cpp.o: /opt/ros/kinetic/include/geometry_msgs/Vector3.h
-CMakeFiles/goal_identifier_node.dir/src/goal_identifier_node.cpp.o: /opt/ros/kinetic/include/nav_msgs/Odometry.h
 CMakeFiles/goal_identifier_node.dir/src/goal_identifier_node.cpp.o: /opt/ros/kinetic/include/octomap/AbstractOcTree.h
 CMakeFiles/goal_identifier_node.dir/src/goal_identifier_node.cpp.o: /opt/ros/kinetic/include/octomap/AbstractOccupancyOcTree.h
 CMakeFiles/goal_identifier_node.dir/src/goal_identifier_node.cpp.o: /opt/ros/kinetic/include/octomap/ColorOcTree.h
@@ -137,6 +133,7 @@ CMakeFiles/goal_identifier_node.dir/src/goal_identifier_node.cpp.o: /opt/ros/kin
 CMakeFiles/goal_identifier_node.dir/src/goal_identifier_node.cpp.o: /opt/ros/kinetic/include/ros/wall_timer_options.h
 CMakeFiles/goal_identifier_node.dir/src/goal_identifier_node.cpp.o: /opt/ros/kinetic/include/rosconsole/macros_generated.h
 CMakeFiles/goal_identifier_node.dir/src/goal_identifier_node.cpp.o: /opt/ros/kinetic/include/std_msgs/Header.h
+CMakeFiles/goal_identifier_node.dir/src/goal_identifier_node.cpp.o: /opt/ros/kinetic/include/tf/tfMessage.h
 CMakeFiles/goal_identifier_node.dir/src/goal_identifier_node.cpp.o: /opt/ros/kinetic/include/xmlrpcpp/XmlRpcDecl.h
 CMakeFiles/goal_identifier_node.dir/src/goal_identifier_node.cpp.o: /opt/ros/kinetic/include/xmlrpcpp/XmlRpcValue.h
 

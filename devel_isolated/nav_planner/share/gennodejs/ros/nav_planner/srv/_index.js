@@ -1,10 +1,10 @@
 
 "use strict";
 
-let mapControl = require('./mapControl.js')
+let baseDrive = require('./baseDrive.js')
 let goalControl = require('./goalControl.js')
 
 module.exports = {
-  mapControl: mapControl,
+  baseDrive: baseDrive,
   goalControl: goalControl,
 };

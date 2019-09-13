@@ -11,7 +11,7 @@
     
     <node pkg="nav_planner" type="goal_identifier_node" name="goal_identifier" output="screen">
 		<remap from="octomap" to="/octomap_full" />
-        <remap from="odometry" to="/tf" />
+        <remap from="position" to="/tf" />
 	</node>
 </launch>
 

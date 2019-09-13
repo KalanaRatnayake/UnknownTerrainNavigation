@@ -131,7 +131,10 @@ if(NOT CMAKE_INSTALL_COMPONENT OR "${CMAKE_INSTALL_COMPONENT}" STREQUAL "Unspeci
 endif()
 
 if(NOT CMAKE_INSTALL_COMPONENT OR "${CMAKE_INSTALL_COMPONENT}" STREQUAL "Unspecified")
-  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/nav_planner/srv" TYPE FILE FILES "/home/kalana/FYP/src/nav_planner/srv/goalControl.srv")
+  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/nav_planner/srv" TYPE FILE FILES
+    "/home/kalana/FYP/src/nav_planner/srv/goalControl.srv"
+    "/home/kalana/FYP/src/nav_planner/srv/baseDrive.srv"
+    )
 endif()
 
 if(NOT CMAKE_INSTALL_COMPONENT OR "${CMAKE_INSTALL_COMPONENT}" STREQUAL "Unspecified")

@@ -1,14 +1,16 @@
 #include <ros/ros.h>
 #include <ros/console.h>
 #include <ros/callback_queue.h>
-#include <octomap_msgs/Octomap.h>
-#include <octomap_msgs/conversions.h>
+
 #include <octomap/octomap.h>
 #include <octomap/ColorOcTree.h>
-#include <nav_msgs/Odometry.h>
+
+#include <octomap_msgs/Octomap.h>
+#include <octomap_msgs/conversions.h>
+
 #include <nav_planner/pointData.h>
 #include <nav_planner/pointDataArray.h>
-#include <nav_planner/mapControl.h>
+
 #include <goal_visualizer.h>
 
 static int seq_num = 1; 
