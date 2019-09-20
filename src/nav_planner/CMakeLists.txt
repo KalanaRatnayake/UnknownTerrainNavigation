@@ -12,8 +12,11 @@ find_package(catkin REQUIRED COMPONENTS
   rospy
   message_generation
   std_msgs
+  sensor_msgs
   octomap_ros
   octomap_msgs
+  cv_bridge
+  OpenCV 2 REQUIRED
 )
 
 ## System dependencies are found with CMake's conventions
@@ -121,7 +124,12 @@ catkin_package(
 ## Specify additional locations of header files
 ## Your package locations should be listed before other locations
 include_directories(
-  include ${catkin_INCLUDE_DIRS} ${OCTOMAP_INCLUDE_DIRS} goal_identifier goal_visualizer
+  include 
+  ${catkin_INCLUDE_DIRS} 
+  ${OCTOMAP_INCLUDE_DIRS}
+  ${OpenCV_INCLUDE_DIRS}  
+  goal_identifier 
+  goal_visualizer
 )
 
 ## Declare a C++ library
@@ -178,6 +186,10 @@ target_link_libraries(test_goalPositionClient_node
   ${catkin_LIBRARIES}
   ${OCTOMAP_LIBRARIES}
 )
+
+# target_link_libraries(my_awesome_library 
+#   ${OpenCV_LIBRARIES}
+# )
 #############
 ## Install ##
 #############

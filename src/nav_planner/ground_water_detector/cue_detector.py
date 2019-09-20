@@ -104,6 +104,7 @@ def cueRangeRefleection(depthImage):
             if bool(val%2):
                 mask[points[-1]:255, i] = True
     
+    mask = removeSmallRegionsMask(mask, 9)
     return mask
 
 def check(image, depthImage):
@@ -125,8 +126,13 @@ def analyze(image, depthImage)
     h = shape[0]
     w = shape[1]
 
-    front = np.count_nonzero(mask[h/2:,0.25*w:0.75*w] == True)
-    left = np.count_nonzero(mask[h/2:, :0.25*w] == True)
-    right = np.count_nonzero(mask[h/2:, 0.75*w:] == True)
+    left_count = np.count_nonzero(mask[h/2: , :0.25*w] == True)
+    middle_count = np.count_nonzero(mask[h/2: ,0.25*w:0.75*w] == True)
+    right_count = np.count_nonzero(mask[h/2: , 0.75*w:] == True)
+    full = (float)np.count_nonzero(mask)
 
-    return front, left, right
+    left = left_count/full
+    middle = middle_count/full
+    right = right_count/full
+
+    return left, middle, right
