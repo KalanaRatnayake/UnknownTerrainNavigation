@@ -3,6 +3,7 @@ file(REMOVE_RECURSE
   "/home/kalana/FYP/devel_isolated/nav_planner/share/common-lisp/ros/nav_planner/msg/pointData.lisp"
   "/home/kalana/FYP/devel_isolated/nav_planner/share/common-lisp/ros/nav_planner/msg/pointDataArray.lisp"
   "/home/kalana/FYP/devel_isolated/nav_planner/share/common-lisp/ros/nav_planner/srv/goalControl.lisp"
+  "/home/kalana/FYP/devel_isolated/nav_planner/share/common-lisp/ros/nav_planner/srv/waterDetect.lisp"
   "/home/kalana/FYP/devel_isolated/nav_planner/share/common-lisp/ros/nav_planner/srv/baseDrive.lisp"
 )
 

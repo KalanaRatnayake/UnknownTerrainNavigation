@@ -1,7 +1,7 @@
 # generated from genmsg/cmake/pkg-genmsg.context.in
 
 messages_str = "/home/kalana/FYP/src/nav_planner/msg/pointData.msg;/home/kalana/FYP/src/nav_planner/msg/pointDataArray.msg"
-services_str = "/home/kalana/FYP/src/nav_planner/srv/goalControl.srv;/home/kalana/FYP/src/nav_planner/srv/baseDrive.srv"
+services_str = "/home/kalana/FYP/src/nav_planner/srv/goalControl.srv;/home/kalana/FYP/src/nav_planner/srv/baseDrive.srv;/home/kalana/FYP/src/nav_planner/srv/waterDetect.srv"
 pkg_name = "nav_planner"
 dependencies_str = "std_msgs;octomap_msgs"
 langs = "gencpp;geneus;genlisp;gennodejs;genpy"

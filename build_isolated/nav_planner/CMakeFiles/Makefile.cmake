@@ -261,6 +261,7 @@ set(CMAKE_DEPEND_INFO_FILES
   "CMakeFiles/_nav_planner_generate_messages_check_deps_pointDataArray.dir/DependInfo.cmake"
   "CMakeFiles/_nav_planner_generate_messages_check_deps_baseDrive.dir/DependInfo.cmake"
   "CMakeFiles/_nav_planner_generate_messages_check_deps_pointData.dir/DependInfo.cmake"
+  "CMakeFiles/_nav_planner_generate_messages_check_deps_waterDetect.dir/DependInfo.cmake"
   "CMakeFiles/_nav_planner_generate_messages_check_deps_goalControl.dir/DependInfo.cmake"
   "CMakeFiles/nav_planner_generate_messages.dir/DependInfo.cmake"
   "CMakeFiles/octomap_msgs_generate_messages_py.dir/DependInfo.cmake"

@@ -296,6 +296,19 @@ _nav_planner_generate_messages_check_deps_pointData/fast:
 .PHONY : _nav_planner_generate_messages_check_deps_pointData/fast
 
 #=============================================================================
+# Target rules for targets named _nav_planner_generate_messages_check_deps_waterDetect
+
+# Build rule for target.
+_nav_planner_generate_messages_check_deps_waterDetect: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 _nav_planner_generate_messages_check_deps_waterDetect
+.PHONY : _nav_planner_generate_messages_check_deps_waterDetect
+
+# fast build rule for target.
+_nav_planner_generate_messages_check_deps_waterDetect/fast:
+	$(MAKE) -f CMakeFiles/_nav_planner_generate_messages_check_deps_waterDetect.dir/build.make CMakeFiles/_nav_planner_generate_messages_check_deps_waterDetect.dir/build
+.PHONY : _nav_planner_generate_messages_check_deps_waterDetect/fast
+
+#=============================================================================
 # Target rules for targets named _nav_planner_generate_messages_check_deps_goalControl
 
 # Build rule for target.
@@ -1320,6 +1333,7 @@ help:
 	@echo "... _nav_planner_generate_messages_check_deps_pointDataArray"
 	@echo "... _nav_planner_generate_messages_check_deps_baseDrive"
 	@echo "... _nav_planner_generate_messages_check_deps_pointData"
+	@echo "... _nav_planner_generate_messages_check_deps_waterDetect"
 	@echo "... _nav_planner_generate_messages_check_deps_goalControl"
 	@echo "... nav_planner_generate_messages"
 	@echo "... octomap_msgs_generate_messages_py"

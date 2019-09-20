@@ -56,6 +56,7 @@ include CMakeFiles/nav_planner_generate_messages_eus.dir/progress.make
 CMakeFiles/nav_planner_generate_messages_eus: /home/kalana/FYP/devel_isolated/nav_planner/share/roseus/ros/nav_planner/msg/pointData.l
 CMakeFiles/nav_planner_generate_messages_eus: /home/kalana/FYP/devel_isolated/nav_planner/share/roseus/ros/nav_planner/msg/pointDataArray.l
 CMakeFiles/nav_planner_generate_messages_eus: /home/kalana/FYP/devel_isolated/nav_planner/share/roseus/ros/nav_planner/srv/goalControl.l
+CMakeFiles/nav_planner_generate_messages_eus: /home/kalana/FYP/devel_isolated/nav_planner/share/roseus/ros/nav_planner/srv/waterDetect.l
 CMakeFiles/nav_planner_generate_messages_eus: /home/kalana/FYP/devel_isolated/nav_planner/share/roseus/ros/nav_planner/srv/baseDrive.l
 CMakeFiles/nav_planner_generate_messages_eus: /home/kalana/FYP/devel_isolated/nav_planner/share/roseus/ros/nav_planner/manifest.l
 
@@ -76,19 +77,25 @@ CMakeFiles/nav_planner_generate_messages_eus: /home/kalana/FYP/devel_isolated/na
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/home/kalana/FYP/build_isolated/nav_planner/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Generating EusLisp code from nav_planner/goalControl.srv"
 	catkin_generated/env_cached.sh /usr/bin/python /opt/ros/kinetic/share/geneus/cmake/../../../lib/geneus/gen_eus.py /home/kalana/FYP/src/nav_planner/srv/goalControl.srv -Inav_planner:/home/kalana/FYP/src/nav_planner/msg -Istd_msgs:/opt/ros/kinetic/share/std_msgs/cmake/../msg -Ioctomap_msgs:/opt/ros/kinetic/share/octomap_msgs/cmake/../msg -Igeometry_msgs:/opt/ros/kinetic/share/geometry_msgs/cmake/../msg -p nav_planner -o /home/kalana/FYP/devel_isolated/nav_planner/share/roseus/ros/nav_planner/srv
 
+/home/kalana/FYP/devel_isolated/nav_planner/share/roseus/ros/nav_planner/srv/waterDetect.l: /opt/ros/kinetic/lib/geneus/gen_eus.py
+/home/kalana/FYP/devel_isolated/nav_planner/share/roseus/ros/nav_planner/srv/waterDetect.l: /home/kalana/FYP/src/nav_planner/srv/waterDetect.srv
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/home/kalana/FYP/build_isolated/nav_planner/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Generating EusLisp code from nav_planner/waterDetect.srv"
+	catkin_generated/env_cached.sh /usr/bin/python /opt/ros/kinetic/share/geneus/cmake/../../../lib/geneus/gen_eus.py /home/kalana/FYP/src/nav_planner/srv/waterDetect.srv -Inav_planner:/home/kalana/FYP/src/nav_planner/msg -Istd_msgs:/opt/ros/kinetic/share/std_msgs/cmake/../msg -Ioctomap_msgs:/opt/ros/kinetic/share/octomap_msgs/cmake/../msg -Igeometry_msgs:/opt/ros/kinetic/share/geometry_msgs/cmake/../msg -p nav_planner -o /home/kalana/FYP/devel_isolated/nav_planner/share/roseus/ros/nav_planner/srv
+
 /home/kalana/FYP/devel_isolated/nav_planner/share/roseus/ros/nav_planner/srv/baseDrive.l: /opt/ros/kinetic/lib/geneus/gen_eus.py
 /home/kalana/FYP/devel_isolated/nav_planner/share/roseus/ros/nav_planner/srv/baseDrive.l: /home/kalana/FYP/src/nav_planner/srv/baseDrive.srv
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/home/kalana/FYP/build_isolated/nav_planner/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Generating EusLisp code from nav_planner/baseDrive.srv"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/home/kalana/FYP/build_isolated/nav_planner/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Generating EusLisp code from nav_planner/baseDrive.srv"
 	catkin_generated/env_cached.sh /usr/bin/python /opt/ros/kinetic/share/geneus/cmake/../../../lib/geneus/gen_eus.py /home/kalana/FYP/src/nav_planner/srv/baseDrive.srv -Inav_planner:/home/kalana/FYP/src/nav_planner/msg -Istd_msgs:/opt/ros/kinetic/share/std_msgs/cmake/../msg -Ioctomap_msgs:/opt/ros/kinetic/share/octomap_msgs/cmake/../msg -Igeometry_msgs:/opt/ros/kinetic/share/geometry_msgs/cmake/../msg -p nav_planner -o /home/kalana/FYP/devel_isolated/nav_planner/share/roseus/ros/nav_planner/srv
 
 /home/kalana/FYP/devel_isolated/nav_planner/share/roseus/ros/nav_planner/manifest.l: /opt/ros/kinetic/lib/geneus/gen_eus.py
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/home/kalana/FYP/build_isolated/nav_planner/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Generating EusLisp manifest code for nav_planner"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/home/kalana/FYP/build_isolated/nav_planner/CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Generating EusLisp manifest code for nav_planner"
 	catkin_generated/env_cached.sh /usr/bin/python /opt/ros/kinetic/share/geneus/cmake/../../../lib/geneus/gen_eus.py -m -o /home/kalana/FYP/devel_isolated/nav_planner/share/roseus/ros/nav_planner nav_planner std_msgs octomap_msgs
 
 nav_planner_generate_messages_eus: CMakeFiles/nav_planner_generate_messages_eus
 nav_planner_generate_messages_eus: /home/kalana/FYP/devel_isolated/nav_planner/share/roseus/ros/nav_planner/msg/pointData.l
 nav_planner_generate_messages_eus: /home/kalana/FYP/devel_isolated/nav_planner/share/roseus/ros/nav_planner/msg/pointDataArray.l
 nav_planner_generate_messages_eus: /home/kalana/FYP/devel_isolated/nav_planner/share/roseus/ros/nav_planner/srv/goalControl.l
+nav_planner_generate_messages_eus: /home/kalana/FYP/devel_isolated/nav_planner/share/roseus/ros/nav_planner/srv/waterDetect.l
 nav_planner_generate_messages_eus: /home/kalana/FYP/devel_isolated/nav_planner/share/roseus/ros/nav_planner/srv/baseDrive.l
 nav_planner_generate_messages_eus: /home/kalana/FYP/devel_isolated/nav_planner/share/roseus/ros/nav_planner/manifest.l
 nav_planner_generate_messages_eus: CMakeFiles/nav_planner_generate_messages_eus.dir/build.make

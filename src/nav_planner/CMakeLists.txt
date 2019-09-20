@@ -61,6 +61,7 @@ add_service_files(
   FILES
   goalControl.srv
   baseDrive.srv
+  waterDetect.srv
 )
 
 ## Generate actions in the 'action' folder

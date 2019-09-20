@@ -3,6 +3,7 @@ file(REMOVE_RECURSE
   "/home/kalana/FYP/devel_isolated/nav_planner/share/gennodejs/ros/nav_planner/msg/pointData.js"
   "/home/kalana/FYP/devel_isolated/nav_planner/share/gennodejs/ros/nav_planner/msg/pointDataArray.js"
   "/home/kalana/FYP/devel_isolated/nav_planner/share/gennodejs/ros/nav_planner/srv/goalControl.js"
+  "/home/kalana/FYP/devel_isolated/nav_planner/share/gennodejs/ros/nav_planner/srv/waterDetect.js"
   "/home/kalana/FYP/devel_isolated/nav_planner/share/gennodejs/ros/nav_planner/srv/baseDrive.js"
 )
 

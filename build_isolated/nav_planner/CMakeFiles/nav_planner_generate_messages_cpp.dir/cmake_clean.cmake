@@ -3,6 +3,7 @@ file(REMOVE_RECURSE
   "/home/kalana/FYP/devel_isolated/nav_planner/include/nav_planner/pointData.h"
   "/home/kalana/FYP/devel_isolated/nav_planner/include/nav_planner/pointDataArray.h"
   "/home/kalana/FYP/devel_isolated/nav_planner/include/nav_planner/goalControl.h"
+  "/home/kalana/FYP/devel_isolated/nav_planner/include/nav_planner/waterDetect.h"
   "/home/kalana/FYP/devel_isolated/nav_planner/include/nav_planner/baseDrive.h"
 )
 

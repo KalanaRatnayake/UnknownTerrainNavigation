@@ -56,6 +56,7 @@ include CMakeFiles/nav_planner_generate_messages_nodejs.dir/progress.make
 CMakeFiles/nav_planner_generate_messages_nodejs: /home/kalana/FYP/devel_isolated/nav_planner/share/gennodejs/ros/nav_planner/msg/pointData.js
 CMakeFiles/nav_planner_generate_messages_nodejs: /home/kalana/FYP/devel_isolated/nav_planner/share/gennodejs/ros/nav_planner/msg/pointDataArray.js
 CMakeFiles/nav_planner_generate_messages_nodejs: /home/kalana/FYP/devel_isolated/nav_planner/share/gennodejs/ros/nav_planner/srv/goalControl.js
+CMakeFiles/nav_planner_generate_messages_nodejs: /home/kalana/FYP/devel_isolated/nav_planner/share/gennodejs/ros/nav_planner/srv/waterDetect.js
 CMakeFiles/nav_planner_generate_messages_nodejs: /home/kalana/FYP/devel_isolated/nav_planner/share/gennodejs/ros/nav_planner/srv/baseDrive.js
 
 
@@ -75,15 +76,21 @@ CMakeFiles/nav_planner_generate_messages_nodejs: /home/kalana/FYP/devel_isolated
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/home/kalana/FYP/build_isolated/nav_planner/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Generating Javascript code from nav_planner/goalControl.srv"
 	catkin_generated/env_cached.sh /usr/bin/python /opt/ros/kinetic/share/gennodejs/cmake/../../../lib/gennodejs/gen_nodejs.py /home/kalana/FYP/src/nav_planner/srv/goalControl.srv -Inav_planner:/home/kalana/FYP/src/nav_planner/msg -Istd_msgs:/opt/ros/kinetic/share/std_msgs/cmake/../msg -Ioctomap_msgs:/opt/ros/kinetic/share/octomap_msgs/cmake/../msg -Igeometry_msgs:/opt/ros/kinetic/share/geometry_msgs/cmake/../msg -p nav_planner -o /home/kalana/FYP/devel_isolated/nav_planner/share/gennodejs/ros/nav_planner/srv
 
+/home/kalana/FYP/devel_isolated/nav_planner/share/gennodejs/ros/nav_planner/srv/waterDetect.js: /opt/ros/kinetic/lib/gennodejs/gen_nodejs.py
+/home/kalana/FYP/devel_isolated/nav_planner/share/gennodejs/ros/nav_planner/srv/waterDetect.js: /home/kalana/FYP/src/nav_planner/srv/waterDetect.srv
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/home/kalana/FYP/build_isolated/nav_planner/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Generating Javascript code from nav_planner/waterDetect.srv"
+	catkin_generated/env_cached.sh /usr/bin/python /opt/ros/kinetic/share/gennodejs/cmake/../../../lib/gennodejs/gen_nodejs.py /home/kalana/FYP/src/nav_planner/srv/waterDetect.srv -Inav_planner:/home/kalana/FYP/src/nav_planner/msg -Istd_msgs:/opt/ros/kinetic/share/std_msgs/cmake/../msg -Ioctomap_msgs:/opt/ros/kinetic/share/octomap_msgs/cmake/../msg -Igeometry_msgs:/opt/ros/kinetic/share/geometry_msgs/cmake/../msg -p nav_planner -o /home/kalana/FYP/devel_isolated/nav_planner/share/gennodejs/ros/nav_planner/srv
+
 /home/kalana/FYP/devel_isolated/nav_planner/share/gennodejs/ros/nav_planner/srv/baseDrive.js: /opt/ros/kinetic/lib/gennodejs/gen_nodejs.py
 /home/kalana/FYP/devel_isolated/nav_planner/share/gennodejs/ros/nav_planner/srv/baseDrive.js: /home/kalana/FYP/src/nav_planner/srv/baseDrive.srv
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/home/kalana/FYP/build_isolated/nav_planner/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Generating Javascript code from nav_planner/baseDrive.srv"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/home/kalana/FYP/build_isolated/nav_planner/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Generating Javascript code from nav_planner/baseDrive.srv"
 	catkin_generated/env_cached.sh /usr/bin/python /opt/ros/kinetic/share/gennodejs/cmake/../../../lib/gennodejs/gen_nodejs.py /home/kalana/FYP/src/nav_planner/srv/baseDrive.srv -Inav_planner:/home/kalana/FYP/src/nav_planner/msg -Istd_msgs:/opt/ros/kinetic/share/std_msgs/cmake/../msg -Ioctomap_msgs:/opt/ros/kinetic/share/octomap_msgs/cmake/../msg -Igeometry_msgs:/opt/ros/kinetic/share/geometry_msgs/cmake/../msg -p nav_planner -o /home/kalana/FYP/devel_isolated/nav_planner/share/gennodejs/ros/nav_planner/srv
 
 nav_planner_generate_messages_nodejs: CMakeFiles/nav_planner_generate_messages_nodejs
 nav_planner_generate_messages_nodejs: /home/kalana/FYP/devel_isolated/nav_planner/share/gennodejs/ros/nav_planner/msg/pointData.js
 nav_planner_generate_messages_nodejs: /home/kalana/FYP/devel_isolated/nav_planner/share/gennodejs/ros/nav_planner/msg/pointDataArray.js
 nav_planner_generate_messages_nodejs: /home/kalana/FYP/devel_isolated/nav_planner/share/gennodejs/ros/nav_planner/srv/goalControl.js
+nav_planner_generate_messages_nodejs: /home/kalana/FYP/devel_isolated/nav_planner/share/gennodejs/ros/nav_planner/srv/waterDetect.js
 nav_planner_generate_messages_nodejs: /home/kalana/FYP/devel_isolated/nav_planner/share/gennodejs/ros/nav_planner/srv/baseDrive.js
 nav_planner_generate_messages_nodejs: CMakeFiles/nav_planner_generate_messages_nodejs.dir/build.make
 
