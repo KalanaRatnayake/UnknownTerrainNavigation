@@ -10,13 +10,16 @@ goal_identifier::goal_identifier(float robotHeight, float clusterSize, double in
     xn = (int) x_distance/(sideSize*resolution);
     yn = (int) y_distance/(sideSize*resolution);
     zn = (int) z_distance/(sideSize*resolution);
+    ROS_INFO_STREAM(xn);
+    ROS_INFO_STREAM(yn);
+    ROS_INFO_STREAM(zn);
 }
         
 void goal_identifier::update_tree(octomap::OcTree* receivedTree){
     tree = receivedTree;
 }
 
-void goal_identifier::update_position(octomap::point3d currentPosition){
+void goal_identifier::update_position(octomap::point3d &currentPosition){
     position = currentPosition;
 }
         
@@ -30,7 +33,7 @@ void goal_identifier::discover_clusters(std::vector<octomap::point3d> &outCenter
     for (int x=0; x<xn; x++){
         for (int y=0; y<yn; y++){
             for (int z=0; z<zn; z++){
-                centerPointsArray[index] = octomap::point3d ((sideSize*0.5*resolution)+(x*sideSize*resolution), (sideSize*0.5*resolution)+(y*sideSize*resolution), (sideSize*0.5*resolution)+(z*sideSize*resolution));
+                centerPointsArray[index] = octomap::point3d ((sideSize*resolution)*(x+0.5), (sideSize*resolution)*(y+0.5), (sideSize*resolution)*(z+0.5));
                 index++;
             }
         }
@@ -39,28 +42,31 @@ void goal_identifier::discover_clusters(std::vector<octomap::point3d> &outCenter
     for (int i=0; i<index; i++){
         int counter = 0;
         
-        float x_min = centerPointsArray[i].x()-(sideSize*0.5*resolution)+(0.5*resolution);
-        float x_max = centerPointsArray[i].x()+(sideSize*0.5*resolution)+(0.5*resolution);
-        float y_min = centerPointsArray[i].y()-(sideSize*0.5*resolution)+(0.5*resolution);
-        float y_max = centerPointsArray[i].y()+(sideSize*0.5*resolution)+(0.5*resolution);
-        float z_min = centerPointsArray[i].z()-(sideSize*0.5*resolution)+(0.5*resolution);
-        float z_max = centerPointsArray[i].z()+(sideSize*0.5*resolution)+(0.5*resolution);
+        float x_min = centerPointsArray[i].x()-((sideSize-1)*0.5*resolution);
+        float x_max = centerPointsArray[i].x()+(sideSize*0.5*resolution);
+        float y_min = centerPointsArray[i].y()-((sideSize-1)*0.5*resolution);
+        float y_max = centerPointsArray[i].y()+(sideSize*0.5*resolution);
+        float z_min = centerPointsArray[i].z()-((sideSize-1)*0.5*resolution);
+        float z_max = centerPointsArray[i].z()+(sideSize*0.5*resolution);
 
-        for (float a=x_min; a<x_max; a=a+resolution){
-            for (float b=y_min; b<y_max; b=b+resolution){
-                for (float c=z_min; c<z_max; c=c+resolution){
-                    if (!tree->search((double)a, (double)b, (double)c)){
+        for (float a=x_min; a<x_max; a+=resolution){
+            for (float b=y_min; b<y_max; b+=resolution){
+                for (float c=z_min; c<z_max; c+=resolution){
+                    if (!tree->search(a, b, c)){
                         counter++;
                     }
                 }
             }
         }
 
+        ROS_INFO_STREAM(counter);
+
         if (counter>=(percentage*sideSize*sideSize*sideSize)){
             unknownPointsArray.push_back(centerPointsArray[i]);
         }
     }
 
+    outCenterPointsArray.clear();
     outCenterPointsArray = unknownPointsArray;
 
 }

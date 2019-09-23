@@ -7,6 +7,7 @@
 class goal_visualizer{
     private:
         octomap::ColorOcTree* tree;
+        double resolution;
     
     public:
         goal_visualizer(double inputResolution);

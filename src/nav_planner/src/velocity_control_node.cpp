@@ -16,6 +16,7 @@
 #include <kobuki_msgs/MotorPower.h>
 
 #include <nav_planner/baseDrive.h>
+#include <nav_planner/baseRotate.h>
 
 octomap::point3d currentPosition;
 cotomap::point3d goalPosition;
@@ -44,9 +45,9 @@ void currentPositionCallback(const tf::tfMessage::ConstPtr &msg)
 	currentPosition = position;
 }
 
-bool executionCallback(nav_planner::baseDrive::Request &request, nav_planner::baseDrive::Response &response)
+bool driveCallback(nav_planner::baseDrive::Request &request, nav_planner::baseDrive::Response &response)
 { 
-	ROS_INFO("velocity_control_node : request received");
+	ROS_INFO("velocity_control_node : drive request received");
 
     goalPosition.x() = request.x;
 	goalPosition.y() = request.y;
@@ -81,27 +82,6 @@ bool executionCallback(nav_planner::baseDrive::Request &request, nav_planner::ba
 	} while (distance>=0.01);
 
 	cmd->linear.x = 0;
-	double desiredYaw = currentYaw + pi;
-
-	do{
-		double angleDiff = desiredYaw - currentYaw;
-		double angularV = ang_constant*angleDiff;
-
-		if (angularV >= angular_vel_max) cmd->angular.z = angular_vel_max; else cmd->angular.z = angularV;
-		velocity_pub.publish(cmd);
-	} while (angleDiff>=0.01);
-
-	double desiredYaw = currentYaw + pi;
-
-	do{
-		double angleDiff = desiredYaw - currentYaw;
-		double angularV = ang_constant*angleDiff;
-
-		if (angularV >= angular_vel_max) cmd->angular.z = angular_vel_max; else cmd->angular.z = angularV;
-		velocity_pub.publish(cmd);
-	} while (angleDiff>=0.01);
-
-	cmd->angular.z = 0;
 
 	ROS_INFO("velocity_control_node : reach goal. turning motors off...");
 	kobuki_msgs::MotorPower power_cmd;
@@ -111,6 +91,56 @@ bool executionCallback(nav_planner::baseDrive::Request &request, nav_planner::ba
 	power_status = false;
 
 	response.success = true;
+
+	ROS_INFO("velocity_control_node : response sent");
+	return true;
+}
+
+bool rotateCallback(nav_planner::baseRotate::Request &request, nav_planner::baseRotate::Response &response)
+{ 
+	ROS_INFO("velocity_control_node : rotate request received");
+
+	if (!power_status){
+		ROS_INFO("velocity_control_node : motor was powered down. turning on now....");
+		kobuki_msgs::MotorPower power_cmd;
+		power_cmd.state = kobuki_msgs::MotorPower::ON;
+		motpower_pub.publish(power_cmd);
+		ROS_INFO("velocity_control_node : successfully powered up.");
+		power_status = true;
+	}
+	
+	if (request.execute){
+		double desiredYaw = currentYaw + pi;
+
+		do{
+			double angleDiff = desiredYaw - currentYaw;
+			double angularV = ang_constant*angleDiff;
+
+			if (angularV >= angular_vel_max) cmd->angular.z = angular_vel_max; else cmd->angular.z = angularV;
+			velocity_pub.publish(cmd);
+		} while (angleDiff>=0.01);
+
+		double desiredYaw = currentYaw + pi;
+
+		do{
+			double angleDiff = desiredYaw - currentYaw;
+			double angularV = ang_constant*angleDiff;
+
+			if (angularV >= angular_vel_max) cmd->angular.z = angular_vel_max; else cmd->angular.z = angularV;
+			velocity_pub.publish(cmd);
+		} while (angleDiff>=0.01);
+
+		cmd->angular.z = 0;
+	}
+
+	ROS_INFO("velocity_control_node : reach goal. turning motors off...");
+	kobuki_msgs::MotorPower power_cmd;
+	power_cmd.state = kobuki_msgs::MotorPower::OFF;
+	motpower_pub.publish(power_cmd);
+	ROS_INFO("velocity_control_node : successfully powered down.");
+	power_status = false;
+
+	response.completed = true;
 
 	ROS_INFO("velocity_control_node : response sent");
 	return true;
@@ -132,7 +162,8 @@ int main(int argc, char **argv)
 	
 	ROS_INFO("velocity_control_node : created subscribers");
 
-	ros::ServiceServer serviceDrive = node.advertiseService<nav_planner::baseDriveRequest, nav_planner::baseDriveResponse>("baseControl", executionCallback);
+	ros::ServiceServer serviceDrive = node.advertiseService<nav_planner::baseDriveRequest, nav_planner::baseDriveResponse>("baseForword", driveCallback);
+	ros::ServiceServer serviceRotate = node.advertiseService<nav_planner::baseRotateRequest, nav_planner::baseRotateResponse>("baseRotate", rotateCallback);
 	
 	ROS_INFO("velocity_control_node : created service");
 

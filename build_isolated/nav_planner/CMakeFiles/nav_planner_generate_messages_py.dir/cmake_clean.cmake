@@ -3,6 +3,7 @@ file(REMOVE_RECURSE
   "/home/kalana/FYP/devel_isolated/nav_planner/lib/python2.7/dist-packages/nav_planner/msg/_pointData.py"
   "/home/kalana/FYP/devel_isolated/nav_planner/lib/python2.7/dist-packages/nav_planner/msg/_pointDataArray.py"
   "/home/kalana/FYP/devel_isolated/nav_planner/lib/python2.7/dist-packages/nav_planner/srv/_goalControl.py"
+  "/home/kalana/FYP/devel_isolated/nav_planner/lib/python2.7/dist-packages/nav_planner/srv/_baseRotate.py"
   "/home/kalana/FYP/devel_isolated/nav_planner/lib/python2.7/dist-packages/nav_planner/srv/_waterDetect.py"
   "/home/kalana/FYP/devel_isolated/nav_planner/lib/python2.7/dist-packages/nav_planner/srv/_baseDrive.py"
   "/home/kalana/FYP/devel_isolated/nav_planner/lib/python2.7/dist-packages/nav_planner/msg/__init__.py"

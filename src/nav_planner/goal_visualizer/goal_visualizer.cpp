@@ -2,13 +2,13 @@
 
 goal_visualizer::goal_visualizer(double inputResolution){
     tree = new octomap::ColorOcTree(inputResolution);
+    resolution = inputResolution;
 }
 
 void goal_visualizer::update_cluster_centers(std::vector<octomap::point3d> &inCenterPointsArray){
+    tree -> clear();
 
-    int len = inCenterPointsArray.size();
-
-    for(int i=0; i<len; i++){
+    for(int i=0; i<inCenterPointsArray.size(); i++){
         octomap::ColorOcTreeNode* n = tree->updateNode(inCenterPointsArray[i], true);
         n->setColor(255, 0, 0); // set color to red
     }
@@ -21,6 +21,8 @@ void goal_visualizer::update_nearest_cluster(octomap::point3d &nearestCluster){
 }
 
 void goal_visualizer::get_tree(octomap::ColorOcTree &outTree){
+    outTree.clear();
+
     for(octomap::ColorOcTree::leaf_iterator it = tree->begin_leafs(), end = tree->end_leafs(); it!=end; ++it){
 
         octomap::point3d node(it.getX(), it.getY(),it.getZ());
@@ -33,6 +35,5 @@ void goal_visualizer::get_tree(octomap::ColorOcTree &outTree){
         }else{
             outTree.updateNode(node, false);
         }
-        
     }
 }

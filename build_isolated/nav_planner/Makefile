@@ -166,19 +166,6 @@ depend:
 .PHONY : depend
 
 #=============================================================================
-# Target rules for targets named test_goalPositionClient_node
-
-# Build rule for target.
-test_goalPositionClient_node: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 test_goalPositionClient_node
-.PHONY : test_goalPositionClient_node
-
-# fast build rule for target.
-test_goalPositionClient_node/fast:
-	$(MAKE) -f CMakeFiles/test_goalPositionClient_node.dir/build.make CMakeFiles/test_goalPositionClient_node.dir/build
-.PHONY : test_goalPositionClient_node/fast
-
-#=============================================================================
 # Target rules for targets named goal_visualizer_node
 
 # Build rule for target.
@@ -216,6 +203,19 @@ nav_planner_generate_messages_py: cmake_check_build_system
 nav_planner_generate_messages_py/fast:
 	$(MAKE) -f CMakeFiles/nav_planner_generate_messages_py.dir/build.make CMakeFiles/nav_planner_generate_messages_py.dir/build
 .PHONY : nav_planner_generate_messages_py/fast
+
+#=============================================================================
+# Target rules for targets named test_goalIdentifier_node
+
+# Build rule for target.
+test_goalIdentifier_node: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 test_goalIdentifier_node
+.PHONY : test_goalIdentifier_node
+
+# fast build rule for target.
+test_goalIdentifier_node/fast:
+	$(MAKE) -f CMakeFiles/test_goalIdentifier_node.dir/build.make CMakeFiles/test_goalIdentifier_node.dir/build
+.PHONY : test_goalIdentifier_node/fast
 
 #=============================================================================
 # Target rules for targets named nav_planner_generate_messages_nodejs
@@ -283,6 +283,19 @@ _nav_planner_generate_messages_check_deps_baseDrive/fast:
 .PHONY : _nav_planner_generate_messages_check_deps_baseDrive/fast
 
 #=============================================================================
+# Target rules for targets named _nav_planner_generate_messages_check_deps_goalControl
+
+# Build rule for target.
+_nav_planner_generate_messages_check_deps_goalControl: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 _nav_planner_generate_messages_check_deps_goalControl
+.PHONY : _nav_planner_generate_messages_check_deps_goalControl
+
+# fast build rule for target.
+_nav_planner_generate_messages_check_deps_goalControl/fast:
+	$(MAKE) -f CMakeFiles/_nav_planner_generate_messages_check_deps_goalControl.dir/build.make CMakeFiles/_nav_planner_generate_messages_check_deps_goalControl.dir/build
+.PHONY : _nav_planner_generate_messages_check_deps_goalControl/fast
+
+#=============================================================================
 # Target rules for targets named _nav_planner_generate_messages_check_deps_pointData
 
 # Build rule for target.
@@ -307,19 +320,6 @@ _nav_planner_generate_messages_check_deps_waterDetect: cmake_check_build_system
 _nav_planner_generate_messages_check_deps_waterDetect/fast:
 	$(MAKE) -f CMakeFiles/_nav_planner_generate_messages_check_deps_waterDetect.dir/build.make CMakeFiles/_nav_planner_generate_messages_check_deps_waterDetect.dir/build
 .PHONY : _nav_planner_generate_messages_check_deps_waterDetect/fast
-
-#=============================================================================
-# Target rules for targets named _nav_planner_generate_messages_check_deps_goalControl
-
-# Build rule for target.
-_nav_planner_generate_messages_check_deps_goalControl: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 _nav_planner_generate_messages_check_deps_goalControl
-.PHONY : _nav_planner_generate_messages_check_deps_goalControl
-
-# fast build rule for target.
-_nav_planner_generate_messages_check_deps_goalControl/fast:
-	$(MAKE) -f CMakeFiles/_nav_planner_generate_messages_check_deps_goalControl.dir/build.make CMakeFiles/_nav_planner_generate_messages_check_deps_goalControl.dir/build
-.PHONY : _nav_planner_generate_messages_check_deps_goalControl/fast
 
 #=============================================================================
 # Target rules for targets named nav_planner_generate_messages
@@ -868,6 +868,19 @@ geometry_msgs_generate_messages_cpp/fast:
 .PHONY : geometry_msgs_generate_messages_cpp/fast
 
 #=============================================================================
+# Target rules for targets named _nav_planner_generate_messages_check_deps_baseRotate
+
+# Build rule for target.
+_nav_planner_generate_messages_check_deps_baseRotate: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 _nav_planner_generate_messages_check_deps_baseRotate
+.PHONY : _nav_planner_generate_messages_check_deps_baseRotate
+
+# fast build rule for target.
+_nav_planner_generate_messages_check_deps_baseRotate/fast:
+	$(MAKE) -f CMakeFiles/_nav_planner_generate_messages_check_deps_baseRotate.dir/build.make CMakeFiles/_nav_planner_generate_messages_check_deps_baseRotate.dir/build
+.PHONY : _nav_planner_generate_messages_check_deps_baseRotate/fast
+
+#=============================================================================
 # Target rules for targets named std_msgs_generate_messages_nodejs
 
 # Build rule for target.
@@ -1287,32 +1300,32 @@ src/goal_visualizer_node.cpp.s:
 	$(MAKE) -f CMakeFiles/goal_visualizer_node.dir/build.make CMakeFiles/goal_visualizer_node.dir/src/goal_visualizer_node.cpp.s
 .PHONY : src/goal_visualizer_node.cpp.s
 
-src/test_goalPositionClient_node.o: src/test_goalPositionClient_node.cpp.o
+src/test_goalIdentifier_node.o: src/test_goalIdentifier_node.cpp.o
 
-.PHONY : src/test_goalPositionClient_node.o
+.PHONY : src/test_goalIdentifier_node.o
 
 # target to build an object file
-src/test_goalPositionClient_node.cpp.o:
-	$(MAKE) -f CMakeFiles/test_goalPositionClient_node.dir/build.make CMakeFiles/test_goalPositionClient_node.dir/src/test_goalPositionClient_node.cpp.o
-.PHONY : src/test_goalPositionClient_node.cpp.o
+src/test_goalIdentifier_node.cpp.o:
+	$(MAKE) -f CMakeFiles/test_goalIdentifier_node.dir/build.make CMakeFiles/test_goalIdentifier_node.dir/src/test_goalIdentifier_node.cpp.o
+.PHONY : src/test_goalIdentifier_node.cpp.o
 
-src/test_goalPositionClient_node.i: src/test_goalPositionClient_node.cpp.i
+src/test_goalIdentifier_node.i: src/test_goalIdentifier_node.cpp.i
 
-.PHONY : src/test_goalPositionClient_node.i
+.PHONY : src/test_goalIdentifier_node.i
 
 # target to preprocess a source file
-src/test_goalPositionClient_node.cpp.i:
-	$(MAKE) -f CMakeFiles/test_goalPositionClient_node.dir/build.make CMakeFiles/test_goalPositionClient_node.dir/src/test_goalPositionClient_node.cpp.i
-.PHONY : src/test_goalPositionClient_node.cpp.i
+src/test_goalIdentifier_node.cpp.i:
+	$(MAKE) -f CMakeFiles/test_goalIdentifier_node.dir/build.make CMakeFiles/test_goalIdentifier_node.dir/src/test_goalIdentifier_node.cpp.i
+.PHONY : src/test_goalIdentifier_node.cpp.i
 
-src/test_goalPositionClient_node.s: src/test_goalPositionClient_node.cpp.s
+src/test_goalIdentifier_node.s: src/test_goalIdentifier_node.cpp.s
 
-.PHONY : src/test_goalPositionClient_node.s
+.PHONY : src/test_goalIdentifier_node.s
 
 # target to generate assembly for a file
-src/test_goalPositionClient_node.cpp.s:
-	$(MAKE) -f CMakeFiles/test_goalPositionClient_node.dir/build.make CMakeFiles/test_goalPositionClient_node.dir/src/test_goalPositionClient_node.cpp.s
-.PHONY : src/test_goalPositionClient_node.cpp.s
+src/test_goalIdentifier_node.cpp.s:
+	$(MAKE) -f CMakeFiles/test_goalIdentifier_node.dir/build.make CMakeFiles/test_goalIdentifier_node.dir/src/test_goalIdentifier_node.cpp.s
+.PHONY : src/test_goalIdentifier_node.cpp.s
 
 # Help Target
 help:
@@ -1323,18 +1336,18 @@ help:
 	@echo "... edit_cache"
 	@echo "... install/local"
 	@echo "... install/strip"
-	@echo "... test_goalPositionClient_node"
 	@echo "... goal_visualizer_node"
 	@echo "... goal_identifier_node"
 	@echo "... nav_planner_generate_messages_py"
+	@echo "... test_goalIdentifier_node"
 	@echo "... nav_planner_generate_messages_nodejs"
 	@echo "... nav_planner_generate_messages_lisp"
 	@echo "... nav_planner_gencpp"
 	@echo "... _nav_planner_generate_messages_check_deps_pointDataArray"
 	@echo "... _nav_planner_generate_messages_check_deps_baseDrive"
+	@echo "... _nav_planner_generate_messages_check_deps_goalControl"
 	@echo "... _nav_planner_generate_messages_check_deps_pointData"
 	@echo "... _nav_planner_generate_messages_check_deps_waterDetect"
-	@echo "... _nav_planner_generate_messages_check_deps_goalControl"
 	@echo "... nav_planner_generate_messages"
 	@echo "... octomap_msgs_generate_messages_py"
 	@echo "... octomap_msgs_generate_messages_lisp"
@@ -1381,6 +1394,7 @@ help:
 	@echo "... test"
 	@echo "... octomap_msgs_generate_messages_nodejs"
 	@echo "... geometry_msgs_generate_messages_cpp"
+	@echo "... _nav_planner_generate_messages_check_deps_baseRotate"
 	@echo "... std_msgs_generate_messages_nodejs"
 	@echo "... geometry_msgs_generate_messages_py"
 	@echo "... nav_planner_generate_messages_cpp"
@@ -1417,9 +1431,9 @@ help:
 	@echo "... src/goal_visualizer_node.o"
 	@echo "... src/goal_visualizer_node.i"
 	@echo "... src/goal_visualizer_node.s"
-	@echo "... src/test_goalPositionClient_node.o"
-	@echo "... src/test_goalPositionClient_node.i"
-	@echo "... src/test_goalPositionClient_node.s"
+	@echo "... src/test_goalIdentifier_node.o"
+	@echo "... src/test_goalIdentifier_node.i"
+	@echo "... src/test_goalIdentifier_node.s"
 .PHONY : help
 
 

@@ -42,8 +42,8 @@ int main(int argc, char **argv){
 
     ROS_INFO("Initialized the goal_visualizer_node");
 
-    ros::Subscriber array_sub = node.subscribe("array", 1000, arrayCallback);
-	ros::Subscriber goal_sub = node.subscribe("goal", 10, goalCallback);
+    ros::Subscriber array_sub = node.subscribe("array", 1, arrayCallback);
+	ros::Subscriber goal_sub = node.subscribe("goal", 1, goalCallback);
 
     ROS_INFO("goal_visualizer_node : subscribers created");
 
@@ -65,7 +65,7 @@ int main(int argc, char **argv){
 
         map_pub.publish(map_msg);
         
-        ros::getGlobalCallbackQueue()->callAvailable(ros::WallDuration(0.001));
+        ros::getGlobalCallbackQueue()->callAvailable(ros::WallDuration(0.01));
     }
 
 	return 0;

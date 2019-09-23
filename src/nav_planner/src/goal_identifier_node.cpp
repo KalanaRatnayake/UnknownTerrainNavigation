@@ -23,7 +23,7 @@
 std::vector<octomap::point3d> centerArray;
 octomap::point3d goal;
 
-goal_identifier identifierObject = goal_identifier(0.75f, 10.0f, 0.05, 20.0f, 20.0f, 3.0f, 0.02f);
+goal_identifier identifierObject = goal_identifier(0.50, 10.0, 0.05, 20.0, 20.0, 3.0, 0.95);
 
 /*
 /  The node subscribe to topics 'Octomap' at (octomap_msgs/Octomap) and 'pose' at (nav_msgs/Odometry)
@@ -77,8 +77,8 @@ int main(int argc, char **argv)
 	
 	ROS_INFO("Initialized the goal_identifier_node");
 
-    ros::Subscriber octree_sub = node.subscribe("octomap", 10, mapCallback);
-	ros::Subscriber poition_sub = node.subscribe("position", 10, currentPositionCallback);
+    ros::Subscriber octree_sub = node.subscribe("octomap", 1, mapCallback);
+	ros::Subscriber positi_sub = node.subscribe("position", 1, currentPositionCallback);
 	
 	ROS_INFO("goal_identifier_node : created subscribers");
 
@@ -86,8 +86,8 @@ int main(int argc, char **argv)
 	
 	ROS_INFO("goal_identifier_node : created service");
 
-	ros::Publisher centerArray_pub = node.advertise<nav_planner::pointDataArray>("centerArray", 1000);
-	ros::Publisher centerPoint_pub = node.advertise<nav_planner::pointData>("goalPoint", 10);
+	ros::Publisher centerArray_pub = node.advertise<nav_planner::pointDataArray>("centerArray", 1, true);
+	ros::Publisher centerPoint_pub = node.advertise<nav_planner::pointData>("goalPoint", 1, true);
 	
 	ROS_INFO("goal_identifier_node : created publishers");
 
