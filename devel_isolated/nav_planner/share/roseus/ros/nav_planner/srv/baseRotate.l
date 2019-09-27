@@ -20,37 +20,37 @@
 
 (defclass nav_planner::baseRotateRequest
   :super ros::object
-  :slots (_execute ))
+  :slots (_angle ))
 
 (defmethod nav_planner::baseRotateRequest
   (:init
    (&key
-    ((:execute __execute) nil)
+    ((:angle __angle) 0.0)
     )
    (send-super :init)
-   (setq _execute __execute)
+   (setq _angle (float __angle))
    self)
-  (:execute
-   (&optional __execute)
-   (if __execute (setq _execute __execute)) _execute)
+  (:angle
+   (&optional __angle)
+   (if __angle (setq _angle __angle)) _angle)
   (:serialization-length
    ()
    (+
-    ;; bool _execute
-    1
+    ;; float64 _angle
+    8
     ))
   (:serialize
    (&optional strm)
    (let ((s (if strm strm
               (make-string-output-stream (send self :serialization-length)))))
-     ;; bool _execute
-       (if _execute (write-byte -1 s) (write-byte 0 s))
+     ;; float64 _angle
+       (sys::poke _angle (send s :buffer) (send s :count) :double) (incf (stream-count s) 8)
      ;;
      (if (null strm) (get-output-stream-string s))))
   (:deserialize
    (buf &optional (ptr- 0))
-   ;; bool _execute
-     (setq _execute (not (= 0 (sys::peek buf ptr- :char)))) (incf ptr- 1)
+   ;; float64 _angle
+     (setq _angle (sys::peek buf ptr- :double)) (incf ptr- 8)
    ;;
    self)
   )
@@ -96,7 +96,7 @@
   :super ros::object
   :slots ())
 
-(setf (get nav_planner::baseRotate :md5sum-) "a933da1aed447ccd941e96046fc95d53")
+(setf (get nav_planner::baseRotate :md5sum-) "c1a76fcaf62dc4534903e93216b59a79")
 (setf (get nav_planner::baseRotate :datatype-) "nav_planner/baseRotate")
 (setf (get nav_planner::baseRotate :request) nav_planner::baseRotateRequest)
 (setf (get nav_planner::baseRotate :response) nav_planner::baseRotateResponse)
@@ -104,19 +104,19 @@
 (defmethod nav_planner::baseRotateRequest
   (:response () (instance nav_planner::baseRotateResponse :init)))
 
-(setf (get nav_planner::baseRotateRequest :md5sum-) "a933da1aed447ccd941e96046fc95d53")
+(setf (get nav_planner::baseRotateRequest :md5sum-) "c1a76fcaf62dc4534903e93216b59a79")
 (setf (get nav_planner::baseRotateRequest :datatype-) "nav_planner/baseRotateRequest")
 (setf (get nav_planner::baseRotateRequest :definition-)
-      "bool execute
+      "float64 angle
 ---
 bool success
 
 ")
 
-(setf (get nav_planner::baseRotateResponse :md5sum-) "a933da1aed447ccd941e96046fc95d53")
+(setf (get nav_planner::baseRotateResponse :md5sum-) "c1a76fcaf62dc4534903e93216b59a79")
 (setf (get nav_planner::baseRotateResponse :datatype-) "nav_planner/baseRotateResponse")
 (setf (get nav_planner::baseRotateResponse :definition-)
-      "bool execute
+      "float64 angle
 ---
 bool success
 
@@ -124,6 +124,6 @@ bool success
 
 
 
-(provide :nav_planner/baseRotate "a933da1aed447ccd941e96046fc95d53")
+(provide :nav_planner/baseRotate "c1a76fcaf62dc4534903e93216b59a79")
 
 

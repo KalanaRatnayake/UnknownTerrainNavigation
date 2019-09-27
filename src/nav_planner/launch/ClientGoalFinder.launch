@@ -1,0 +1,5 @@
+<launch>
+    <node pkg="nav_planner" type="test_goalIdentifier_node" name="test_goalIdentifier" output="screen">
+	</node>
+</launch>
+

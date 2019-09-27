@@ -7,11 +7,11 @@
 ;//! \htmlinclude baseRotate-request.msg.html
 
 (cl:defclass <baseRotate-request> (roslisp-msg-protocol:ros-message)
-  ((execute
-    :reader execute
-    :initarg :execute
-    :type cl:boolean
-    :initform cl:nil))
+  ((angle
+    :reader angle
+    :initarg :angle
+    :type cl:float
+    :initform 0.0))
 )
 
 (cl:defclass baseRotate-request (<baseRotate-request>)
@@ -22,17 +22,34 @@
   (cl:unless (cl:typep m 'baseRotate-request)
     (roslisp-msg-protocol:msg-deprecation-warning "using old message class name nav_planner-srv:<baseRotate-request> is deprecated: use nav_planner-srv:baseRotate-request instead.")))
 
-(cl:ensure-generic-function 'execute-val :lambda-list '(m))
-(cl:defmethod execute-val ((m <baseRotate-request>))
-  (roslisp-msg-protocol:msg-deprecation-warning "Using old-style slot reader nav_planner-srv:execute-val is deprecated.  Use nav_planner-srv:execute instead.")
-  (execute m))
+(cl:ensure-generic-function 'angle-val :lambda-list '(m))
+(cl:defmethod angle-val ((m <baseRotate-request>))
+  (roslisp-msg-protocol:msg-deprecation-warning "Using old-style slot reader nav_planner-srv:angle-val is deprecated.  Use nav_planner-srv:angle instead.")
+  (angle m))
 (cl:defmethod roslisp-msg-protocol:serialize ((msg <baseRotate-request>) ostream)
   "Serializes a message object of type '<baseRotate-request>"
-  (cl:write-byte (cl:ldb (cl:byte 8 0) (cl:if (cl:slot-value msg 'execute) 1 0)) ostream)
+  (cl:let ((bits (roslisp-utils:encode-double-float-bits (cl:slot-value msg 'angle))))
+    (cl:write-byte (cl:ldb (cl:byte 8 0) bits) ostream)
+    (cl:write-byte (cl:ldb (cl:byte 8 8) bits) ostream)
+    (cl:write-byte (cl:ldb (cl:byte 8 16) bits) ostream)
+    (cl:write-byte (cl:ldb (cl:byte 8 24) bits) ostream)
+    (cl:write-byte (cl:ldb (cl:byte 8 32) bits) ostream)
+    (cl:write-byte (cl:ldb (cl:byte 8 40) bits) ostream)
+    (cl:write-byte (cl:ldb (cl:byte 8 48) bits) ostream)
+    (cl:write-byte (cl:ldb (cl:byte 8 56) bits) ostream))
 )
 (cl:defmethod roslisp-msg-protocol:deserialize ((msg <baseRotate-request>) istream)
   "Deserializes a message object of type '<baseRotate-request>"
-    (cl:setf (cl:slot-value msg 'execute) (cl:not (cl:zerop (cl:read-byte istream))))
+    (cl:let ((bits 0))
+      (cl:setf (cl:ldb (cl:byte 8 0) bits) (cl:read-byte istream))
+      (cl:setf (cl:ldb (cl:byte 8 8) bits) (cl:read-byte istream))
+      (cl:setf (cl:ldb (cl:byte 8 16) bits) (cl:read-byte istream))
+      (cl:setf (cl:ldb (cl:byte 8 24) bits) (cl:read-byte istream))
+      (cl:setf (cl:ldb (cl:byte 8 32) bits) (cl:read-byte istream))
+      (cl:setf (cl:ldb (cl:byte 8 40) bits) (cl:read-byte istream))
+      (cl:setf (cl:ldb (cl:byte 8 48) bits) (cl:read-byte istream))
+      (cl:setf (cl:ldb (cl:byte 8 56) bits) (cl:read-byte istream))
+    (cl:setf (cl:slot-value msg 'angle) (roslisp-utils:decode-double-float-bits bits)))
   msg
 )
 (cl:defmethod roslisp-msg-protocol:ros-datatype ((msg (cl:eql '<baseRotate-request>)))
@@ -43,24 +60,24 @@
   "nav_planner/baseRotateRequest")
 (cl:defmethod roslisp-msg-protocol:md5sum ((type (cl:eql '<baseRotate-request>)))
   "Returns md5sum for a message object of type '<baseRotate-request>"
-  "a933da1aed447ccd941e96046fc95d53")
+  "c1a76fcaf62dc4534903e93216b59a79")
 (cl:defmethod roslisp-msg-protocol:md5sum ((type (cl:eql 'baseRotate-request)))
   "Returns md5sum for a message object of type 'baseRotate-request"
-  "a933da1aed447ccd941e96046fc95d53")
+  "c1a76fcaf62dc4534903e93216b59a79")
 (cl:defmethod roslisp-msg-protocol:message-definition ((type (cl:eql '<baseRotate-request>)))
   "Returns full string definition for message of type '<baseRotate-request>"
-  (cl:format cl:nil "bool execute~%~%~%"))
+  (cl:format cl:nil "float64 angle~%~%~%"))
 (cl:defmethod roslisp-msg-protocol:message-definition ((type (cl:eql 'baseRotate-request)))
   "Returns full string definition for message of type 'baseRotate-request"
-  (cl:format cl:nil "bool execute~%~%~%"))
+  (cl:format cl:nil "float64 angle~%~%~%"))
 (cl:defmethod roslisp-msg-protocol:serialization-length ((msg <baseRotate-request>))
   (cl:+ 0
-     1
+     8
 ))
 (cl:defmethod roslisp-msg-protocol:ros-message-to-list ((msg <baseRotate-request>))
   "Converts a ROS message object to a list"
   (cl:list 'baseRotate-request
-    (cl:cons ':execute (execute msg))
+    (cl:cons ':angle (angle msg))
 ))
 ;//! \htmlinclude baseRotate-response.msg.html
 
@@ -101,10 +118,10 @@
   "nav_planner/baseRotateResponse")
 (cl:defmethod roslisp-msg-protocol:md5sum ((type (cl:eql '<baseRotate-response>)))
   "Returns md5sum for a message object of type '<baseRotate-response>"
-  "a933da1aed447ccd941e96046fc95d53")
+  "c1a76fcaf62dc4534903e93216b59a79")
 (cl:defmethod roslisp-msg-protocol:md5sum ((type (cl:eql 'baseRotate-response)))
   "Returns md5sum for a message object of type 'baseRotate-response"
-  "a933da1aed447ccd941e96046fc95d53")
+  "c1a76fcaf62dc4534903e93216b59a79")
 (cl:defmethod roslisp-msg-protocol:message-definition ((type (cl:eql '<baseRotate-response>)))
   "Returns full string definition for message of type '<baseRotate-response>"
   (cl:format cl:nil "bool success~%~%~%~%"))

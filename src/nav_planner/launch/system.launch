@@ -6,6 +6,7 @@
 		<param name="frame_id" type="string" value="/odom" />
 		<param name="sensor_model/max_range" value="10.0" />
 		<param name="latch" value="true" />
+
 		<remap from="cloud_in" to="/camera/depth/points" />
 	</node>
     
@@ -13,5 +14,16 @@
 		<remap from="octomap" to="/octomap_full" />
         <remap from="position" to="/tf" />
 	</node>
+
+	<node pkg="nav_planner" type="velocity_control_node" name="velocity_Controller" output="screen">
+		<remap from="keyop/motor_power" to="mobile_base/commands/motor_power"/>
+		<remap from="keyop/cmd_vel" to="mobile_base/commands/velocity"/>
+		<remap from="position" to="/tf" />
+
+		<param name="linear_vel_max"   value="1"  type="double"/>
+		<param name="angular_vel_max"  value="1.57"  type="double"/>
+		<param name="velocity_constant"  value="2"  type="double"/>
+		<param name="angularv_constant"  value="2"  type="double"/>
+  	</node>
 </launch>
 

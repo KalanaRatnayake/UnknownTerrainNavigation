@@ -868,6 +868,19 @@ geometry_msgs_generate_messages_cpp/fast:
 .PHONY : geometry_msgs_generate_messages_cpp/fast
 
 #=============================================================================
+# Target rules for targets named velocity_control_node
+
+# Build rule for target.
+velocity_control_node: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 velocity_control_node
+.PHONY : velocity_control_node
+
+# fast build rule for target.
+velocity_control_node/fast:
+	$(MAKE) -f CMakeFiles/velocity_control_node.dir/build.make CMakeFiles/velocity_control_node.dir/build
+.PHONY : velocity_control_node/fast
+
+#=============================================================================
 # Target rules for targets named _nav_planner_generate_messages_check_deps_baseRotate
 
 # Build rule for target.
@@ -983,6 +996,19 @@ tf_generate_messages_py: cmake_check_build_system
 tf_generate_messages_py/fast:
 	$(MAKE) -f CMakeFiles/tf_generate_messages_py.dir/build.make CMakeFiles/tf_generate_messages_py.dir/build
 .PHONY : tf_generate_messages_py/fast
+
+#=============================================================================
+# Target rules for targets named test_velocityControl_node
+
+# Build rule for target.
+test_velocityControl_node: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 test_velocityControl_node
+.PHONY : test_velocityControl_node
+
+# fast build rule for target.
+test_velocityControl_node/fast:
+	$(MAKE) -f CMakeFiles/test_velocityControl_node.dir/build.make CMakeFiles/test_velocityControl_node.dir/build
+.PHONY : test_velocityControl_node/fast
 
 #=============================================================================
 # Target rules for targets named sensor_msgs_generate_messages_py
@@ -1327,6 +1353,60 @@ src/test_goalIdentifier_node.cpp.s:
 	$(MAKE) -f CMakeFiles/test_goalIdentifier_node.dir/build.make CMakeFiles/test_goalIdentifier_node.dir/src/test_goalIdentifier_node.cpp.s
 .PHONY : src/test_goalIdentifier_node.cpp.s
 
+src/test_velocityControl_node.o: src/test_velocityControl_node.cpp.o
+
+.PHONY : src/test_velocityControl_node.o
+
+# target to build an object file
+src/test_velocityControl_node.cpp.o:
+	$(MAKE) -f CMakeFiles/test_velocityControl_node.dir/build.make CMakeFiles/test_velocityControl_node.dir/src/test_velocityControl_node.cpp.o
+.PHONY : src/test_velocityControl_node.cpp.o
+
+src/test_velocityControl_node.i: src/test_velocityControl_node.cpp.i
+
+.PHONY : src/test_velocityControl_node.i
+
+# target to preprocess a source file
+src/test_velocityControl_node.cpp.i:
+	$(MAKE) -f CMakeFiles/test_velocityControl_node.dir/build.make CMakeFiles/test_velocityControl_node.dir/src/test_velocityControl_node.cpp.i
+.PHONY : src/test_velocityControl_node.cpp.i
+
+src/test_velocityControl_node.s: src/test_velocityControl_node.cpp.s
+
+.PHONY : src/test_velocityControl_node.s
+
+# target to generate assembly for a file
+src/test_velocityControl_node.cpp.s:
+	$(MAKE) -f CMakeFiles/test_velocityControl_node.dir/build.make CMakeFiles/test_velocityControl_node.dir/src/test_velocityControl_node.cpp.s
+.PHONY : src/test_velocityControl_node.cpp.s
+
+src/velocity_control_node.o: src/velocity_control_node.cpp.o
+
+.PHONY : src/velocity_control_node.o
+
+# target to build an object file
+src/velocity_control_node.cpp.o:
+	$(MAKE) -f CMakeFiles/velocity_control_node.dir/build.make CMakeFiles/velocity_control_node.dir/src/velocity_control_node.cpp.o
+.PHONY : src/velocity_control_node.cpp.o
+
+src/velocity_control_node.i: src/velocity_control_node.cpp.i
+
+.PHONY : src/velocity_control_node.i
+
+# target to preprocess a source file
+src/velocity_control_node.cpp.i:
+	$(MAKE) -f CMakeFiles/velocity_control_node.dir/build.make CMakeFiles/velocity_control_node.dir/src/velocity_control_node.cpp.i
+.PHONY : src/velocity_control_node.cpp.i
+
+src/velocity_control_node.s: src/velocity_control_node.cpp.s
+
+.PHONY : src/velocity_control_node.s
+
+# target to generate assembly for a file
+src/velocity_control_node.cpp.s:
+	$(MAKE) -f CMakeFiles/velocity_control_node.dir/build.make CMakeFiles/velocity_control_node.dir/src/velocity_control_node.cpp.s
+.PHONY : src/velocity_control_node.cpp.s
+
 # Help Target
 help:
 	@echo "The following are some of the valid targets for this Makefile:"
@@ -1394,6 +1474,7 @@ help:
 	@echo "... test"
 	@echo "... octomap_msgs_generate_messages_nodejs"
 	@echo "... geometry_msgs_generate_messages_cpp"
+	@echo "... velocity_control_node"
 	@echo "... _nav_planner_generate_messages_check_deps_baseRotate"
 	@echo "... std_msgs_generate_messages_nodejs"
 	@echo "... geometry_msgs_generate_messages_py"
@@ -1403,6 +1484,7 @@ help:
 	@echo "... roscpp_generate_messages_py"
 	@echo "... tf_generate_messages_nodejs"
 	@echo "... tf_generate_messages_py"
+	@echo "... test_velocityControl_node"
 	@echo "... sensor_msgs_generate_messages_py"
 	@echo "... actionlib_generate_messages_cpp"
 	@echo "... tf2_msgs_generate_messages_py"
@@ -1434,6 +1516,12 @@ help:
 	@echo "... src/test_goalIdentifier_node.o"
 	@echo "... src/test_goalIdentifier_node.i"
 	@echo "... src/test_goalIdentifier_node.s"
+	@echo "... src/test_velocityControl_node.o"
+	@echo "... src/test_velocityControl_node.i"
+	@echo "... src/test_velocityControl_node.s"
+	@echo "... src/velocity_control_node.o"
+	@echo "... src/velocity_control_node.i"
+	@echo "... src/velocity_control_node.s"
 .PHONY : help
 
 

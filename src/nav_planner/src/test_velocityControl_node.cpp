@@ -1,6 +1,12 @@
 #include "ros/ros.h"
 #include <ros/console.h>
 
+#include <octomap/octomap.h>
+#include <octomap/OcTree.h>
+
+#include <octomap_msgs/Octomap.h>
+#include <octomap_msgs/conversions.h>
+
 #include <nav_planner/baseDrive.h>
 #include <nav_planner/baseRotate.h>
 
@@ -13,8 +19,8 @@ int main(int argc, char **argv)
   
   ROS_INFO("test_velocityControl_node : Initiated");
 
-  ros::ServiceClient forward = n.serviceClient<nav_planner::baseDriveRequest, nav_planner::baseDriveResponse>("baseForword");
-  ros::ServiceClient rotate = n.serviceClient<nav_planner::baseRotateRequest, nav_planner::baseRotateResponse>("baseRotate");
+  ros::ServiceClient forwardClient = n.serviceClient<nav_planner::baseDriveRequest, nav_planner::baseDriveResponse>("baseForword");
+  ros::ServiceClient rotateClient = n.serviceClient<nav_planner::baseRotateRequest, nav_planner::baseRotateResponse>("baseRotate");
   
   ROS_INFO("test_velocityControl_node : client created");
 
@@ -27,8 +33,8 @@ int main(int argc, char **argv)
   
   ROS_INFO("test_velocityControl_node : forward requested");
 
-  if (client.call(forward)){
-    ROS_INFO("x : %b", forward.response.success);
+  if (forwardClient.call(forward)){
+    ROS_INFO_STREAM(forward.response.success);
     ROS_INFO("test_velocityControl_node : response recieved");
     
   } else {
@@ -36,12 +42,12 @@ int main(int argc, char **argv)
     return 1;
   }
 
-  rotate.request.execute = true;
+  rotate.request.angle = 1.57;
   
   ROS_INFO("test_velocityControl_node : rotate requested");
 
-  if (client.call(rotate)){
-    ROS_INFO("x : %b", rotate.response.success);
+  if (rotateClient.call(rotate)){
+    ROS_INFO_STREAM(rotate.response.success);
     ROS_INFO("test_velocityControl_node : response recieved");
     
   } else {
@@ -55,8 +61,8 @@ int main(int argc, char **argv)
   
   ROS_INFO("test_velocityControl_node : forward requested");
 
-  if (client.call(forward)){
-    ROS_INFO("x : %b", forward.response.success);
+  if (forwardClient.call(forward)){
+    ROS_INFO_STREAM(forward.response.success);
     ROS_INFO("test_velocityControl_node : response recieved");
     
   } else {

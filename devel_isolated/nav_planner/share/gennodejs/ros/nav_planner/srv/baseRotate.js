@@ -21,22 +21,22 @@ class baseRotateRequest {
   constructor(initObj={}) {
     if (initObj === null) {
       // initObj === null is a special case for deserialization where we don't initialize fields
-      this.execute = null;
+      this.angle = null;
     }
     else {
-      if (initObj.hasOwnProperty('execute')) {
-        this.execute = initObj.execute
+      if (initObj.hasOwnProperty('angle')) {
+        this.angle = initObj.angle
       }
       else {
-        this.execute = false;
+        this.angle = 0.0;
       }
     }
   }
 
   static serialize(obj, buffer, bufferOffset) {
     // Serializes a message object of type baseRotateRequest
-    // Serialize message field [execute]
-    bufferOffset = _serializer.bool(obj.execute, buffer, bufferOffset);
+    // Serialize message field [angle]
+    bufferOffset = _serializer.float64(obj.angle, buffer, bufferOffset);
     return bufferOffset;
   }
 
@@ -44,13 +44,13 @@ class baseRotateRequest {
     //deserializes a message object of type baseRotateRequest
     let len;
     let data = new baseRotateRequest(null);
-    // Deserialize message field [execute]
-    data.execute = _deserializer.bool(buffer, bufferOffset);
+    // Deserialize message field [angle]
+    data.angle = _deserializer.float64(buffer, bufferOffset);
     return data;
   }
 
   static getMessageSize(object) {
-    return 1;
+    return 8;
   }
 
   static datatype() {
@@ -60,13 +60,13 @@ class baseRotateRequest {
 
   static md5sum() {
     //Returns md5sum for a message object
-    return '371e747b927788fd0b8812d474ff9a56';
+    return '4edb55038e2b888976a0c0c56935341c';
   }
 
   static messageDefinition() {
     // Returns full string definition for message
     return `
-    bool execute
+    float64 angle
     
     `;
   }
@@ -77,11 +77,11 @@ class baseRotateRequest {
       msg = {};
     }
     const resolved = new baseRotateRequest(null);
-    if (msg.execute !== undefined) {
-      resolved.execute = msg.execute;
+    if (msg.angle !== undefined) {
+      resolved.angle = msg.angle;
     }
     else {
-      resolved.execute = false
+      resolved.angle = 0.0
     }
 
     return resolved;
@@ -163,6 +163,6 @@ class baseRotateResponse {
 module.exports = {
   Request: baseRotateRequest,
   Response: baseRotateResponse,
-  md5sum() { return 'a933da1aed447ccd941e96046fc95d53'; },
+  md5sum() { return 'c1a76fcaf62dc4534903e93216b59a79'; },
   datatype() { return 'nav_planner/baseRotate'; }
 };

@@ -4,10 +4,15 @@
 #include <ros/console.h>
 #include <ros/callback_queue.h>
 
-#include <ecl/time.hpp>
-#include <ecl/exceptions.hpp>
+#include <octomap/octomap.h>
+#include <octomap/OcTree.h>
+
+#include <octomap_msgs/Octomap.h>
+#include <octomap_msgs/conversions.h>
 
 #include <tf/tfMessage.h>
+#include <tf2/LinearMath/Quaternion.h>
+#include <tf2/LinearMath/Matrix3x3.h>
 #include <geometry_msgs/TransformStamped.h>
 #include <geometry_msgs/Transform.h>
 #include <geometry_msgs/Vector3.h>
@@ -19,13 +24,12 @@
 #include <nav_planner/baseRotate.h>
 
 octomap::point3d currentPosition;
-cotomap::point3d goalPosition;
-geometry_msgs::TwistPtr* cmd;
+octomap::point3d goalPosition;
+geometry_msgs::Twist cmd;
 
 bool power_status = false;
 bool connected = false;
 
-ecl::MilliSleep millisleep;
 int count = 0;
 
 double linear_vel_max, vel_constant;
@@ -33,13 +37,23 @@ double angular_vel_max, ang_constant;
 double currentRoll, currentPitch, currentYaw;
 double pi = 3.14159265;
 
+ros::Publisher velocity_pub;
+ros::Publisher motpower_pub;
+
+double angle;
+double angleDiff;
+double angularV;
+double velocity;
+double distance;
+double desiredYaw;
+
 
 void currentPositionCallback(const tf::tfMessage::ConstPtr &msg)
 {
 	octomap::point3d position = octomap::point3d(msg->transforms[0].transform.translation.x, msg->transforms[0].transform.translation.y, msg->transforms[0].transform.translation.z);
     
-	tf::Quaternion q(msg->transforms[0].transform.rotation.x, msg->transforms[0].transform.rotation.y, msg->transforms[0].transform.rotation.z, msg->transforms[0].transform.rotation.w);
-	tf::Matrix3x3 m(q);
+	tf2::Quaternion q(msg->transforms[0].transform.rotation.x, msg->transforms[0].transform.rotation.y, msg->transforms[0].transform.rotation.z, msg->transforms[0].transform.rotation.w);
+	tf2::Matrix3x3 m(q);
 
 	m.getRPY(currentRoll, currentPitch, currentYaw);
 	currentPosition = position;
@@ -63,25 +77,25 @@ bool driveCallback(nav_planner::baseDrive::Request &request, nav_planner::baseDr
 	}
 
 	do{
-		double desiredYaw = atan2(goalPosition.y()-currentPosition.y(), goalPosition.x()-currentPosition.x())+(pi*0.5);
-		double angleDiff = desiredYaw - currentYaw;
-		double angularV = ang_constant*angleDiff;
+		desiredYaw = atan2(goalPosition.y()-currentPosition.y(), goalPosition.x()-currentPosition.x())+(pi*0.5);
+		angleDiff = desiredYaw - currentYaw;
+		angularV = ang_constant*angleDiff;
 
-		if (angularV >= angular_vel_max) cmd->angular.z = angular_vel_max; else cmd->angular.z = angularV;
+		if (angularV >= angular_vel_max) cmd.angular.z = angular_vel_max; else cmd.angular.z = angularV;
 		velocity_pub.publish(cmd);
 	} while (angleDiff>=0.01);
 
-	cmd->angular.z = 0;
+	cmd.angular.z = 0;
 
 	do{
-		double distance = goalPosition.distance(currentPosition);
-		double velocity = distance*vel_constant;
+		distance = goalPosition.distance(currentPosition);
+		velocity = distance*vel_constant;
 
-		if (velocity >= linear_vel_max) cmd->linear.x = linear_vel_max; else cmd->linear.x = velocity;
+		if (velocity >= linear_vel_max) cmd.linear.x = linear_vel_max; else cmd.linear.x = velocity;
 		velocity_pub.publish(cmd);
 	} while (distance>=0.01);
 
-	cmd->linear.x = 0;
+	cmd.linear.x = 0;
 
 	ROS_INFO("velocity_control_node : reach goal. turning motors off...");
 	kobuki_msgs::MotorPower power_cmd;
@@ -109,29 +123,29 @@ bool rotateCallback(nav_planner::baseRotate::Request &request, nav_planner::base
 		power_status = true;
 	}
 	
-	if (request.execute){
-		double desiredYaw = currentYaw + pi;
+	angle = request.angle;
+		
+	desiredYaw = currentYaw + (angle*0.5);
 
-		do{
-			double angleDiff = desiredYaw - currentYaw;
-			double angularV = ang_constant*angleDiff;
+	do{
+		angleDiff = desiredYaw - currentYaw;
+		angularV = ang_constant*angleDiff;
 
-			if (angularV >= angular_vel_max) cmd->angular.z = angular_vel_max; else cmd->angular.z = angularV;
-			velocity_pub.publish(cmd);
-		} while (angleDiff>=0.01);
+		if (angularV >= angular_vel_max) cmd.angular.z = angular_vel_max; else cmd.angular.z = angularV;
+		velocity_pub.publish(cmd);
+	} while (angleDiff>=0.01);
 
-		double desiredYaw = currentYaw + pi;
+	desiredYaw = currentYaw + (angle*0.5);
 
-		do{
-			double angleDiff = desiredYaw - currentYaw;
-			double angularV = ang_constant*angleDiff;
+	do{
+		angleDiff = desiredYaw - currentYaw;
+		angularV = ang_constant*angleDiff;
 
-			if (angularV >= angular_vel_max) cmd->angular.z = angular_vel_max; else cmd->angular.z = angularV;
-			velocity_pub.publish(cmd);
-		} while (angleDiff>=0.01);
+		if (angularV >= angular_vel_max) cmd.angular.z = angular_vel_max; else cmd.angular.z = angularV;
+		velocity_pub.publish(cmd);
+	} while (angleDiff>=0.01);
 
-		cmd->angular.z = 0;
-	}
+	cmd.angular.z = 0;
 
 	ROS_INFO("velocity_control_node : reach goal. turning motors off...");
 	kobuki_msgs::MotorPower power_cmd;
@@ -140,7 +154,7 @@ bool rotateCallback(nav_planner::baseRotate::Request &request, nav_planner::base
 	ROS_INFO("velocity_control_node : successfully powered down.");
 	power_status = false;
 
-	response.completed = true;
+	response.success = true;
 
 	ROS_INFO("velocity_control_node : response sent");
 	return true;
@@ -158,7 +172,7 @@ int main(int argc, char **argv)
 	
 	ROS_INFO("Initialized the velocity_control_node");
 
-	ros::Subscriber poition_sub = node.subscribe("position", 10, currentPositionCallback);
+	ros::Subscriber poition_sub = node.subscribe("position", 1, currentPositionCallback);
 	
 	ROS_INFO("velocity_control_node : created subscribers");
 
@@ -167,17 +181,17 @@ int main(int argc, char **argv)
 	
 	ROS_INFO("velocity_control_node : created service");
 
-	ros::Publisher velocity_pub = node.advertise<geometry_msgs::Twist>("cmd_vel", 1);
-	ros::Publisher motpower_pub = node.advertise<kobuki_msgs::MotorPower>("motor_power", 1);
+	velocity_pub = node.advertise<geometry_msgs::Twist>("cmd_vel", 1);
+	motpower_pub = node.advertise<kobuki_msgs::MotorPower>("motor_power", 1);
 	
 	ROS_INFO("velocity_control_node : created publishers");
 
-	cmd->linear.x = 0.0;
-  	cmd->linear.y = 0.0;
-  	cmd->linear.z = 0.0;
-  	cmd->angular.x = 0.0;
-  	cmd->angular.y = 0.0;
-  	cmd->angular.z = 0.0;
+	cmd.linear.x = 0.0;
+  	cmd.linear.y = 0.0;
+  	cmd.linear.z = 0.0;
+  	cmd.angular.x = 0.0;
+  	cmd.angular.y = 0.0;
+  	cmd.angular.z = 0.0;
 
 	ROS_INFO("velocity_control_node : velocity message initialized");
 	
@@ -193,12 +207,7 @@ int main(int argc, char **argv)
 			break;
 		} else {
 			ROS_WARN_STREAM("velocity_control_node : could not connect with base, trying again after 500ms...");
-			try {
-				millisleep(500);
-			} catch (ecl::StandardException e) {
-				ROS_ERROR_STREAM("velocity_control_node : Waiting has been interrupted.");
-				ROS_DEBUG_STREAM(e.what());
-			}
+			ros::Duration(0.5).sleep(); // sleep for half a second
 			++count;
 		}
 	}

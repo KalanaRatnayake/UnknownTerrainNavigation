@@ -24,17 +24,17 @@ struct baseRotateRequest_
   typedef baseRotateRequest_<ContainerAllocator> Type;
 
   baseRotateRequest_()
-    : execute(false)  {
+    : angle(0.0)  {
     }
   baseRotateRequest_(const ContainerAllocator& _alloc)
-    : execute(false)  {
+    : angle(0.0)  {
   (void)_alloc;
     }
 
 
 
-   typedef uint8_t _execute_type;
-  _execute_type execute;
+   typedef double _angle_type;
+  _angle_type angle;
 
 
 
@@ -114,12 +114,12 @@ struct MD5Sum< ::nav_planner::baseRotateRequest_<ContainerAllocator> >
 {
   static const char* value()
   {
-    return "371e747b927788fd0b8812d474ff9a56";
+    return "4edb55038e2b888976a0c0c56935341c";
   }
 
   static const char* value(const ::nav_planner::baseRotateRequest_<ContainerAllocator>&) { return value(); }
-  static const uint64_t static_value1 = 0x371e747b927788fdULL;
-  static const uint64_t static_value2 = 0x0b8812d474ff9a56ULL;
+  static const uint64_t static_value1 = 0x4edb55038e2b8889ULL;
+  static const uint64_t static_value2 = 0x76a0c0c56935341cULL;
 };
 
 template<class ContainerAllocator>
@@ -138,7 +138,7 @@ struct Definition< ::nav_planner::baseRotateRequest_<ContainerAllocator> >
 {
   static const char* value()
   {
-    return "bool execute\n\
+    return "float64 angle\n\
 ";
   }
 
@@ -157,7 +157,7 @@ namespace serialization
   {
     template<typename Stream, typename T> inline static void allInOne(Stream& stream, T m)
     {
-      stream.next(m.execute);
+      stream.next(m.angle);
     }
 
     ROS_DECLARE_ALLINONE_SERIALIZER
@@ -176,8 +176,8 @@ struct Printer< ::nav_planner::baseRotateRequest_<ContainerAllocator> >
 {
   template<typename Stream> static void stream(Stream& s, const std::string& indent, const ::nav_planner::baseRotateRequest_<ContainerAllocator>& v)
   {
-    s << indent << "execute: ";
-    Printer<uint8_t>::stream(s, indent + "  ", v.execute);
+    s << indent << "angle: ";
+    Printer<double>::stream(s, indent + "  ", v.angle);
   }
 };
 

@@ -1,0 +1,5 @@
+<launch>
+    <node pkg="nav_planner" type="test_velocityControl_node" name="test_velocityControl" output="screen">
+	</node>
+</launch>
+

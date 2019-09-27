@@ -1,6 +1,6 @@
 (cl:in-package nav_planner-srv)
-(cl:export '(EXECUTE-VAL
-          EXECUTE
+(cl:export '(ANGLE-VAL
+          ANGLE
           SUCCESS-VAL
           SUCCESS
 ))

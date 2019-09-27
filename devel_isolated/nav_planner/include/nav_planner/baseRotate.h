@@ -40,7 +40,7 @@ template<>
 struct MD5Sum< ::nav_planner::baseRotate > {
   static const char* value()
   {
-    return "a933da1aed447ccd941e96046fc95d53";
+    return "c1a76fcaf62dc4534903e93216b59a79";
   }
 
   static const char* value(const ::nav_planner::baseRotate&) { return value(); }
