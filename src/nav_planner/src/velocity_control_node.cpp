@@ -1,5 +1,4 @@
 #include <cmath>
-
 #include <ros/ros.h>
 #include <ros/console.h>
 #include <ros/callback_queue.h>
@@ -26,14 +25,17 @@
 octomap::point3d currentPosition;
 octomap::point3d goalPosition;
 geometry_msgs::Twist cmd;
+kobuki_msgs::MotorPower power_cmd;
 
 bool power_status = false;
 bool connected = false;
 
 int count = 0;
 
-double linear_vel_max, vel_constant;
-double angular_vel_max, ang_constant;
+double linear_vel_max = 1.0;
+double vel_constant = 0.2;
+double angular_vel_max = 1.57;
+double ang_constant = 0.2;
 double currentRoll, currentPitch, currentYaw;
 double pi = 3.14159265;
 
@@ -69,7 +71,6 @@ bool driveCallback(nav_planner::baseDrive::Request &request, nav_planner::baseDr
 
 	if (!power_status){
 		ROS_INFO("velocity_control_node : motor was powered down. turning on now....");
-		kobuki_msgs::MotorPower power_cmd;
 		power_cmd.state = kobuki_msgs::MotorPower::ON;
 		motpower_pub.publish(power_cmd);
 		ROS_INFO("velocity_control_node : successfully powered up.");
@@ -77,28 +78,39 @@ bool driveCallback(nav_planner::baseDrive::Request &request, nav_planner::baseDr
 	}
 
 	do{
-		desiredYaw = atan2(goalPosition.y()-currentPosition.y(), goalPosition.x()-currentPosition.x())+(pi*0.5);
+		desiredYaw = atan2(goalPosition.y()-currentPosition.y(), goalPosition.x()-currentPosition.x());
 		angleDiff = desiredYaw - currentYaw;
 		angularV = ang_constant*angleDiff;
 
-		if (angularV >= angular_vel_max) cmd.angular.z = angular_vel_max; else cmd.angular.z = angularV;
+		if (angularV >= angular_vel_max) {
+			cmd.angular.z = angular_vel_max;
+		} else {
+			cmd.angular.z = angularV;
+		}
 		velocity_pub.publish(cmd);
 	} while (angleDiff>=0.01);
 
 	cmd.angular.z = 0;
+	velocity_pub.publish(cmd);
+	ROS_INFO("velocity_control_node : successfully rotated");
 
 	do{
-		distance = goalPosition.distance(currentPosition);
+		distance = goalPosition.distanceXY(currentPosition);
 		velocity = distance*vel_constant;
 
-		if (velocity >= linear_vel_max) cmd.linear.x = linear_vel_max; else cmd.linear.x = velocity;
+		if (velocity >= linear_vel_max) {
+			cmd.linear.x = linear_vel_max;
+		} else {
+			cmd.linear.x = velocity;
+		}
 		velocity_pub.publish(cmd);
 	} while (distance>=0.01);
 
 	cmd.linear.x = 0;
+	velocity_pub.publish(cmd);
+	ROS_INFO("velocity_control_node : successfully moved");
 
 	ROS_INFO("velocity_control_node : reach goal. turning motors off...");
-	kobuki_msgs::MotorPower power_cmd;
 	power_cmd.state = kobuki_msgs::MotorPower::OFF;
 	motpower_pub.publish(power_cmd);
 	ROS_INFO("velocity_control_node : successfully powered down.");
@@ -116,7 +128,6 @@ bool rotateCallback(nav_planner::baseRotate::Request &request, nav_planner::base
 
 	if (!power_status){
 		ROS_INFO("velocity_control_node : motor was powered down. turning on now....");
-		kobuki_msgs::MotorPower power_cmd;
 		power_cmd.state = kobuki_msgs::MotorPower::ON;
 		motpower_pub.publish(power_cmd);
 		ROS_INFO("velocity_control_node : successfully powered up.");
@@ -131,24 +142,36 @@ bool rotateCallback(nav_planner::baseRotate::Request &request, nav_planner::base
 		angleDiff = desiredYaw - currentYaw;
 		angularV = ang_constant*angleDiff;
 
-		if (angularV >= angular_vel_max) cmd.angular.z = angular_vel_max; else cmd.angular.z = angularV;
+		if (angularV >= angular_vel_max) {
+			cmd.angular.z = angular_vel_max;
+		} else {
+			cmd.angular.z = angularV;
+		}
 		velocity_pub.publish(cmd);
+		ROS_INFO_STREAM(angleDiff);
 	} while (angleDiff>=0.01);
 
 	desiredYaw = currentYaw + (angle*0.5);
+	ROS_INFO("velocity_control_node : successfully rotated");
 
 	do{
 		angleDiff = desiredYaw - currentYaw;
 		angularV = ang_constant*angleDiff;
 
-		if (angularV >= angular_vel_max) cmd.angular.z = angular_vel_max; else cmd.angular.z = angularV;
+		if (angularV >= angular_vel_max) {
+			cmd.angular.z = angular_vel_max;
+		} else {
+			cmd.angular.z = angularV;
+		}
 		velocity_pub.publish(cmd);
+		ROS_INFO_STREAM(angleDiff);
 	} while (angleDiff>=0.01);
 
 	cmd.angular.z = 0;
+	velocity_pub.publish(cmd);
+	ROS_INFO("velocity_control_node : successfully rotated");
 
 	ROS_INFO("velocity_control_node : reach goal. turning motors off...");
-	kobuki_msgs::MotorPower power_cmd;
 	power_cmd.state = kobuki_msgs::MotorPower::OFF;
 	motpower_pub.publish(power_cmd);
 	ROS_INFO("velocity_control_node : successfully powered down.");
@@ -164,11 +187,6 @@ int main(int argc, char **argv)
 {
 	ros::init (argc, argv, "Velocity Controller");
 	ros::NodeHandle node;
-
-  	node.getParam("linear_vel_max", linear_vel_max);
-  	node.getParam("angular_vel_max", angular_vel_max);
-	node.getParam("velocity_constant", vel_constant);
-	node.getParam("angularv_constant", ang_constant);
 	
 	ROS_INFO("Initialized the velocity_control_node");
 
@@ -183,7 +201,7 @@ int main(int argc, char **argv)
 
 	velocity_pub = node.advertise<geometry_msgs::Twist>("cmd_vel", 1);
 	motpower_pub = node.advertise<kobuki_msgs::MotorPower>("motor_power", 1);
-	
+
 	ROS_INFO("velocity_control_node : created publishers");
 
 	cmd.linear.x = 0.0;
@@ -199,6 +217,7 @@ int main(int argc, char **argv)
 	{
 		if (motpower_pub.getNumSubscribers() > 0){
 			connected = true;
+			ROS_WARN_STREAM("velocity_control_node : connected with base");
 			break;
 		}
 		
@@ -217,7 +236,11 @@ int main(int argc, char **argv)
 		ROS_ERROR("velocity_control_node : check remappings for enable/disable topics).");
 	}
 
-	ros::getGlobalCallbackQueue()->callAvailable(ros::WallDuration(0));
+	ros::AsyncSpinner spinner (2);
+	ros::Rate r(100);
+
+	spinner.start();
+	ros::waitForShutdown();
 
 	return 0;
 }

@@ -16,14 +16,9 @@
 	</node>
 
 	<node pkg="nav_planner" type="velocity_control_node" name="velocity_Controller" output="screen">
-		<remap from="keyop/motor_power" to="mobile_base/commands/motor_power"/>
-		<remap from="keyop/cmd_vel" to="mobile_base/commands/velocity"/>
+		<remap from="motor_power" to="/mobile_base/commands/motor_power"/>
+		<remap from="cmd_vel" to="/mobile_base/commands/velocity"/>
 		<remap from="position" to="/tf" />
-
-		<param name="linear_vel_max"   value="1"  type="double"/>
-		<param name="angular_vel_max"  value="1.57"  type="double"/>
-		<param name="velocity_constant"  value="2"  type="double"/>
-		<param name="angularv_constant"  value="2"  type="double"/>
   	</node>
 </launch>
 
