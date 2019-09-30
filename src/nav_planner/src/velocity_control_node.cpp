@@ -33,9 +33,9 @@ bool connected = false;
 int count = 0;
 
 double linear_vel_max = 1.0;
-double vel_constant = 0.2;
+double vel_constant = 0.1;
 double angular_vel_max = 1.57;
-double ang_constant = 0.2;
+double ang_constant = 0.05;
 double currentRoll, currentPitch, currentYaw;
 double pi = 3.14159265;
 
@@ -82,29 +82,25 @@ bool driveCallback(nav_planner::baseDrive::Request &request, nav_planner::baseDr
 		angleDiff = desiredYaw - currentYaw;
 		angularV = ang_constant*angleDiff;
 
-		if (angularV >= angular_vel_max) {
-			cmd.angular.z = angular_vel_max;
-		} else {
-			cmd.angular.z = angularV;
-		}
+		if (angularV >= angular_vel_max) angularV = angular_vel_max;
+		cmd.angular.z = angularV;
 		velocity_pub.publish(cmd);
-	} while (angleDiff>=0.01);
+		ros::Duration(0.005).sleep();
+	} while (angleDiff>=0.05);
 
 	cmd.angular.z = 0;
 	velocity_pub.publish(cmd);
+	ros::Duration(0.005).sleep();
 	ROS_INFO("velocity_control_node : successfully rotated");
 
 	do{
 		distance = goalPosition.distanceXY(currentPosition);
 		velocity = distance*vel_constant;
-
-		if (velocity >= linear_vel_max) {
-			cmd.linear.x = linear_vel_max;
-		} else {
-			cmd.linear.x = velocity;
-		}
+		if (velocity >= linear_vel_max) velocity = linear_vel_max;
+		cmd.linear.x = velocity;
 		velocity_pub.publish(cmd);
-	} while (distance>=0.01);
+		ros::Duration(0.005).sleep();
+	} while (distance>=0.1);
 
 	cmd.linear.x = 0;
 	velocity_pub.publish(cmd);
@@ -142,14 +138,9 @@ bool rotateCallback(nav_planner::baseRotate::Request &request, nav_planner::base
 		angleDiff = desiredYaw - currentYaw;
 		angularV = ang_constant*angleDiff;
 
-		if (angularV >= angular_vel_max) {
-			cmd.angular.z = angular_vel_max;
-		} else {
-			cmd.angular.z = angularV;
-		}
+		if (angularV >= angular_vel_max) cmd.angular.z = angular_vel_max; else cmd.angular.z = angularV;
 		velocity_pub.publish(cmd);
-		ROS_INFO_STREAM(angleDiff);
-	} while (angleDiff>=0.01);
+	} while (angleDiff>=0.05);
 
 	desiredYaw = currentYaw + (angle*0.5);
 	ROS_INFO("velocity_control_node : successfully rotated");
@@ -158,14 +149,9 @@ bool rotateCallback(nav_planner::baseRotate::Request &request, nav_planner::base
 		angleDiff = desiredYaw - currentYaw;
 		angularV = ang_constant*angleDiff;
 
-		if (angularV >= angular_vel_max) {
-			cmd.angular.z = angular_vel_max;
-		} else {
-			cmd.angular.z = angularV;
-		}
+		if (angularV >= angular_vel_max) cmd.angular.z = angular_vel_max; else cmd.angular.z = angularV;
 		velocity_pub.publish(cmd);
-		ROS_INFO_STREAM(angleDiff);
-	} while (angleDiff>=0.01);
+	} while (angleDiff>=0.05);
 
 	cmd.angular.z = 0;
 	velocity_pub.publish(cmd);
