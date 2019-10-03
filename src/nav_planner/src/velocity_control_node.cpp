@@ -32,13 +32,12 @@ bool connected = false;
 
 int count = 0;
 
-double linear_vel_max = 1.0;
-double vel_constant = 0.1;
-double angular_vel_max = 1.57;
-double ang_constant = 0.05;
-double currentRoll, currentPitch, currentYaw;
+double linear_vel_max = 0.5;
+double vel_constant = 0.2;
+double angular_vel_max = 0.5;
+double ang_constant = 0.2;
+double Roll, Pitch, Yaw;
 double pi = 3.14159265;
-
 ros::Publisher velocity_pub;
 ros::Publisher motpower_pub;
 
@@ -47,8 +46,7 @@ double angleDiff;
 double angularV;
 double velocity;
 double distance;
-double desiredYaw;
-
+double currentYaw, desiredYaw;
 
 void currentPositionCallback(const tf::tfMessage::ConstPtr &msg)
 {
@@ -57,8 +55,12 @@ void currentPositionCallback(const tf::tfMessage::ConstPtr &msg)
 	tf2::Quaternion q(msg->transforms[0].transform.rotation.x, msg->transforms[0].transform.rotation.y, msg->transforms[0].transform.rotation.z, msg->transforms[0].transform.rotation.w);
 	tf2::Matrix3x3 m(q);
 
-	m.getRPY(currentRoll, currentPitch, currentYaw);
+	m.getRPY(Roll, Pitch, Yaw);
 	currentPosition = position;
+
+	if ((Yaw<3.14)&&(Yaw>-3.14)){
+		currentYaw = Yaw;
+	}
 }
 
 bool driveCallback(nav_planner::baseDrive::Request &request, nav_planner::baseDrive::Response &response)
@@ -76,17 +78,24 @@ bool driveCallback(nav_planner::baseDrive::Request &request, nav_planner::baseDr
 		ROS_INFO("velocity_control_node : successfully powered up.");
 		power_status = true;
 	}
+	
+	desiredYaw = atan2(goalPosition.y()-currentPosition.y(), goalPosition.x()-currentPosition.x());
 
 	do{
-		desiredYaw = atan2(goalPosition.y()-currentPosition.y(), goalPosition.x()-currentPosition.x());
 		angleDiff = desiredYaw - currentYaw;
 		angularV = ang_constant*angleDiff;
+
+		ROS_INFO("----");
+		ROS_INFO_STREAM(desiredYaw);
+		ROS_INFO_STREAM(currentYaw);
+		ROS_INFO_STREAM(angleDiff);
+		ROS_INFO_STREAM(angularV);
 
 		if (angularV >= angular_vel_max) angularV = angular_vel_max;
 		cmd.angular.z = angularV;
 		velocity_pub.publish(cmd);
 		ros::Duration(0.005).sleep();
-	} while (angleDiff>=0.05);
+	} while (std::abs(angleDiff)>=0.01);
 
 	cmd.angular.z = 0;
 	velocity_pub.publish(cmd);
@@ -100,15 +109,16 @@ bool driveCallback(nav_planner::baseDrive::Request &request, nav_planner::baseDr
 		cmd.linear.x = velocity;
 		velocity_pub.publish(cmd);
 		ros::Duration(0.005).sleep();
-	} while (distance>=0.1);
+	} while (std::abs(distance)>=0.1);
 
 	cmd.linear.x = 0;
 	velocity_pub.publish(cmd);
 	ROS_INFO("velocity_control_node : successfully moved");
 
-	ROS_INFO("velocity_control_node : reach goal. turning motors off...");
+	ROS_INFO("velocity_control_node : reached goal. turning motors off...");
 	power_cmd.state = kobuki_msgs::MotorPower::OFF;
 	motpower_pub.publish(power_cmd);
+	ros::Duration(0.005).sleep();
 	ROS_INFO("velocity_control_node : successfully powered down.");
 	power_status = false;
 
@@ -131,27 +141,22 @@ bool rotateCallback(nav_planner::baseRotate::Request &request, nav_planner::base
 	}
 	
 	angle = request.angle;
-		
-	desiredYaw = currentYaw + (angle*0.5);
 
 	do{
-		angleDiff = desiredYaw - currentYaw;
+		angleDiff = angle - currentYaw;
 		angularV = ang_constant*angleDiff;
 
-		if (angularV >= angular_vel_max) cmd.angular.z = angular_vel_max; else cmd.angular.z = angularV;
+		ROS_INFO("----");
+		ROS_INFO_STREAM(angle);
+		ROS_INFO_STREAM(currentYaw);
+		ROS_INFO_STREAM(angleDiff);
+		ROS_INFO_STREAM(angularV);
+
+		if (angularV >= angular_vel_max) angularV = angular_vel_max;
+		cmd.angular.z = angularV;
 		velocity_pub.publish(cmd);
-	} while (angleDiff>=0.05);
-
-	desiredYaw = currentYaw + (angle*0.5);
-	ROS_INFO("velocity_control_node : successfully rotated");
-
-	do{
-		angleDiff = desiredYaw - currentYaw;
-		angularV = ang_constant*angleDiff;
-
-		if (angularV >= angular_vel_max) cmd.angular.z = angular_vel_max; else cmd.angular.z = angularV;
-		velocity_pub.publish(cmd);
-	} while (angleDiff>=0.05);
+		ros::Duration(0.005).sleep();
+	} while (std::abs(angleDiff)>=0.01);
 
 	cmd.angular.z = 0;
 	velocity_pub.publish(cmd);
@@ -222,7 +227,7 @@ int main(int argc, char **argv)
 		ROS_ERROR("velocity_control_node : check remappings for enable/disable topics).");
 	}
 
-	ros::AsyncSpinner spinner (2);
+	ros::AsyncSpinner spinner (3);
 	ros::Rate r(100);
 
 	spinner.start();

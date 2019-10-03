@@ -55,8 +55,8 @@ int main(int argc, char **argv)
     return 1;
   }
 
-  forward.request.x = 2.0;
-  forward.request.y = 1.0;
+  forward.request.x = 1.0;
+  forward.request.y = 2.0;
   forward.request.z = 0.0;
   
   ROS_INFO("test_velocityControl_node : forward requested");
