@@ -10,6 +10,8 @@
     (:file "_package_baseRotate" :depends-on ("_package"))
     (:file "goalControl" :depends-on ("_package_goalControl"))
     (:file "_package_goalControl" :depends-on ("_package"))
+    (:file "systemControl" :depends-on ("_package_systemControl"))
+    (:file "_package_systemControl" :depends-on ("_package"))
     (:file "waterDetect" :depends-on ("_package_waterDetect"))
     (:file "_package_waterDetect" :depends-on ("_package"))
   ))

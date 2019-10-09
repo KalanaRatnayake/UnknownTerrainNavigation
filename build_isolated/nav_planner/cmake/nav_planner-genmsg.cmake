@@ -1,6 +1,6 @@
 # generated from genmsg/cmake/pkg-genmsg.cmake.em
 
-message(STATUS "nav_planner: 2 messages, 4 services")
+message(STATUS "nav_planner: 2 messages, 5 services")
 
 set(MSG_I_FLAGS "-Inav_planner:/home/kalana/FYP/src/nav_planner/msg;-Istd_msgs:/opt/ros/kinetic/share/std_msgs/cmake/../msg;-Ioctomap_msgs:/opt/ros/kinetic/share/octomap_msgs/cmake/../msg;-Igeometry_msgs:/opt/ros/kinetic/share/geometry_msgs/cmake/../msg")
 
@@ -25,6 +25,11 @@ add_custom_target(_nav_planner_generate_messages_check_deps_${_filename}
 get_filename_component(_filename "/home/kalana/FYP/src/nav_planner/msg/pointData.msg" NAME_WE)
 add_custom_target(_nav_planner_generate_messages_check_deps_${_filename}
   COMMAND ${CATKIN_ENV} ${PYTHON_EXECUTABLE} ${GENMSG_CHECK_DEPS_SCRIPT} "nav_planner" "/home/kalana/FYP/src/nav_planner/msg/pointData.msg" ""
+)
+
+get_filename_component(_filename "/home/kalana/FYP/src/nav_planner/srv/systemControl.srv" NAME_WE)
+add_custom_target(_nav_planner_generate_messages_check_deps_${_filename}
+  COMMAND ${CATKIN_ENV} ${PYTHON_EXECUTABLE} ${GENMSG_CHECK_DEPS_SCRIPT} "nav_planner" "/home/kalana/FYP/src/nav_planner/srv/systemControl.srv" ""
 )
 
 get_filename_component(_filename "/home/kalana/FYP/src/nav_planner/srv/goalControl.srv" NAME_WE)
@@ -91,6 +96,12 @@ _generate_srv_cpp(nav_planner
   ""
   ${CATKIN_DEVEL_PREFIX}/${gencpp_INSTALL_DIR}/nav_planner
 )
+_generate_srv_cpp(nav_planner
+  "/home/kalana/FYP/src/nav_planner/srv/systemControl.srv"
+  "${MSG_I_FLAGS}"
+  ""
+  ${CATKIN_DEVEL_PREFIX}/${gencpp_INSTALL_DIR}/nav_planner
+)
 
 ### Generating Module File
 _generate_module_cpp(nav_planner
@@ -107,6 +118,8 @@ add_dependencies(nav_planner_generate_messages nav_planner_generate_messages_cpp
 get_filename_component(_filename "/home/kalana/FYP/src/nav_planner/srv/waterDetect.srv" NAME_WE)
 add_dependencies(nav_planner_generate_messages_cpp _nav_planner_generate_messages_check_deps_${_filename})
 get_filename_component(_filename "/home/kalana/FYP/src/nav_planner/msg/pointData.msg" NAME_WE)
+add_dependencies(nav_planner_generate_messages_cpp _nav_planner_generate_messages_check_deps_${_filename})
+get_filename_component(_filename "/home/kalana/FYP/src/nav_planner/srv/systemControl.srv" NAME_WE)
 add_dependencies(nav_planner_generate_messages_cpp _nav_planner_generate_messages_check_deps_${_filename})
 get_filename_component(_filename "/home/kalana/FYP/src/nav_planner/srv/goalControl.srv" NAME_WE)
 add_dependencies(nav_planner_generate_messages_cpp _nav_planner_generate_messages_check_deps_${_filename})
@@ -164,6 +177,12 @@ _generate_srv_eus(nav_planner
   ""
   ${CATKIN_DEVEL_PREFIX}/${geneus_INSTALL_DIR}/nav_planner
 )
+_generate_srv_eus(nav_planner
+  "/home/kalana/FYP/src/nav_planner/srv/systemControl.srv"
+  "${MSG_I_FLAGS}"
+  ""
+  ${CATKIN_DEVEL_PREFIX}/${geneus_INSTALL_DIR}/nav_planner
+)
 
 ### Generating Module File
 _generate_module_eus(nav_planner
@@ -180,6 +199,8 @@ add_dependencies(nav_planner_generate_messages nav_planner_generate_messages_eus
 get_filename_component(_filename "/home/kalana/FYP/src/nav_planner/srv/waterDetect.srv" NAME_WE)
 add_dependencies(nav_planner_generate_messages_eus _nav_planner_generate_messages_check_deps_${_filename})
 get_filename_component(_filename "/home/kalana/FYP/src/nav_planner/msg/pointData.msg" NAME_WE)
+add_dependencies(nav_planner_generate_messages_eus _nav_planner_generate_messages_check_deps_${_filename})
+get_filename_component(_filename "/home/kalana/FYP/src/nav_planner/srv/systemControl.srv" NAME_WE)
 add_dependencies(nav_planner_generate_messages_eus _nav_planner_generate_messages_check_deps_${_filename})
 get_filename_component(_filename "/home/kalana/FYP/src/nav_planner/srv/goalControl.srv" NAME_WE)
 add_dependencies(nav_planner_generate_messages_eus _nav_planner_generate_messages_check_deps_${_filename})
@@ -237,6 +258,12 @@ _generate_srv_lisp(nav_planner
   ""
   ${CATKIN_DEVEL_PREFIX}/${genlisp_INSTALL_DIR}/nav_planner
 )
+_generate_srv_lisp(nav_planner
+  "/home/kalana/FYP/src/nav_planner/srv/systemControl.srv"
+  "${MSG_I_FLAGS}"
+  ""
+  ${CATKIN_DEVEL_PREFIX}/${genlisp_INSTALL_DIR}/nav_planner
+)
 
 ### Generating Module File
 _generate_module_lisp(nav_planner
@@ -253,6 +280,8 @@ add_dependencies(nav_planner_generate_messages nav_planner_generate_messages_lis
 get_filename_component(_filename "/home/kalana/FYP/src/nav_planner/srv/waterDetect.srv" NAME_WE)
 add_dependencies(nav_planner_generate_messages_lisp _nav_planner_generate_messages_check_deps_${_filename})
 get_filename_component(_filename "/home/kalana/FYP/src/nav_planner/msg/pointData.msg" NAME_WE)
+add_dependencies(nav_planner_generate_messages_lisp _nav_planner_generate_messages_check_deps_${_filename})
+get_filename_component(_filename "/home/kalana/FYP/src/nav_planner/srv/systemControl.srv" NAME_WE)
 add_dependencies(nav_planner_generate_messages_lisp _nav_planner_generate_messages_check_deps_${_filename})
 get_filename_component(_filename "/home/kalana/FYP/src/nav_planner/srv/goalControl.srv" NAME_WE)
 add_dependencies(nav_planner_generate_messages_lisp _nav_planner_generate_messages_check_deps_${_filename})
@@ -310,6 +339,12 @@ _generate_srv_nodejs(nav_planner
   ""
   ${CATKIN_DEVEL_PREFIX}/${gennodejs_INSTALL_DIR}/nav_planner
 )
+_generate_srv_nodejs(nav_planner
+  "/home/kalana/FYP/src/nav_planner/srv/systemControl.srv"
+  "${MSG_I_FLAGS}"
+  ""
+  ${CATKIN_DEVEL_PREFIX}/${gennodejs_INSTALL_DIR}/nav_planner
+)
 
 ### Generating Module File
 _generate_module_nodejs(nav_planner
@@ -326,6 +361,8 @@ add_dependencies(nav_planner_generate_messages nav_planner_generate_messages_nod
 get_filename_component(_filename "/home/kalana/FYP/src/nav_planner/srv/waterDetect.srv" NAME_WE)
 add_dependencies(nav_planner_generate_messages_nodejs _nav_planner_generate_messages_check_deps_${_filename})
 get_filename_component(_filename "/home/kalana/FYP/src/nav_planner/msg/pointData.msg" NAME_WE)
+add_dependencies(nav_planner_generate_messages_nodejs _nav_planner_generate_messages_check_deps_${_filename})
+get_filename_component(_filename "/home/kalana/FYP/src/nav_planner/srv/systemControl.srv" NAME_WE)
 add_dependencies(nav_planner_generate_messages_nodejs _nav_planner_generate_messages_check_deps_${_filename})
 get_filename_component(_filename "/home/kalana/FYP/src/nav_planner/srv/goalControl.srv" NAME_WE)
 add_dependencies(nav_planner_generate_messages_nodejs _nav_planner_generate_messages_check_deps_${_filename})
@@ -383,6 +420,12 @@ _generate_srv_py(nav_planner
   ""
   ${CATKIN_DEVEL_PREFIX}/${genpy_INSTALL_DIR}/nav_planner
 )
+_generate_srv_py(nav_planner
+  "/home/kalana/FYP/src/nav_planner/srv/systemControl.srv"
+  "${MSG_I_FLAGS}"
+  ""
+  ${CATKIN_DEVEL_PREFIX}/${genpy_INSTALL_DIR}/nav_planner
+)
 
 ### Generating Module File
 _generate_module_py(nav_planner
@@ -399,6 +442,8 @@ add_dependencies(nav_planner_generate_messages nav_planner_generate_messages_py)
 get_filename_component(_filename "/home/kalana/FYP/src/nav_planner/srv/waterDetect.srv" NAME_WE)
 add_dependencies(nav_planner_generate_messages_py _nav_planner_generate_messages_check_deps_${_filename})
 get_filename_component(_filename "/home/kalana/FYP/src/nav_planner/msg/pointData.msg" NAME_WE)
+add_dependencies(nav_planner_generate_messages_py _nav_planner_generate_messages_check_deps_${_filename})
+get_filename_component(_filename "/home/kalana/FYP/src/nav_planner/srv/systemControl.srv" NAME_WE)
 add_dependencies(nav_planner_generate_messages_py _nav_planner_generate_messages_check_deps_${_filename})
 get_filename_component(_filename "/home/kalana/FYP/src/nav_planner/srv/goalControl.srv" NAME_WE)
 add_dependencies(nav_planner_generate_messages_py _nav_planner_generate_messages_check_deps_${_filename})

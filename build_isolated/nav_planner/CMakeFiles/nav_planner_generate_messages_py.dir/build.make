@@ -59,6 +59,7 @@ CMakeFiles/nav_planner_generate_messages_py: /home/kalana/FYP/devel_isolated/nav
 CMakeFiles/nav_planner_generate_messages_py: /home/kalana/FYP/devel_isolated/nav_planner/lib/python2.7/dist-packages/nav_planner/srv/_baseRotate.py
 CMakeFiles/nav_planner_generate_messages_py: /home/kalana/FYP/devel_isolated/nav_planner/lib/python2.7/dist-packages/nav_planner/srv/_waterDetect.py
 CMakeFiles/nav_planner_generate_messages_py: /home/kalana/FYP/devel_isolated/nav_planner/lib/python2.7/dist-packages/nav_planner/srv/_baseDrive.py
+CMakeFiles/nav_planner_generate_messages_py: /home/kalana/FYP/devel_isolated/nav_planner/lib/python2.7/dist-packages/nav_planner/srv/_systemControl.py
 CMakeFiles/nav_planner_generate_messages_py: /home/kalana/FYP/devel_isolated/nav_planner/lib/python2.7/dist-packages/nav_planner/msg/__init__.py
 CMakeFiles/nav_planner_generate_messages_py: /home/kalana/FYP/devel_isolated/nav_planner/lib/python2.7/dist-packages/nav_planner/srv/__init__.py
 
@@ -94,6 +95,11 @@ CMakeFiles/nav_planner_generate_messages_py: /home/kalana/FYP/devel_isolated/nav
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/home/kalana/FYP/build_isolated/nav_planner/CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Generating Python code from SRV nav_planner/baseDrive"
 	catkin_generated/env_cached.sh /usr/bin/python /opt/ros/kinetic/share/genpy/cmake/../../../lib/genpy/gensrv_py.py /home/kalana/FYP/src/nav_planner/srv/baseDrive.srv -Inav_planner:/home/kalana/FYP/src/nav_planner/msg -Istd_msgs:/opt/ros/kinetic/share/std_msgs/cmake/../msg -Ioctomap_msgs:/opt/ros/kinetic/share/octomap_msgs/cmake/../msg -Igeometry_msgs:/opt/ros/kinetic/share/geometry_msgs/cmake/../msg -p nav_planner -o /home/kalana/FYP/devel_isolated/nav_planner/lib/python2.7/dist-packages/nav_planner/srv
 
+/home/kalana/FYP/devel_isolated/nav_planner/lib/python2.7/dist-packages/nav_planner/srv/_systemControl.py: /opt/ros/kinetic/lib/genpy/gensrv_py.py
+/home/kalana/FYP/devel_isolated/nav_planner/lib/python2.7/dist-packages/nav_planner/srv/_systemControl.py: /home/kalana/FYP/src/nav_planner/srv/systemControl.srv
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/home/kalana/FYP/build_isolated/nav_planner/CMakeFiles --progress-num=$(CMAKE_PROGRESS_7) "Generating Python code from SRV nav_planner/systemControl"
+	catkin_generated/env_cached.sh /usr/bin/python /opt/ros/kinetic/share/genpy/cmake/../../../lib/genpy/gensrv_py.py /home/kalana/FYP/src/nav_planner/srv/systemControl.srv -Inav_planner:/home/kalana/FYP/src/nav_planner/msg -Istd_msgs:/opt/ros/kinetic/share/std_msgs/cmake/../msg -Ioctomap_msgs:/opt/ros/kinetic/share/octomap_msgs/cmake/../msg -Igeometry_msgs:/opt/ros/kinetic/share/geometry_msgs/cmake/../msg -p nav_planner -o /home/kalana/FYP/devel_isolated/nav_planner/lib/python2.7/dist-packages/nav_planner/srv
+
 /home/kalana/FYP/devel_isolated/nav_planner/lib/python2.7/dist-packages/nav_planner/msg/__init__.py: /opt/ros/kinetic/lib/genpy/genmsg_py.py
 /home/kalana/FYP/devel_isolated/nav_planner/lib/python2.7/dist-packages/nav_planner/msg/__init__.py: /home/kalana/FYP/devel_isolated/nav_planner/lib/python2.7/dist-packages/nav_planner/msg/_pointData.py
 /home/kalana/FYP/devel_isolated/nav_planner/lib/python2.7/dist-packages/nav_planner/msg/__init__.py: /home/kalana/FYP/devel_isolated/nav_planner/lib/python2.7/dist-packages/nav_planner/msg/_pointDataArray.py
@@ -101,7 +107,8 @@ CMakeFiles/nav_planner_generate_messages_py: /home/kalana/FYP/devel_isolated/nav
 /home/kalana/FYP/devel_isolated/nav_planner/lib/python2.7/dist-packages/nav_planner/msg/__init__.py: /home/kalana/FYP/devel_isolated/nav_planner/lib/python2.7/dist-packages/nav_planner/srv/_baseRotate.py
 /home/kalana/FYP/devel_isolated/nav_planner/lib/python2.7/dist-packages/nav_planner/msg/__init__.py: /home/kalana/FYP/devel_isolated/nav_planner/lib/python2.7/dist-packages/nav_planner/srv/_waterDetect.py
 /home/kalana/FYP/devel_isolated/nav_planner/lib/python2.7/dist-packages/nav_planner/msg/__init__.py: /home/kalana/FYP/devel_isolated/nav_planner/lib/python2.7/dist-packages/nav_planner/srv/_baseDrive.py
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/home/kalana/FYP/build_isolated/nav_planner/CMakeFiles --progress-num=$(CMAKE_PROGRESS_7) "Generating Python msg __init__.py for nav_planner"
+/home/kalana/FYP/devel_isolated/nav_planner/lib/python2.7/dist-packages/nav_planner/msg/__init__.py: /home/kalana/FYP/devel_isolated/nav_planner/lib/python2.7/dist-packages/nav_planner/srv/_systemControl.py
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/home/kalana/FYP/build_isolated/nav_planner/CMakeFiles --progress-num=$(CMAKE_PROGRESS_8) "Generating Python msg __init__.py for nav_planner"
 	catkin_generated/env_cached.sh /usr/bin/python /opt/ros/kinetic/share/genpy/cmake/../../../lib/genpy/genmsg_py.py -o /home/kalana/FYP/devel_isolated/nav_planner/lib/python2.7/dist-packages/nav_planner/msg --initpy
 
 /home/kalana/FYP/devel_isolated/nav_planner/lib/python2.7/dist-packages/nav_planner/srv/__init__.py: /opt/ros/kinetic/lib/genpy/genmsg_py.py
@@ -111,7 +118,8 @@ CMakeFiles/nav_planner_generate_messages_py: /home/kalana/FYP/devel_isolated/nav
 /home/kalana/FYP/devel_isolated/nav_planner/lib/python2.7/dist-packages/nav_planner/srv/__init__.py: /home/kalana/FYP/devel_isolated/nav_planner/lib/python2.7/dist-packages/nav_planner/srv/_baseRotate.py
 /home/kalana/FYP/devel_isolated/nav_planner/lib/python2.7/dist-packages/nav_planner/srv/__init__.py: /home/kalana/FYP/devel_isolated/nav_planner/lib/python2.7/dist-packages/nav_planner/srv/_waterDetect.py
 /home/kalana/FYP/devel_isolated/nav_planner/lib/python2.7/dist-packages/nav_planner/srv/__init__.py: /home/kalana/FYP/devel_isolated/nav_planner/lib/python2.7/dist-packages/nav_planner/srv/_baseDrive.py
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/home/kalana/FYP/build_isolated/nav_planner/CMakeFiles --progress-num=$(CMAKE_PROGRESS_8) "Generating Python srv __init__.py for nav_planner"
+/home/kalana/FYP/devel_isolated/nav_planner/lib/python2.7/dist-packages/nav_planner/srv/__init__.py: /home/kalana/FYP/devel_isolated/nav_planner/lib/python2.7/dist-packages/nav_planner/srv/_systemControl.py
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/home/kalana/FYP/build_isolated/nav_planner/CMakeFiles --progress-num=$(CMAKE_PROGRESS_9) "Generating Python srv __init__.py for nav_planner"
 	catkin_generated/env_cached.sh /usr/bin/python /opt/ros/kinetic/share/genpy/cmake/../../../lib/genpy/genmsg_py.py -o /home/kalana/FYP/devel_isolated/nav_planner/lib/python2.7/dist-packages/nav_planner/srv --initpy
 
 nav_planner_generate_messages_py: CMakeFiles/nav_planner_generate_messages_py
@@ -121,6 +129,7 @@ nav_planner_generate_messages_py: /home/kalana/FYP/devel_isolated/nav_planner/li
 nav_planner_generate_messages_py: /home/kalana/FYP/devel_isolated/nav_planner/lib/python2.7/dist-packages/nav_planner/srv/_baseRotate.py
 nav_planner_generate_messages_py: /home/kalana/FYP/devel_isolated/nav_planner/lib/python2.7/dist-packages/nav_planner/srv/_waterDetect.py
 nav_planner_generate_messages_py: /home/kalana/FYP/devel_isolated/nav_planner/lib/python2.7/dist-packages/nav_planner/srv/_baseDrive.py
+nav_planner_generate_messages_py: /home/kalana/FYP/devel_isolated/nav_planner/lib/python2.7/dist-packages/nav_planner/srv/_systemControl.py
 nav_planner_generate_messages_py: /home/kalana/FYP/devel_isolated/nav_planner/lib/python2.7/dist-packages/nav_planner/msg/__init__.py
 nav_planner_generate_messages_py: /home/kalana/FYP/devel_isolated/nav_planner/lib/python2.7/dist-packages/nav_planner/srv/__init__.py
 nav_planner_generate_messages_py: CMakeFiles/nav_planner_generate_messages_py.dir/build.make

@@ -36,9 +36,6 @@ CMakeFiles/goal_visualizer_node.dir/goal_visualizer/goal_visualizer.cpp.o: /opt/
 CMakeFiles/goal_visualizer_node.dir/goal_visualizer/goal_visualizer.cpp.o: /opt/ros/kinetic/include/ros/time.h
 CMakeFiles/goal_visualizer_node.dir/goal_visualizer/goal_visualizer.cpp.o: /opt/ros/kinetic/include/rosconsole/macros_generated.h
 
-CMakeFiles/goal_visualizer_node.dir/src/goal_visualizer_node.cpp.o: /home/kalana/FYP/devel_isolated/nav_planner/include/nav_planner/mapControl.h
-CMakeFiles/goal_visualizer_node.dir/src/goal_visualizer_node.cpp.o: /home/kalana/FYP/devel_isolated/nav_planner/include/nav_planner/mapControlRequest.h
-CMakeFiles/goal_visualizer_node.dir/src/goal_visualizer_node.cpp.o: /home/kalana/FYP/devel_isolated/nav_planner/include/nav_planner/mapControlResponse.h
 CMakeFiles/goal_visualizer_node.dir/src/goal_visualizer_node.cpp.o: /home/kalana/FYP/devel_isolated/nav_planner/include/nav_planner/pointData.h
 CMakeFiles/goal_visualizer_node.dir/src/goal_visualizer_node.cpp.o: /home/kalana/FYP/devel_isolated/nav_planner/include/nav_planner/pointDataArray.h
 CMakeFiles/goal_visualizer_node.dir/src/goal_visualizer_node.cpp.o: /home/kalana/FYP/src/nav_planner/goal_visualizer/goal_visualizer.h
@@ -46,14 +43,6 @@ CMakeFiles/goal_visualizer_node.dir/src/goal_visualizer_node.cpp.o: /home/kalana
 CMakeFiles/goal_visualizer_node.dir/src/goal_visualizer_node.cpp.o: /opt/ros/kinetic/include/boost_161_condition_variable.h
 CMakeFiles/goal_visualizer_node.dir/src/goal_visualizer_node.cpp.o: /opt/ros/kinetic/include/boost_161_pthread_condition_variable.h
 CMakeFiles/goal_visualizer_node.dir/src/goal_visualizer_node.cpp.o: /opt/ros/kinetic/include/boost_161_pthread_condition_variable_fwd.h
-CMakeFiles/goal_visualizer_node.dir/src/goal_visualizer_node.cpp.o: /opt/ros/kinetic/include/geometry_msgs/Point.h
-CMakeFiles/goal_visualizer_node.dir/src/goal_visualizer_node.cpp.o: /opt/ros/kinetic/include/geometry_msgs/Pose.h
-CMakeFiles/goal_visualizer_node.dir/src/goal_visualizer_node.cpp.o: /opt/ros/kinetic/include/geometry_msgs/PoseWithCovariance.h
-CMakeFiles/goal_visualizer_node.dir/src/goal_visualizer_node.cpp.o: /opt/ros/kinetic/include/geometry_msgs/Quaternion.h
-CMakeFiles/goal_visualizer_node.dir/src/goal_visualizer_node.cpp.o: /opt/ros/kinetic/include/geometry_msgs/Twist.h
-CMakeFiles/goal_visualizer_node.dir/src/goal_visualizer_node.cpp.o: /opt/ros/kinetic/include/geometry_msgs/TwistWithCovariance.h
-CMakeFiles/goal_visualizer_node.dir/src/goal_visualizer_node.cpp.o: /opt/ros/kinetic/include/geometry_msgs/Vector3.h
-CMakeFiles/goal_visualizer_node.dir/src/goal_visualizer_node.cpp.o: /opt/ros/kinetic/include/nav_msgs/Odometry.h
 CMakeFiles/goal_visualizer_node.dir/src/goal_visualizer_node.cpp.o: /opt/ros/kinetic/include/octomap/AbstractOcTree.h
 CMakeFiles/goal_visualizer_node.dir/src/goal_visualizer_node.cpp.o: /opt/ros/kinetic/include/octomap/AbstractOccupancyOcTree.h
 CMakeFiles/goal_visualizer_node.dir/src/goal_visualizer_node.cpp.o: /opt/ros/kinetic/include/octomap/ColorOcTree.h

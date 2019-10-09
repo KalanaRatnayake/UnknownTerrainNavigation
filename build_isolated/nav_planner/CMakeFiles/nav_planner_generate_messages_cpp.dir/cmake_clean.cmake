@@ -6,6 +6,7 @@ file(REMOVE_RECURSE
   "/home/kalana/FYP/devel_isolated/nav_planner/include/nav_planner/baseRotate.h"
   "/home/kalana/FYP/devel_isolated/nav_planner/include/nav_planner/waterDetect.h"
   "/home/kalana/FYP/devel_isolated/nav_planner/include/nav_planner/baseDrive.h"
+  "/home/kalana/FYP/devel_isolated/nav_planner/include/nav_planner/systemControl.h"
 )
 
 # Per-language clean rules from dependency scanning.

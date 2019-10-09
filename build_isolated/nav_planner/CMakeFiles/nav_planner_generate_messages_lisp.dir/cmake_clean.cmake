@@ -6,6 +6,7 @@ file(REMOVE_RECURSE
   "/home/kalana/FYP/devel_isolated/nav_planner/share/common-lisp/ros/nav_planner/srv/baseRotate.lisp"
   "/home/kalana/FYP/devel_isolated/nav_planner/share/common-lisp/ros/nav_planner/srv/waterDetect.lisp"
   "/home/kalana/FYP/devel_isolated/nav_planner/share/common-lisp/ros/nav_planner/srv/baseDrive.lisp"
+  "/home/kalana/FYP/devel_isolated/nav_planner/share/common-lisp/ros/nav_planner/srv/systemControl.lisp"
 )
 
 # Per-language clean rules from dependency scanning.

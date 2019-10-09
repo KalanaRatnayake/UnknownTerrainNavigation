@@ -2,6 +2,7 @@
 /home/kalana/FYP/build_isolated/nav_planner/CMakeFiles/install/local.dir
 /home/kalana/FYP/build_isolated/nav_planner/CMakeFiles/install/strip.dir
 /home/kalana/FYP/build_isolated/nav_planner/CMakeFiles/goal_visualizer_node.dir
+/home/kalana/FYP/build_isolated/nav_planner/CMakeFiles/global_path_planner_node.dir
 /home/kalana/FYP/build_isolated/nav_planner/CMakeFiles/goal_identifier_node.dir
 /home/kalana/FYP/build_isolated/nav_planner/CMakeFiles/nav_planner_generate_messages_py.dir
 /home/kalana/FYP/build_isolated/nav_planner/CMakeFiles/test_goalIdentifier_node.dir
@@ -11,6 +12,7 @@
 /home/kalana/FYP/build_isolated/nav_planner/CMakeFiles/_nav_planner_generate_messages_check_deps_pointDataArray.dir
 /home/kalana/FYP/build_isolated/nav_planner/CMakeFiles/_nav_planner_generate_messages_check_deps_baseDrive.dir
 /home/kalana/FYP/build_isolated/nav_planner/CMakeFiles/_nav_planner_generate_messages_check_deps_goalControl.dir
+/home/kalana/FYP/build_isolated/nav_planner/CMakeFiles/_nav_planner_generate_messages_check_deps_systemControl.dir
 /home/kalana/FYP/build_isolated/nav_planner/CMakeFiles/_nav_planner_generate_messages_check_deps_pointData.dir
 /home/kalana/FYP/build_isolated/nav_planner/CMakeFiles/_nav_planner_generate_messages_check_deps_waterDetect.dir
 /home/kalana/FYP/build_isolated/nav_planner/CMakeFiles/nav_planner_generate_messages.dir
@@ -72,6 +74,7 @@
 /home/kalana/FYP/build_isolated/nav_planner/CMakeFiles/test_velocityControl_node.dir
 /home/kalana/FYP/build_isolated/nav_planner/CMakeFiles/sensor_msgs_generate_messages_py.dir
 /home/kalana/FYP/build_isolated/nav_planner/CMakeFiles/actionlib_generate_messages_cpp.dir
+/home/kalana/FYP/build_isolated/nav_planner/CMakeFiles/test_system_node.dir
 /home/kalana/FYP/build_isolated/nav_planner/CMakeFiles/tf2_msgs_generate_messages_py.dir
 /home/kalana/FYP/build_isolated/nav_planner/CMakeFiles/actionlib_msgs_generate_messages_nodejs.dir
 /home/kalana/FYP/build_isolated/nav_planner/CMakeFiles/actionlib_msgs_generate_messages_eus.dir

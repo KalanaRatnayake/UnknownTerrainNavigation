@@ -11,12 +11,15 @@ CMakeFiles/velocity_control_node.dir/src/velocity_control_node.cpp.o: /home/kala
 CMakeFiles/velocity_control_node.dir/src/velocity_control_node.cpp.o: /opt/ros/kinetic/include/boost_161_condition_variable.h
 CMakeFiles/velocity_control_node.dir/src/velocity_control_node.cpp.o: /opt/ros/kinetic/include/boost_161_pthread_condition_variable.h
 CMakeFiles/velocity_control_node.dir/src/velocity_control_node.cpp.o: /opt/ros/kinetic/include/boost_161_pthread_condition_variable_fwd.h
+CMakeFiles/velocity_control_node.dir/src/velocity_control_node.cpp.o: /opt/ros/kinetic/include/geometry_msgs/Point.h
+CMakeFiles/velocity_control_node.dir/src/velocity_control_node.cpp.o: /opt/ros/kinetic/include/geometry_msgs/Pose.h
+CMakeFiles/velocity_control_node.dir/src/velocity_control_node.cpp.o: /opt/ros/kinetic/include/geometry_msgs/PoseWithCovariance.h
 CMakeFiles/velocity_control_node.dir/src/velocity_control_node.cpp.o: /opt/ros/kinetic/include/geometry_msgs/Quaternion.h
-CMakeFiles/velocity_control_node.dir/src/velocity_control_node.cpp.o: /opt/ros/kinetic/include/geometry_msgs/Transform.h
-CMakeFiles/velocity_control_node.dir/src/velocity_control_node.cpp.o: /opt/ros/kinetic/include/geometry_msgs/TransformStamped.h
 CMakeFiles/velocity_control_node.dir/src/velocity_control_node.cpp.o: /opt/ros/kinetic/include/geometry_msgs/Twist.h
+CMakeFiles/velocity_control_node.dir/src/velocity_control_node.cpp.o: /opt/ros/kinetic/include/geometry_msgs/TwistWithCovariance.h
 CMakeFiles/velocity_control_node.dir/src/velocity_control_node.cpp.o: /opt/ros/kinetic/include/geometry_msgs/Vector3.h
 CMakeFiles/velocity_control_node.dir/src/velocity_control_node.cpp.o: /opt/ros/kinetic/include/kobuki_msgs/MotorPower.h
+CMakeFiles/velocity_control_node.dir/src/velocity_control_node.cpp.o: /opt/ros/kinetic/include/nav_msgs/Odometry.h
 CMakeFiles/velocity_control_node.dir/src/velocity_control_node.cpp.o: /opt/ros/kinetic/include/octomap/AbstractOcTree.h
 CMakeFiles/velocity_control_node.dir/src/velocity_control_node.cpp.o: /opt/ros/kinetic/include/octomap/AbstractOccupancyOcTree.h
 CMakeFiles/velocity_control_node.dir/src/velocity_control_node.cpp.o: /opt/ros/kinetic/include/octomap/ColorOcTree.h
@@ -100,7 +103,6 @@ CMakeFiles/velocity_control_node.dir/src/velocity_control_node.cpp.o: /opt/ros/k
 CMakeFiles/velocity_control_node.dir/src/velocity_control_node.cpp.o: /opt/ros/kinetic/include/ros/wall_timer_options.h
 CMakeFiles/velocity_control_node.dir/src/velocity_control_node.cpp.o: /opt/ros/kinetic/include/rosconsole/macros_generated.h
 CMakeFiles/velocity_control_node.dir/src/velocity_control_node.cpp.o: /opt/ros/kinetic/include/std_msgs/Header.h
-CMakeFiles/velocity_control_node.dir/src/velocity_control_node.cpp.o: /opt/ros/kinetic/include/tf/tfMessage.h
 CMakeFiles/velocity_control_node.dir/src/velocity_control_node.cpp.o: /opt/ros/kinetic/include/tf2/LinearMath/Matrix3x3.h
 CMakeFiles/velocity_control_node.dir/src/velocity_control_node.cpp.o: /opt/ros/kinetic/include/tf2/LinearMath/MinMax.h
 CMakeFiles/velocity_control_node.dir/src/velocity_control_node.cpp.o: /opt/ros/kinetic/include/tf2/LinearMath/QuadWord.h

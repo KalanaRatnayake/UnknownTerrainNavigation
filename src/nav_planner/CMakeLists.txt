@@ -66,6 +66,7 @@ add_service_files(
   baseDrive.srv
   baseRotate.srv
   waterDetect.srv
+  systemControl.srv
 )
 
 ## Generate actions in the 'action' folder
@@ -131,6 +132,7 @@ include_directories(
   ${OpenCV_INCLUDE_DIRS}  
   goal_identifier 
   goal_visualizer
+  global_path_planner
 )
 
 ## Declare a C++ library
@@ -156,6 +158,11 @@ add_executable(goal_visualizer_node
   goal_visualizer/goal_visualizer.cpp
 )
 
+add_executable(global_path_planner_node
+  src/global_path_planner_node.cpp
+  global_path_planner/global_path_planner.cpp
+)
+
 add_executable(velocity_control_node
   src/velocity_control_node.cpp
 )
@@ -170,6 +177,10 @@ add_executable(test_velocityControl_node
   src/test_velocityControl_node.cpp
 )
 
+add_executable(test_system_node
+  src/test_system_node.cpp
+)
+
 ## Rename C++ executable without prefix
 ## The above recommended prefix causes long target names, the following renames the
 ## target back to the shorter version for ease of user use
@@ -180,9 +191,11 @@ add_executable(test_velocityControl_node
 ## same as for the library above
 add_dependencies(goal_identifier_node ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
 add_dependencies(goal_visualizer_node ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
+add_dependencies(global_path_planner_node ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
 add_dependencies(velocity_control_node ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
 add_dependencies(test_goalIdentifier_node ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
 add_dependencies(test_velocityControl_node ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
+add_dependencies(test_system_node ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
 
 ## Specify libraries to link a library or executable target against
 target_link_libraries(goal_identifier_node 
@@ -191,6 +204,11 @@ target_link_libraries(goal_identifier_node
 )
 
 target_link_libraries(goal_visualizer_node 
+  ${catkin_LIBRARIES}
+  ${OCTOMAP_LIBRARIES}
+)
+
+target_link_libraries(global_path_planner_node 
   ${catkin_LIBRARIES}
   ${OCTOMAP_LIBRARIES}
 )
@@ -208,6 +226,11 @@ target_link_libraries(test_goalIdentifier_node
 )
 
 target_link_libraries(test_velocityControl_node
+  ${catkin_LIBRARIES}
+  ${OCTOMAP_LIBRARIES}
+)
+
+target_link_libraries(test_system_node
   ${catkin_LIBRARIES}
   ${OCTOMAP_LIBRARIES}
 )

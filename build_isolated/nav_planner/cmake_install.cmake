@@ -136,6 +136,7 @@ if(NOT CMAKE_INSTALL_COMPONENT OR "${CMAKE_INSTALL_COMPONENT}" STREQUAL "Unspeci
     "/home/kalana/FYP/src/nav_planner/srv/baseDrive.srv"
     "/home/kalana/FYP/src/nav_planner/srv/baseRotate.srv"
     "/home/kalana/FYP/src/nav_planner/srv/waterDetect.srv"
+    "/home/kalana/FYP/src/nav_planner/srv/systemControl.srv"
     )
 endif()
 

@@ -6,6 +6,7 @@ file(REMOVE_RECURSE
   "/home/kalana/FYP/devel_isolated/nav_planner/share/roseus/ros/nav_planner/srv/baseRotate.l"
   "/home/kalana/FYP/devel_isolated/nav_planner/share/roseus/ros/nav_planner/srv/waterDetect.l"
   "/home/kalana/FYP/devel_isolated/nav_planner/share/roseus/ros/nav_planner/srv/baseDrive.l"
+  "/home/kalana/FYP/devel_isolated/nav_planner/share/roseus/ros/nav_planner/srv/systemControl.l"
   "/home/kalana/FYP/devel_isolated/nav_planner/share/roseus/ros/nav_planner/manifest.l"
 )
 

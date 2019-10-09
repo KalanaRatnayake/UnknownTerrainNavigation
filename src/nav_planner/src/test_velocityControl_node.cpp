@@ -70,5 +70,59 @@ int main(int argc, char **argv)
     return 1;
   }
 
+  rotate.request.angle = 3.141;
+  
+  ROS_INFO("test_velocityControl_node : rotate requested");
+
+  if (rotateClient.call(rotate)){
+    ROS_INFO_STREAM(rotate.response.success);
+    ROS_INFO("test_velocityControl_node : response recieved");
+    
+  } else {
+    ROS_ERROR("Failed to call service baseForward");
+    return 1;
+  }
+
+  forward.request.x = 0.0;
+  forward.request.y = 0.0;
+  forward.request.z = 0.0;
+  
+  ROS_INFO("test_velocityControl_node : forward requested");
+
+  if (forwardClient.call(forward)){
+    ROS_INFO_STREAM(forward.response.success);
+    ROS_INFO("test_velocityControl_node : response recieved");
+    
+  } else {
+    ROS_ERROR("Failed to call service baseForward");
+    return 1;
+  }
+
+  rotate.request.angle = 3.1415;
+  
+  ROS_INFO("test_velocityControl_node : rotate requested");
+
+  if (rotateClient.call(rotate)){
+    ROS_INFO_STREAM(rotate.response.success);
+    ROS_INFO("test_velocityControl_node : response recieved");
+    
+  } else {
+    ROS_ERROR("Failed to call service baseForward");
+    return 1;
+  }
+
+  rotate.request.angle = -3.1415;
+  
+  ROS_INFO("test_velocityControl_node : rotate requested");
+
+  if (rotateClient.call(rotate)){
+    ROS_INFO_STREAM(rotate.response.success);
+    ROS_INFO("test_velocityControl_node : response recieved");
+    
+  } else {
+    ROS_ERROR("Failed to call service baseForward");
+    return 1;
+  }
+
   return 0;
 }

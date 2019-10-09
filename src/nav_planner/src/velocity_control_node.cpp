@@ -9,12 +9,10 @@
 #include <octomap_msgs/Octomap.h>
 #include <octomap_msgs/conversions.h>
 
-#include <tf/tfMessage.h>
 #include <tf2/LinearMath/Quaternion.h>
 #include <tf2/LinearMath/Matrix3x3.h>
-#include <geometry_msgs/TransformStamped.h>
-#include <geometry_msgs/Transform.h>
-#include <geometry_msgs/Vector3.h>
+
+#include <nav_msgs/Odometry.h>
 
 #include <geometry_msgs/Twist.h>
 #include <kobuki_msgs/MotorPower.h>
@@ -33,9 +31,9 @@ bool connected = false;
 int count = 0;
 
 double linear_vel_max = 0.5;
-double vel_constant = 0.2;
+double vel_constant = 0.1;
 double angular_vel_max = 0.5;
-double ang_constant = 0.2;
+double ang_constant = 0.1;
 double Roll, Pitch, Yaw;
 double pi = 3.14159265;
 ros::Publisher velocity_pub;
@@ -46,13 +44,13 @@ double angleDiff;
 double angularV;
 double velocity;
 double distance;
-double currentYaw, desiredYaw;
+double currentYaw;
 
-void currentPositionCallback(const tf::tfMessage::ConstPtr &msg)
+void currentPositionCallback(const nav_msgs::OdometryConstPtr &msg)
 {
-	octomap::point3d position = octomap::point3d(msg->transforms[0].transform.translation.x, msg->transforms[0].transform.translation.y, msg->transforms[0].transform.translation.z);
+	octomap::point3d position = octomap::point3d(msg->pose.pose.position.x, msg->pose.pose.position.y, msg->pose.pose.position.z);
     
-	tf2::Quaternion q(msg->transforms[0].transform.rotation.x, msg->transforms[0].transform.rotation.y, msg->transforms[0].transform.rotation.z, msg->transforms[0].transform.rotation.w);
+	tf2::Quaternion q(msg->pose.pose.orientation.x, msg->pose.pose.orientation.y, msg->pose.pose.orientation.z, msg->pose.pose.orientation.w);
 	tf2::Matrix3x3 m(q);
 
 	m.getRPY(Roll, Pitch, Yaw);
@@ -79,17 +77,42 @@ bool driveCallback(nav_planner::baseDrive::Request &request, nav_planner::baseDr
 		power_status = true;
 	}
 	
-	desiredYaw = atan2(goalPosition.y()-currentPosition.y(), goalPosition.x()-currentPosition.x());
+	double desiredYaw = atan2(goalPosition.y()-currentPosition.y(), goalPosition.x()-currentPosition.x());
+	double initDistance = goalPosition.distanceXY(currentPosition);
 
 	do{
 		angleDiff = desiredYaw - currentYaw;
 		angularV = ang_constant*angleDiff;
 
-		ROS_INFO("----");
-		ROS_INFO_STREAM(desiredYaw);
-		ROS_INFO_STREAM(currentYaw);
-		ROS_INFO_STREAM(angleDiff);
-		ROS_INFO_STREAM(angularV);
+		if (angularV >= angular_vel_max) angularV = angular_vel_max;
+		cmd.angular.z = angularV;
+		velocity_pub.publish(cmd);
+		ros::Duration(0.005).sleep();
+	} while (std::abs(angleDiff)>=0.01);
+
+	cmd.angular.z = 0;
+	velocity_pub.publish(cmd);
+	ros::Duration(0.005).sleep();
+	ROS_INFO("velocity_control_node : successfully rotated");
+
+	do{
+		distance = goalPosition.distanceXY(currentPosition);
+		velocity = distance*vel_constant;
+		if (velocity >= linear_vel_max) velocity = linear_vel_max;
+		cmd.linear.x = velocity;
+		velocity_pub.publish(cmd);
+		ros::Duration(0.005).sleep();
+	} while (std::abs(distance)>=(initDistance*0.5));
+
+	cmd.linear.x = 0;
+	velocity_pub.publish(cmd);
+	ROS_INFO("velocity_control_node : successfully moved");
+
+	desiredYaw = atan2(goalPosition.y()-currentPosition.y(), goalPosition.x()-currentPosition.x());
+
+	do{
+		angleDiff = desiredYaw - currentYaw;
+		angularV = ang_constant*angleDiff;
 
 		if (angularV >= angular_vel_max) angularV = angular_vel_max;
 		cmd.angular.z = angularV;
@@ -140,17 +163,15 @@ bool rotateCallback(nav_planner::baseRotate::Request &request, nav_planner::base
 		power_status = true;
 	}
 	
-	angle = request.angle;
+	angle = request.angle + currentYaw;
+
+	if (angle>3.1415){ 
+		angle += -6.283;
+	} 
 
 	do{
 		angleDiff = angle - currentYaw;
 		angularV = ang_constant*angleDiff;
-
-		ROS_INFO("----");
-		ROS_INFO_STREAM(angle);
-		ROS_INFO_STREAM(currentYaw);
-		ROS_INFO_STREAM(angleDiff);
-		ROS_INFO_STREAM(angularV);
 
 		if (angularV >= angular_vel_max) angularV = angular_vel_max;
 		cmd.angular.z = angularV;
@@ -176,7 +197,7 @@ bool rotateCallback(nav_planner::baseRotate::Request &request, nav_planner::base
 
 int main(int argc, char **argv)
 {
-	ros::init (argc, argv, "Velocity Controller");
+	ros::init (argc, argv, "Velocity_Controller");
 	ros::NodeHandle node;
 	
 	ROS_INFO("Initialized the velocity_control_node");

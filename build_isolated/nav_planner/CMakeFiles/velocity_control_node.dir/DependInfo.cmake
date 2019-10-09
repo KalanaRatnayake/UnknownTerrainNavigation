@@ -23,6 +23,7 @@ set(CMAKE_CXX_TARGET_INCLUDE_PATH
   "/opt/ros/kinetic/share/xmlrpcpp/cmake/../../../include/xmlrpcpp"
   "/home/kalana/FYP/src/nav_planner/goal_identifier"
   "/home/kalana/FYP/src/nav_planner/goal_visualizer"
+  "/home/kalana/FYP/src/nav_planner/global_path_planner"
   )
 
 # Targets to which this target links.

@@ -12,13 +12,18 @@
     
     <node pkg="nav_planner" type="goal_identifier_node" name="goal_identifier" output="screen">
 		<remap from="octomap" to="/octomap_full" />
-        <remap from="position" to="/tf" />
+        <remap from="position" to="/odom" />
 	</node>
 
 	<node pkg="nav_planner" type="velocity_control_node" name="velocity_Controller" output="screen">
 		<remap from="motor_power" to="/mobile_base/commands/motor_power"/>
 		<remap from="cmd_vel" to="/mobile_base/commands/velocity"/>
-		<remap from="position" to="/tf" />
+		<remap from="position" to="/odom" />
+  	</node>
+
+	<node pkg="nav_planner" type="global_path_planner_node" name="Global_Path_Planner" output="screen">
+		<remap from="octomap" to="/octomap_full" />
+		<remap from="position" to="/odom" />
   	</node>
 </launch>
 
