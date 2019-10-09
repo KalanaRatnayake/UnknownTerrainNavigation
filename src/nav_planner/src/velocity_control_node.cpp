@@ -32,7 +32,7 @@ int count = 0;
 
 double linear_vel_max = 0.5;
 double vel_constant = 0.1;
-double angular_vel_max = 0.5;
+double angular_vel_max = 0.3;
 double ang_constant = 0.1;
 double Roll, Pitch, Yaw;
 double pi = 3.14159265;
@@ -167,17 +167,15 @@ bool rotateCallback(nav_planner::baseRotate::Request &request, nav_planner::base
 
 	if (angle>3.1415){ 
 		angle += -6.283;
-	} 
+	}
 
 	do{
 		angleDiff = angle - currentYaw;
-		angularV = ang_constant*angleDiff;
 
-		if (angularV >= angular_vel_max) angularV = angular_vel_max;
-		cmd.angular.z = angularV;
+		cmd.angular.z = 0.05;
 		velocity_pub.publish(cmd);
 		ros::Duration(0.005).sleep();
-	} while (std::abs(angleDiff)>=0.01);
+		} while (std::abs(angleDiff)>=0.01);
 
 	cmd.angular.z = 0;
 	velocity_pub.publish(cmd);

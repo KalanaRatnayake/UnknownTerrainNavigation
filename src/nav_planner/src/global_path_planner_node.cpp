@@ -75,6 +75,8 @@ bool systemCallback(nav_planner::systemControl::Request &request, nav_planner::s
 			ROS_ERROR("global_path_planner_node : failed to call service goalPosition");
 		}
 
+		srvRotate.request.angle = -3.14;
+
 		// rotate by 180 degrees
 		if (forwardClient.call(srvRotate)){
 			ROS_INFO("global_path_planner_node : second half rotated");

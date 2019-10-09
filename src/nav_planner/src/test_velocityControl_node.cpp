@@ -98,7 +98,7 @@ int main(int argc, char **argv)
     return 1;
   }
 
-  rotate.request.angle = 3.1415;
+  rotate.request.angle = 3.141;
   
   ROS_INFO("test_velocityControl_node : rotate requested");
 
@@ -111,7 +111,7 @@ int main(int argc, char **argv)
     return 1;
   }
 
-  rotate.request.angle = -3.1415;
+  rotate.request.angle = 3.141;
   
   ROS_INFO("test_velocityControl_node : rotate requested");
 
