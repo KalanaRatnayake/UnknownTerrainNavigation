@@ -34,7 +34,6 @@ int main(int argc, char **argv)
   ROS_INFO("test_velocityControl_node : forward requested");
 
   if (forwardClient.call(forward)){
-    ROS_INFO_STREAM(forward.response.success);
     ROS_INFO("test_velocityControl_node : response recieved");
     
   } else {
@@ -47,7 +46,6 @@ int main(int argc, char **argv)
   ROS_INFO("test_velocityControl_node : rotate requested");
 
   if (rotateClient.call(rotate)){
-    ROS_INFO_STREAM(rotate.response.success);
     ROS_INFO("test_velocityControl_node : response recieved");
     
   } else {
@@ -62,7 +60,6 @@ int main(int argc, char **argv)
   ROS_INFO("test_velocityControl_node : forward requested");
 
   if (forwardClient.call(forward)){
-    ROS_INFO_STREAM(forward.response.success);
     ROS_INFO("test_velocityControl_node : response recieved");
     
   } else {
@@ -75,7 +72,6 @@ int main(int argc, char **argv)
   ROS_INFO("test_velocityControl_node : rotate requested");
 
   if (rotateClient.call(rotate)){
-    ROS_INFO_STREAM(rotate.response.success);
     ROS_INFO("test_velocityControl_node : response recieved");
     
   } else {
@@ -90,7 +86,6 @@ int main(int argc, char **argv)
   ROS_INFO("test_velocityControl_node : forward requested");
 
   if (forwardClient.call(forward)){
-    ROS_INFO_STREAM(forward.response.success);
     ROS_INFO("test_velocityControl_node : response recieved");
     
   } else {
@@ -103,7 +98,6 @@ int main(int argc, char **argv)
   ROS_INFO("test_velocityControl_node : rotate requested");
 
   if (rotateClient.call(rotate)){
-    ROS_INFO_STREAM(rotate.response.success);
     ROS_INFO("test_velocityControl_node : response recieved");
     
   } else {
@@ -116,7 +110,6 @@ int main(int argc, char **argv)
   ROS_INFO("test_velocityControl_node : rotate requested");
 
   if (rotateClient.call(rotate)){
-    ROS_INFO_STREAM(rotate.response.success);
     ROS_INFO("test_velocityControl_node : response recieved");
     
   } else {
