@@ -7,7 +7,7 @@
   <arg name="3d_sensor" value="$(optenv TURTLEBOT_3D_SENSOR kinect)"/>  <!-- kinect, asus_xtion_pro --> 
   
   <include file="$(find gazebo_ros)/launch/empty_world.launch">
-    <arg name="world_name" value="$(find testworld_gazebo)/worlds/test_underpass.world"/>
+    <arg name="world_name" value="$(find testworld_gazebo)/worlds/test_walled.world"/>
   </include>
   
   <include file="$(find turtlebot_gazebo)/launch/includes/$(arg base).launch.xml">

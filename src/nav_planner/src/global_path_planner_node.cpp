@@ -52,6 +52,24 @@ bool systemCallback(nav_planner::systemControl::Request &request, nav_planner::s
 
 		double distance;
 
+		srvRotate.request.angle = 3.14;
+
+		// rotate by 180 degrees
+		if (forwardClient.call(srvRotate)){
+			ROS_INFO("global_path_planner_node : first half rotated");
+		} else {
+			ROS_ERROR("global_path_planner_node : failed to call service goalPosition");
+		}
+
+		srvRotate.request.angle = 3.14;
+
+		// rotate by 180 degrees
+		if (forwardClient.call(srvRotate)){
+			ROS_INFO("global_path_planner_node : second half rotated");
+		} else {
+			ROS_ERROR("global_path_planner_node : failed to call service goalPosition");
+		}
+
 		srvGoal.request.execute = true;
 
 		ROS_INFO("global_path_planner_node : requested goalPosition service");
@@ -62,24 +80,6 @@ bool systemCallback(nav_planner::systemControl::Request &request, nav_planner::s
 			goal = octomap::point3d(srvGoal.response.x, srvGoal.response.y, srvGoal.response.z);
 			plannerObject.updateGoalPoint(goal);
 
-		} else {
-			ROS_ERROR("global_path_planner_node : failed to call service goalPosition");
-		}
-
-		srvRotate.request.angle = 3.14;
-
-		// rotate by 180 degrees
-		if (forwardClient.call(srvRotate)){
-			ROS_INFO("global_path_planner_node : first half rotated");
-		} else {
-			ROS_ERROR("global_path_planner_node : failed to call service goalPosition");
-		}
-
-		srvRotate.request.angle = -3.14;
-
-		// rotate by 180 degrees
-		if (forwardClient.call(srvRotate)){
-			ROS_INFO("global_path_planner_node : second half rotated");
 		} else {
 			ROS_ERROR("global_path_planner_node : failed to call service goalPosition");
 		}
@@ -120,6 +120,10 @@ int main(int argc, char **argv)
 	ros::Subscriber pos_sub = node.subscribe("position", 1, currentPositionCallback);
 	
 	ROS_INFO("global_path_planner_node : created subscribers");
+
+	ros::service::waitForService("goalPosition");
+	ros::service::waitForService("baseForword");
+	ros::service::waitForService("baseRotate");
 
 	clientGoalPosition = node.serviceClient<nav_planner::goalControlRequest, nav_planner::goalControlResponse>("goalPosition");
 	forwardClient = node.serviceClient<nav_planner::baseDriveRequest, nav_planner::baseDriveResponse>("baseForword");

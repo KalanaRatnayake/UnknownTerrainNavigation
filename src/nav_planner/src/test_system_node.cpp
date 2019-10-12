@@ -9,6 +9,8 @@ int main(int argc, char **argv)
   
   ROS_INFO("test_system_node : Initiated");
 
+  ros::service::waitForService("System_Control");
+
   ros::ServiceClient client = n.serviceClient<nav_planner::systemControlRequest, nav_planner::systemControlResponse>("System_Control");
   
   ROS_INFO("test_system_node : client created");

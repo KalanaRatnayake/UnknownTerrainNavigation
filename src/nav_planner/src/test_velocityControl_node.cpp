@@ -18,6 +18,9 @@ int main(int argc, char **argv)
   ros::NodeHandle n;
   
   ROS_INFO("test_velocityControl_node : Initiated");
+  
+	ros::service::waitForService("baseForword");
+	ros::service::waitForService("baseRotate");
 
   ros::ServiceClient forwardClient = n.serviceClient<nav_planner::baseDriveRequest, nav_planner::baseDriveResponse>("baseForword");
   ros::ServiceClient rotateClient = n.serviceClient<nav_planner::baseRotateRequest, nav_planner::baseRotateResponse>("baseRotate");

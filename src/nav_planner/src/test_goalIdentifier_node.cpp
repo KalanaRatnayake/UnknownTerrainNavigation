@@ -10,6 +10,8 @@ int main(int argc, char **argv)
   
   ROS_INFO("test_goalPositionClient_node : Initiated");
 
+  ros::service::waitForService("goalPosition");
+
   ros::ServiceClient client = n.serviceClient<nav_planner::goalControlRequest, nav_planner::goalControlResponse>("goalPosition");
   
   ROS_INFO("test_goalPositionClient_node : client created");

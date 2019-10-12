@@ -56,8 +56,6 @@ void goal_identifier::discover_clusters(std::vector<octomap::point3d> &outCenter
             }
         }
 
-        ROS_INFO_STREAM(counter);
-
         if (counter>=(percentage*sideSize*sideSize*sideSize)){
             unknownPointsArray.push_back(centerPointsArray[i]);
         }

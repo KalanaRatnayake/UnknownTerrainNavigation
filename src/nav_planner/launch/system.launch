@@ -21,9 +21,9 @@
 		<remap from="position" to="/odom" />
   	</node>
 
-	<!-- <node pkg="nav_planner" type="global_path_planner_node" name="Global_Path_Planner" output="screen">
+	<node pkg="nav_planner" type="global_path_planner_node" name="Global_Path_Planner" output="screen">
 		<remap from="octomap" to="/octomap_full" />
 		<remap from="position" to="/odom" />
-  	</node> -->
+  	</node>
 </launch>
 

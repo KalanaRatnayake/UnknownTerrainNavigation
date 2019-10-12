@@ -1,22 +1,22 @@
 Determining if the pthread_create exist failed with the following output:
 Change Dir: /home/kalana/FYP/build_isolated/nav_planner/CMakeFiles/CMakeTmp
 
-Run Build Command:"/usr/bin/make" "cmTC_649fa/fast"
-/usr/bin/make -f CMakeFiles/cmTC_649fa.dir/build.make CMakeFiles/cmTC_649fa.dir/build
+Run Build Command:"/usr/bin/make" "cmTC_91b68/fast"
+/usr/bin/make -f CMakeFiles/cmTC_91b68.dir/build.make CMakeFiles/cmTC_91b68.dir/build
 make[1]: Entering directory '/home/kalana/FYP/build_isolated/nav_planner/CMakeFiles/CMakeTmp'
-Building C object CMakeFiles/cmTC_649fa.dir/CheckSymbolExists.c.o
-/usr/bin/cc     -o CMakeFiles/cmTC_649fa.dir/CheckSymbolExists.c.o   -c /home/kalana/FYP/build_isolated/nav_planner/CMakeFiles/CMakeTmp/CheckSymbolExists.c
-Linking C executable cmTC_649fa
-/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_649fa.dir/link.txt --verbose=1
-/usr/bin/cc       CMakeFiles/cmTC_649fa.dir/CheckSymbolExists.c.o  -o cmTC_649fa -rdynamic 
-CMakeFiles/cmTC_649fa.dir/CheckSymbolExists.c.o: In function `main':
+Building C object CMakeFiles/cmTC_91b68.dir/CheckSymbolExists.c.o
+/usr/bin/cc     -o CMakeFiles/cmTC_91b68.dir/CheckSymbolExists.c.o   -c /home/kalana/FYP/build_isolated/nav_planner/CMakeFiles/CMakeTmp/CheckSymbolExists.c
+Linking C executable cmTC_91b68
+/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_91b68.dir/link.txt --verbose=1
+/usr/bin/cc       CMakeFiles/cmTC_91b68.dir/CheckSymbolExists.c.o  -o cmTC_91b68 -rdynamic 
+CMakeFiles/cmTC_91b68.dir/CheckSymbolExists.c.o: In function `main':
 CheckSymbolExists.c:(.text+0x16): undefined reference to `pthread_create'
 collect2: error: ld returned 1 exit status
-CMakeFiles/cmTC_649fa.dir/build.make:97: recipe for target 'cmTC_649fa' failed
-make[1]: *** [cmTC_649fa] Error 1
+CMakeFiles/cmTC_91b68.dir/build.make:97: recipe for target 'cmTC_91b68' failed
+make[1]: *** [cmTC_91b68] Error 1
 make[1]: Leaving directory '/home/kalana/FYP/build_isolated/nav_planner/CMakeFiles/CMakeTmp'
-Makefile:126: recipe for target 'cmTC_649fa/fast' failed
-make: *** [cmTC_649fa/fast] Error 2
+Makefile:126: recipe for target 'cmTC_91b68/fast' failed
+make: *** [cmTC_91b68/fast] Error 2
 
 File /home/kalana/FYP/build_isolated/nav_planner/CMakeFiles/CMakeTmp/CheckSymbolExists.c:
 /* */
@@ -36,20 +36,20 @@ int main(int argc, char** argv)
 Determining if the function pthread_create exists in the pthreads failed with the following output:
 Change Dir: /home/kalana/FYP/build_isolated/nav_planner/CMakeFiles/CMakeTmp
 
-Run Build Command:"/usr/bin/make" "cmTC_a752e/fast"
-/usr/bin/make -f CMakeFiles/cmTC_a752e.dir/build.make CMakeFiles/cmTC_a752e.dir/build
+Run Build Command:"/usr/bin/make" "cmTC_30de1/fast"
+/usr/bin/make -f CMakeFiles/cmTC_30de1.dir/build.make CMakeFiles/cmTC_30de1.dir/build
 make[1]: Entering directory '/home/kalana/FYP/build_isolated/nav_planner/CMakeFiles/CMakeTmp'
-Building C object CMakeFiles/cmTC_a752e.dir/CheckFunctionExists.c.o
-/usr/bin/cc    -DCHECK_FUNCTION_EXISTS=pthread_create   -o CMakeFiles/cmTC_a752e.dir/CheckFunctionExists.c.o   -c /usr/share/cmake-3.5/Modules/CheckFunctionExists.c
-Linking C executable cmTC_a752e
-/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_a752e.dir/link.txt --verbose=1
-/usr/bin/cc   -DCHECK_FUNCTION_EXISTS=pthread_create    CMakeFiles/cmTC_a752e.dir/CheckFunctionExists.c.o  -o cmTC_a752e -rdynamic -lpthreads 
+Building C object CMakeFiles/cmTC_30de1.dir/CheckFunctionExists.c.o
+/usr/bin/cc    -DCHECK_FUNCTION_EXISTS=pthread_create   -o CMakeFiles/cmTC_30de1.dir/CheckFunctionExists.c.o   -c /usr/share/cmake-3.5/Modules/CheckFunctionExists.c
+Linking C executable cmTC_30de1
+/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_30de1.dir/link.txt --verbose=1
+/usr/bin/cc   -DCHECK_FUNCTION_EXISTS=pthread_create    CMakeFiles/cmTC_30de1.dir/CheckFunctionExists.c.o  -o cmTC_30de1 -rdynamic -lpthreads 
 /usr/bin/ld: cannot find -lpthreads
 collect2: error: ld returned 1 exit status
-CMakeFiles/cmTC_a752e.dir/build.make:97: recipe for target 'cmTC_a752e' failed
-make[1]: *** [cmTC_a752e] Error 1
+CMakeFiles/cmTC_30de1.dir/build.make:97: recipe for target 'cmTC_30de1' failed
+make[1]: *** [cmTC_30de1] Error 1
 make[1]: Leaving directory '/home/kalana/FYP/build_isolated/nav_planner/CMakeFiles/CMakeTmp'
-Makefile:126: recipe for target 'cmTC_a752e/fast' failed
-make: *** [cmTC_a752e/fast] Error 2
+Makefile:126: recipe for target 'cmTC_30de1/fast' failed
+make: *** [cmTC_30de1/fast] Error 2
 
 
