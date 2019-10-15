@@ -132,7 +132,6 @@ include_directories(
   ${OpenCV_INCLUDE_DIRS}  
   goal_identifier 
   goal_visualizer
-  global_path_planner
 )
 
 ## Declare a C++ library
@@ -158,10 +157,9 @@ add_executable(goal_visualizer_node
   goal_visualizer/goal_visualizer.cpp
 )
 
-add_executable(global_path_planner_node
-  src/global_path_planner_node.cpp
-  global_path_planner/global_path_planner.cpp
-)
+# add_executable(global_path_planner_node
+#   src/global_path_planner_node.cpp
+# )
 
 add_executable(velocity_control_node
   src/velocity_control_node.cpp
@@ -191,7 +189,7 @@ add_executable(test_system_node
 ## same as for the library above
 add_dependencies(goal_identifier_node ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
 add_dependencies(goal_visualizer_node ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
-add_dependencies(global_path_planner_node ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
+#add_dependencies(global_path_planner_node ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
 add_dependencies(velocity_control_node ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
 add_dependencies(test_goalIdentifier_node ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
 add_dependencies(test_velocityControl_node ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
@@ -208,10 +206,10 @@ target_link_libraries(goal_visualizer_node
   ${OCTOMAP_LIBRARIES}
 )
 
-target_link_libraries(global_path_planner_node 
-  ${catkin_LIBRARIES}
-  ${OCTOMAP_LIBRARIES}
-)
+# target_link_libraries(global_path_planner_node 
+#   ${catkin_LIBRARIES}
+#   ${OCTOMAP_LIBRARIES}
+# )
 
 target_link_libraries(velocity_control_node
   ${catkin_LIBRARIES}

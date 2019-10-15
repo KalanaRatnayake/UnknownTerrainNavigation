@@ -179,19 +179,6 @@ goal_visualizer_node/fast:
 .PHONY : goal_visualizer_node/fast
 
 #=============================================================================
-# Target rules for targets named global_path_planner_node
-
-# Build rule for target.
-global_path_planner_node: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 global_path_planner_node
-.PHONY : global_path_planner_node
-
-# fast build rule for target.
-global_path_planner_node/fast:
-	$(MAKE) -f CMakeFiles/global_path_planner_node.dir/build.make CMakeFiles/global_path_planner_node.dir/build
-.PHONY : global_path_planner_node/fast
-
-#=============================================================================
 # Target rules for targets named goal_identifier_node
 
 # Build rule for target.
@@ -1257,33 +1244,6 @@ gtest_main/fast:
 	$(MAKE) -f gtest/gtest/CMakeFiles/gtest_main.dir/build.make gtest/gtest/CMakeFiles/gtest_main.dir/build
 .PHONY : gtest_main/fast
 
-global_path_planner/global_path_planner.o: global_path_planner/global_path_planner.cpp.o
-
-.PHONY : global_path_planner/global_path_planner.o
-
-# target to build an object file
-global_path_planner/global_path_planner.cpp.o:
-	$(MAKE) -f CMakeFiles/global_path_planner_node.dir/build.make CMakeFiles/global_path_planner_node.dir/global_path_planner/global_path_planner.cpp.o
-.PHONY : global_path_planner/global_path_planner.cpp.o
-
-global_path_planner/global_path_planner.i: global_path_planner/global_path_planner.cpp.i
-
-.PHONY : global_path_planner/global_path_planner.i
-
-# target to preprocess a source file
-global_path_planner/global_path_planner.cpp.i:
-	$(MAKE) -f CMakeFiles/global_path_planner_node.dir/build.make CMakeFiles/global_path_planner_node.dir/global_path_planner/global_path_planner.cpp.i
-.PHONY : global_path_planner/global_path_planner.cpp.i
-
-global_path_planner/global_path_planner.s: global_path_planner/global_path_planner.cpp.s
-
-.PHONY : global_path_planner/global_path_planner.s
-
-# target to generate assembly for a file
-global_path_planner/global_path_planner.cpp.s:
-	$(MAKE) -f CMakeFiles/global_path_planner_node.dir/build.make CMakeFiles/global_path_planner_node.dir/global_path_planner/global_path_planner.cpp.s
-.PHONY : global_path_planner/global_path_planner.cpp.s
-
 goal_identifier/goal_identifier.o: goal_identifier/goal_identifier.cpp.o
 
 .PHONY : goal_identifier/goal_identifier.o
@@ -1337,33 +1297,6 @@ goal_visualizer/goal_visualizer.s: goal_visualizer/goal_visualizer.cpp.s
 goal_visualizer/goal_visualizer.cpp.s:
 	$(MAKE) -f CMakeFiles/goal_visualizer_node.dir/build.make CMakeFiles/goal_visualizer_node.dir/goal_visualizer/goal_visualizer.cpp.s
 .PHONY : goal_visualizer/goal_visualizer.cpp.s
-
-src/global_path_planner_node.o: src/global_path_planner_node.cpp.o
-
-.PHONY : src/global_path_planner_node.o
-
-# target to build an object file
-src/global_path_planner_node.cpp.o:
-	$(MAKE) -f CMakeFiles/global_path_planner_node.dir/build.make CMakeFiles/global_path_planner_node.dir/src/global_path_planner_node.cpp.o
-.PHONY : src/global_path_planner_node.cpp.o
-
-src/global_path_planner_node.i: src/global_path_planner_node.cpp.i
-
-.PHONY : src/global_path_planner_node.i
-
-# target to preprocess a source file
-src/global_path_planner_node.cpp.i:
-	$(MAKE) -f CMakeFiles/global_path_planner_node.dir/build.make CMakeFiles/global_path_planner_node.dir/src/global_path_planner_node.cpp.i
-.PHONY : src/global_path_planner_node.cpp.i
-
-src/global_path_planner_node.s: src/global_path_planner_node.cpp.s
-
-.PHONY : src/global_path_planner_node.s
-
-# target to generate assembly for a file
-src/global_path_planner_node.cpp.s:
-	$(MAKE) -f CMakeFiles/global_path_planner_node.dir/build.make CMakeFiles/global_path_planner_node.dir/src/global_path_planner_node.cpp.s
-.PHONY : src/global_path_planner_node.cpp.s
 
 src/goal_identifier_node.o: src/goal_identifier_node.cpp.o
 
@@ -1537,7 +1470,6 @@ help:
 	@echo "... install/local"
 	@echo "... install/strip"
 	@echo "... goal_visualizer_node"
-	@echo "... global_path_planner_node"
 	@echo "... goal_identifier_node"
 	@echo "... nav_planner_generate_messages_py"
 	@echo "... test_goalIdentifier_node"
@@ -1624,18 +1556,12 @@ help:
 	@echo "... gmock_main"
 	@echo "... gtest"
 	@echo "... gtest_main"
-	@echo "... global_path_planner/global_path_planner.o"
-	@echo "... global_path_planner/global_path_planner.i"
-	@echo "... global_path_planner/global_path_planner.s"
 	@echo "... goal_identifier/goal_identifier.o"
 	@echo "... goal_identifier/goal_identifier.i"
 	@echo "... goal_identifier/goal_identifier.s"
 	@echo "... goal_visualizer/goal_visualizer.o"
 	@echo "... goal_visualizer/goal_visualizer.i"
 	@echo "... goal_visualizer/goal_visualizer.s"
-	@echo "... src/global_path_planner_node.o"
-	@echo "... src/global_path_planner_node.i"
-	@echo "... src/global_path_planner_node.s"
 	@echo "... src/goal_identifier_node.o"
 	@echo "... src/goal_identifier_node.i"
 	@echo "... src/goal_identifier_node.s"

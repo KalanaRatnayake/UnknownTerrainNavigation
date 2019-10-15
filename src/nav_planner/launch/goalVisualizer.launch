@@ -5,4 +5,6 @@
 		<remap from="array" to="/centerArray" />
         <remap from="goal" to="/goalPoint" />
 	</node>
+
+	<node type="rviz" name="rviz" pkg="rviz" args="-d $(find nav_planner)/rviz/nav_planner.rviz" />
 </launch>
