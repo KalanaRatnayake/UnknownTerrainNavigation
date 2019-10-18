@@ -13,6 +13,7 @@
 #include <nav_planner/pointData.h>
 #include <nav_planner/pointDataArray.h>
 #include <nav_planner/goalControl.h>
+#include <nav_planner/goalRemove.h>
 
 #include <goal_identifier.h>
 
@@ -62,6 +63,21 @@ bool executionCallback(nav_planner::goalControl::Request &request, nav_planner::
 	return true;
 }
 
+bool removeCallback(nav_planner::goalRemove::Request &request, nav_planner::goalRemove::Response &response)
+{
+	ROS_INFO("goal_identifier_node : remove request received");
+
+	octomap::point3d point(request.x, request.y, request.z);
+
+	identifierObject.remove(point);
+
+	response.success = true;
+
+	ROS_INFO("goal_identifier_node : response sent");
+
+	return true;
+}
+
 
 /*  goal and centerPointArray which are returned by identifierObject is published in (nav_planner/goal) topic and 
 /   (nav_planner/centerArray). These utilize custom messages defined in 'msg' folder.
@@ -79,7 +95,8 @@ int main(int argc, char **argv)
 	
 	ROS_INFO("goal_identifier_node : created subscribers");
 
-	ros::ServiceServer service = node.advertiseService<nav_planner::goalControlRequest, nav_planner::goalControlResponse>("goalPosition", executionCallback);
+	ros::ServiceServer serviceFind = node.advertiseService<nav_planner::goalControlRequest, nav_planner::goalControlResponse>("goalPosition", executionCallback);
+	ros::ServiceServer serviceRemo = node.advertiseService<nav_planner::goalRemoveRequest, nav_planner::goalRemoveResponse>("goalRemove", removeCallback);
 	
 	ROS_INFO("goal_identifier_node : created service");
 

@@ -38,6 +38,9 @@ CMakeFiles/goal_identifier_node.dir/goal_identifier/goal_identifier.cpp.o: /opt/
 CMakeFiles/goal_identifier_node.dir/src/goal_identifier_node.cpp.o: /home/kalana/FYP/devel_isolated/nav_planner/include/nav_planner/goalControl.h
 CMakeFiles/goal_identifier_node.dir/src/goal_identifier_node.cpp.o: /home/kalana/FYP/devel_isolated/nav_planner/include/nav_planner/goalControlRequest.h
 CMakeFiles/goal_identifier_node.dir/src/goal_identifier_node.cpp.o: /home/kalana/FYP/devel_isolated/nav_planner/include/nav_planner/goalControlResponse.h
+CMakeFiles/goal_identifier_node.dir/src/goal_identifier_node.cpp.o: /home/kalana/FYP/devel_isolated/nav_planner/include/nav_planner/goalRemove.h
+CMakeFiles/goal_identifier_node.dir/src/goal_identifier_node.cpp.o: /home/kalana/FYP/devel_isolated/nav_planner/include/nav_planner/goalRemoveRequest.h
+CMakeFiles/goal_identifier_node.dir/src/goal_identifier_node.cpp.o: /home/kalana/FYP/devel_isolated/nav_planner/include/nav_planner/goalRemoveResponse.h
 CMakeFiles/goal_identifier_node.dir/src/goal_identifier_node.cpp.o: /home/kalana/FYP/devel_isolated/nav_planner/include/nav_planner/pointData.h
 CMakeFiles/goal_identifier_node.dir/src/goal_identifier_node.cpp.o: /home/kalana/FYP/devel_isolated/nav_planner/include/nav_planner/pointDataArray.h
 CMakeFiles/goal_identifier_node.dir/src/goal_identifier_node.cpp.o: /home/kalana/FYP/src/nav_planner/goal_identifier/goal_identifier.h

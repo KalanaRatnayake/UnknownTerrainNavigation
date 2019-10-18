@@ -9,6 +9,7 @@ class goal_identifier
     private:
         octomap::OcTree* tree;
         octomap::point3d position;
+        std::vector<octomap::point3d> ignorePoints;
         int xn, yn, zn;
         float resolution;
         float percentage;
@@ -24,4 +25,5 @@ class goal_identifier
         void update_position(octomap::point3d &currentPosition);
         void update_tree(octomap::OcTree* receivedTree);
         void calculate(std::vector<octomap::point3d> &centerPointsArray, octomap::point3d &goal);
+        void remove(octomap::point3d &point);
 };
