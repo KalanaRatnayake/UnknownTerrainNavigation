@@ -102,6 +102,10 @@ test_system_node_EXTERNAL_OBJECTS =
 /home/kalana/FYP/devel_isolated/nav_planner/lib/nav_planner/test_system_node: /usr/lib/x86_64-linux-gnu/libboost_signals.so
 /home/kalana/FYP/devel_isolated/nav_planner/lib/nav_planner/test_system_node: /opt/ros/kinetic/lib/libxmlrpcpp.so
 /home/kalana/FYP/devel_isolated/nav_planner/lib/nav_planner/test_system_node: /opt/ros/kinetic/lib/libtf2.so
+/home/kalana/FYP/devel_isolated/nav_planner/lib/nav_planner/test_system_node: /opt/ros/kinetic/lib/libcv_bridge.so
+/home/kalana/FYP/devel_isolated/nav_planner/lib/nav_planner/test_system_node: /opt/ros/kinetic/lib/x86_64-linux-gnu/libopencv_core3.so.3.3.1
+/home/kalana/FYP/devel_isolated/nav_planner/lib/nav_planner/test_system_node: /opt/ros/kinetic/lib/x86_64-linux-gnu/libopencv_imgproc3.so.3.3.1
+/home/kalana/FYP/devel_isolated/nav_planner/lib/nav_planner/test_system_node: /opt/ros/kinetic/lib/x86_64-linux-gnu/libopencv_imgcodecs3.so.3.3.1
 /home/kalana/FYP/devel_isolated/nav_planner/lib/nav_planner/test_system_node: /opt/ros/kinetic/lib/librosconsole.so
 /home/kalana/FYP/devel_isolated/nav_planner/lib/nav_planner/test_system_node: /opt/ros/kinetic/lib/librosconsole_log4cxx.so
 /home/kalana/FYP/devel_isolated/nav_planner/lib/nav_planner/test_system_node: /opt/ros/kinetic/lib/librosconsole_backend_interface.so
