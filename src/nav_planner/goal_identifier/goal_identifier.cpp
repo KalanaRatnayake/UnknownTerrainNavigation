@@ -70,93 +70,41 @@ void goal_identifier::discover_clusters(std::vector<octomap::point3d> &outCenter
 
 }
 
-void goal_identifier::find_nearest_cluster(std::vector<octomap::point3d>  &unknownClusterCenters, octomap::point3d &outCluster){
-
-    std::vector<octomap::point3d> lowerClusters;
-    std::vector<octomap::point3d> upperClusters;
+void goal_identifier::find_nearest_cluster(std::vector<octomap::point3d>  &unknownClusterCenters, octomap::point3d &outCluster, bool &completed){
     std::vector<octomap::point3d> selectedClusters;
 
     for(int i=0; i<unknownClusterCenters.size(); i++){
         octomap::point3d cluster = unknownClusterCenters[i];
 
-        if (cluster.z()>= height){
-            upperClusters.push_back(cluster);
-        } else {
-            lowerClusters.push_back(cluster);
-        }
+        if (cluster.z()<height) selectedClusters.push_back(cluster);
     }
+    
+    if (selectedClusters.size()>0){
+        octomap::point3d nearestCluster = selectedClusters[0];
 
-    if (lowerClusters.size()>0){
-        selectedClusters = lowerClusters;
+        float min_distance = sqrt(pow(position.x() - nearestCluster.x(), 2) + pow(position.y() - nearestCluster.y(), 2) + pow(position.z() - nearestCluster.z(), 2));
 
+        for(int i=0; i<selectedClusters.size(); i++){
+            octomap::point3d cluster = selectedClusters[i];
+
+            float distance = sqrt(pow(position.x() - cluster.x(), 2) + pow(position.y() - cluster.y(), 2) + pow(position.z() - cluster.z(), 2));
+
+            if (distance<min_distance){
+                min_distance = distance;
+                nearestCluster = cluster;
+            }
+        }
+
+        outCluster = nearestCluster;
+        completed = false;
     } else {
-        int upperLen = upperClusters.size();
-
-        for(int i=0; i<upperLen; i++){
-            octomap::point3d cluster = upperClusters[i];
-            octomap::point3d newClusterX, newClusterY;
-
-            newClusterX.z() = height/2;
-            newClusterX.y() = cluster.y();
-
-            float k = ((cluster.z()-(height*0.5))/ 0.36397) + cluster.x();  //divided by tan20 because verticle view angle of kinect is 43 degrees
-
-            if (k > (xn*sideSize*resolution)){
-                newClusterX.x() = (2*cluster.x()) - k;
-            } else {
-                newClusterX.x() = k;
-            }
-
-            octomap::OcTreeNode* resultX = tree->search(newClusterX); 
-
-            if (resultX != NULL){
-                if (!tree->isNodeOccupied(resultX)){
-                    selectedClusters.push_back(newClusterX);
-                }
-            }
-
-            newClusterY.z() = height/2;
-            newClusterY.x() = cluster.x();
-
-            float h = ((cluster.z()-(height*0.5))/ 0.36397) + cluster.y();   //divided by tan20 because verticle view angle of kinect is 43 degrees
-
-            if (h > (yn*sideSize*resolution)){
-                newClusterY.y() = (2*cluster.y()) - h;
-            } else {
-                newClusterY.y() = h;
-            }
-
-            octomap::OcTreeNode* resultY = tree->search(newClusterY); 
-
-            if (resultY != NULL){
-                if (!tree->isNodeOccupied(resultY)){
-                    selectedClusters.push_back(newClusterY);
-                }
-            }
-        }
+        octomap::point3d origin (0,0,0);
+        outCluster = origin;
+        completed = true;
     }
-        
-    octomap::point3d nearestCluster = selectedClusters[0];
-
-    float min_distance = sqrt(pow(position.x() - nearestCluster.x(), 2) + pow(position.y() - nearestCluster.y(), 2) + pow(position.z() - nearestCluster.z(), 2));
-
-    int lenM = selectedClusters.size();
-
-    for(int i=0; i<lenM; i++){
-        octomap::point3d cluster = selectedClusters[i];
-
-        float distance = sqrt(pow(position.x() - cluster.x(), 2) + pow(position.y() - cluster.y(), 2) + pow(position.z() - cluster.z(), 2));
-
-        if (distance<min_distance){
-            min_distance = distance;
-            nearestCluster = cluster;
-        }
-    }
-
-    outCluster = nearestCluster;
 }
 
-void goal_identifier::calculate(std::vector<octomap::point3d> &centerPointsArray, octomap::point3d &goal){
+void goal_identifier::calculate(std::vector<octomap::point3d> &centerPointsArray, octomap::point3d &goal, bool &completed){
 
     ROS_INFO("goal_identifier : started calculating");
 
@@ -164,12 +112,11 @@ void goal_identifier::calculate(std::vector<octomap::point3d> &centerPointsArray
 
     ROS_INFO("goal_identifier : created centerpoints array");
 
-    find_nearest_cluster(centerPointsArray, goal);
+    find_nearest_cluster(centerPointsArray, goal, completed);
 
     ROS_INFO("goal_identifier : completed calculating");
 }
 
 void goal_identifier::remove(octomap::point3d &point){
-
     ignorePoints.push_back(point);
 }

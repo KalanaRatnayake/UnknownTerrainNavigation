@@ -1,6 +1,6 @@
 # generated from genmsg/cmake/pkg-genmsg.cmake.em
 
-message(STATUS "nav_planner: 2 messages, 6 services")
+message(STATUS "nav_planner: 5 messages, 7 services")
 
 set(MSG_I_FLAGS "-Inav_planner:/home/kalana/FYP/src/nav_planner/msg;-Istd_msgs:/opt/ros/kinetic/share/std_msgs/cmake/../msg;-Ioctomap_msgs:/opt/ros/kinetic/share/octomap_msgs/cmake/../msg;-Igeometry_msgs:/opt/ros/kinetic/share/geometry_msgs/cmake/../msg")
 
@@ -17,19 +17,9 @@ add_custom_target(nav_planner_generate_messages ALL)
 
 
 
-get_filename_component(_filename "/home/kalana/FYP/src/nav_planner/srv/waterDetect.srv" NAME_WE)
+get_filename_component(_filename "/home/kalana/FYP/src/nav_planner/msg/gridPoint.msg" NAME_WE)
 add_custom_target(_nav_planner_generate_messages_check_deps_${_filename}
-  COMMAND ${CATKIN_ENV} ${PYTHON_EXECUTABLE} ${GENMSG_CHECK_DEPS_SCRIPT} "nav_planner" "/home/kalana/FYP/src/nav_planner/srv/waterDetect.srv" ""
-)
-
-get_filename_component(_filename "/home/kalana/FYP/src/nav_planner/msg/pointData.msg" NAME_WE)
-add_custom_target(_nav_planner_generate_messages_check_deps_${_filename}
-  COMMAND ${CATKIN_ENV} ${PYTHON_EXECUTABLE} ${GENMSG_CHECK_DEPS_SCRIPT} "nav_planner" "/home/kalana/FYP/src/nav_planner/msg/pointData.msg" ""
-)
-
-get_filename_component(_filename "/home/kalana/FYP/src/nav_planner/srv/systemControl.srv" NAME_WE)
-add_custom_target(_nav_planner_generate_messages_check_deps_${_filename}
-  COMMAND ${CATKIN_ENV} ${PYTHON_EXECUTABLE} ${GENMSG_CHECK_DEPS_SCRIPT} "nav_planner" "/home/kalana/FYP/src/nav_planner/srv/systemControl.srv" ""
+  COMMAND ${CATKIN_ENV} ${PYTHON_EXECUTABLE} ${GENMSG_CHECK_DEPS_SCRIPT} "nav_planner" "/home/kalana/FYP/src/nav_planner/msg/gridPoint.msg" ""
 )
 
 get_filename_component(_filename "/home/kalana/FYP/src/nav_planner/srv/goalControl.srv" NAME_WE)
@@ -37,9 +27,39 @@ add_custom_target(_nav_planner_generate_messages_check_deps_${_filename}
   COMMAND ${CATKIN_ENV} ${PYTHON_EXECUTABLE} ${GENMSG_CHECK_DEPS_SCRIPT} "nav_planner" "/home/kalana/FYP/src/nav_planner/srv/goalControl.srv" ""
 )
 
+get_filename_component(_filename "/home/kalana/FYP/src/nav_planner/srv/waterDetect.srv" NAME_WE)
+add_custom_target(_nav_planner_generate_messages_check_deps_${_filename}
+  COMMAND ${CATKIN_ENV} ${PYTHON_EXECUTABLE} ${GENMSG_CHECK_DEPS_SCRIPT} "nav_planner" "/home/kalana/FYP/src/nav_planner/srv/waterDetect.srv" ""
+)
+
 get_filename_component(_filename "/home/kalana/FYP/src/nav_planner/srv/goalRemove.srv" NAME_WE)
 add_custom_target(_nav_planner_generate_messages_check_deps_${_filename}
   COMMAND ${CATKIN_ENV} ${PYTHON_EXECUTABLE} ${GENMSG_CHECK_DEPS_SCRIPT} "nav_planner" "/home/kalana/FYP/src/nav_planner/srv/goalRemove.srv" ""
+)
+
+get_filename_component(_filename "/home/kalana/FYP/src/nav_planner/msg/pointData.msg" NAME_WE)
+add_custom_target(_nav_planner_generate_messages_check_deps_${_filename}
+  COMMAND ${CATKIN_ENV} ${PYTHON_EXECUTABLE} ${GENMSG_CHECK_DEPS_SCRIPT} "nav_planner" "/home/kalana/FYP/src/nav_planner/msg/pointData.msg" ""
+)
+
+get_filename_component(_filename "/home/kalana/FYP/src/nav_planner/msg/gridMap.msg" NAME_WE)
+add_custom_target(_nav_planner_generate_messages_check_deps_${_filename}
+  COMMAND ${CATKIN_ENV} ${PYTHON_EXECUTABLE} ${GENMSG_CHECK_DEPS_SCRIPT} "nav_planner" "/home/kalana/FYP/src/nav_planner/msg/gridMap.msg" "nav_planner/gridPoint:nav_planner/gridRow"
+)
+
+get_filename_component(_filename "/home/kalana/FYP/src/nav_planner/srv/mapSave.srv" NAME_WE)
+add_custom_target(_nav_planner_generate_messages_check_deps_${_filename}
+  COMMAND ${CATKIN_ENV} ${PYTHON_EXECUTABLE} ${GENMSG_CHECK_DEPS_SCRIPT} "nav_planner" "/home/kalana/FYP/src/nav_planner/srv/mapSave.srv" ""
+)
+
+get_filename_component(_filename "/home/kalana/FYP/src/nav_planner/srv/systemControl.srv" NAME_WE)
+add_custom_target(_nav_planner_generate_messages_check_deps_${_filename}
+  COMMAND ${CATKIN_ENV} ${PYTHON_EXECUTABLE} ${GENMSG_CHECK_DEPS_SCRIPT} "nav_planner" "/home/kalana/FYP/src/nav_planner/srv/systemControl.srv" ""
+)
+
+get_filename_component(_filename "/home/kalana/FYP/src/nav_planner/msg/pointDataArray.msg" NAME_WE)
+add_custom_target(_nav_planner_generate_messages_check_deps_${_filename}
+  COMMAND ${CATKIN_ENV} ${PYTHON_EXECUTABLE} ${GENMSG_CHECK_DEPS_SCRIPT} "nav_planner" "/home/kalana/FYP/src/nav_planner/msg/pointDataArray.msg" "nav_planner/pointData"
 )
 
 get_filename_component(_filename "/home/kalana/FYP/src/nav_planner/srv/baseRotate.srv" NAME_WE)
@@ -52,9 +72,9 @@ add_custom_target(_nav_planner_generate_messages_check_deps_${_filename}
   COMMAND ${CATKIN_ENV} ${PYTHON_EXECUTABLE} ${GENMSG_CHECK_DEPS_SCRIPT} "nav_planner" "/home/kalana/FYP/src/nav_planner/srv/baseDrive.srv" ""
 )
 
-get_filename_component(_filename "/home/kalana/FYP/src/nav_planner/msg/pointDataArray.msg" NAME_WE)
+get_filename_component(_filename "/home/kalana/FYP/src/nav_planner/msg/gridRow.msg" NAME_WE)
 add_custom_target(_nav_planner_generate_messages_check_deps_${_filename}
-  COMMAND ${CATKIN_ENV} ${PYTHON_EXECUTABLE} ${GENMSG_CHECK_DEPS_SCRIPT} "nav_planner" "/home/kalana/FYP/src/nav_planner/msg/pointDataArray.msg" "nav_planner/pointData"
+  COMMAND ${CATKIN_ENV} ${PYTHON_EXECUTABLE} ${GENMSG_CHECK_DEPS_SCRIPT} "nav_planner" "/home/kalana/FYP/src/nav_planner/msg/gridRow.msg" "nav_planner/gridPoint"
 )
 
 #
@@ -63,6 +83,24 @@ add_custom_target(_nav_planner_generate_messages_check_deps_${_filename}
 
 ### Section generating for lang: gencpp
 ### Generating Messages
+_generate_msg_cpp(nav_planner
+  "/home/kalana/FYP/src/nav_planner/msg/gridRow.msg"
+  "${MSG_I_FLAGS}"
+  "/home/kalana/FYP/src/nav_planner/msg/gridPoint.msg"
+  ${CATKIN_DEVEL_PREFIX}/${gencpp_INSTALL_DIR}/nav_planner
+)
+_generate_msg_cpp(nav_planner
+  "/home/kalana/FYP/src/nav_planner/msg/gridMap.msg"
+  "${MSG_I_FLAGS}"
+  "/home/kalana/FYP/src/nav_planner/msg/gridPoint.msg;/home/kalana/FYP/src/nav_planner/msg/gridRow.msg"
+  ${CATKIN_DEVEL_PREFIX}/${gencpp_INSTALL_DIR}/nav_planner
+)
+_generate_msg_cpp(nav_planner
+  "/home/kalana/FYP/src/nav_planner/msg/gridPoint.msg"
+  "${MSG_I_FLAGS}"
+  ""
+  ${CATKIN_DEVEL_PREFIX}/${gencpp_INSTALL_DIR}/nav_planner
+)
 _generate_msg_cpp(nav_planner
   "/home/kalana/FYP/src/nav_planner/msg/pointData.msg"
   "${MSG_I_FLAGS}"
@@ -85,6 +123,12 @@ _generate_srv_cpp(nav_planner
 )
 _generate_srv_cpp(nav_planner
   "/home/kalana/FYP/src/nav_planner/srv/systemControl.srv"
+  "${MSG_I_FLAGS}"
+  ""
+  ${CATKIN_DEVEL_PREFIX}/${gencpp_INSTALL_DIR}/nav_planner
+)
+_generate_srv_cpp(nav_planner
+  "/home/kalana/FYP/src/nav_planner/srv/mapSave.srv"
   "${MSG_I_FLAGS}"
   ""
   ${CATKIN_DEVEL_PREFIX}/${gencpp_INSTALL_DIR}/nav_planner
@@ -126,21 +170,29 @@ add_custom_target(nav_planner_generate_messages_cpp
 add_dependencies(nav_planner_generate_messages nav_planner_generate_messages_cpp)
 
 # add dependencies to all check dependencies targets
-get_filename_component(_filename "/home/kalana/FYP/src/nav_planner/srv/waterDetect.srv" NAME_WE)
-add_dependencies(nav_planner_generate_messages_cpp _nav_planner_generate_messages_check_deps_${_filename})
-get_filename_component(_filename "/home/kalana/FYP/src/nav_planner/msg/pointData.msg" NAME_WE)
-add_dependencies(nav_planner_generate_messages_cpp _nav_planner_generate_messages_check_deps_${_filename})
-get_filename_component(_filename "/home/kalana/FYP/src/nav_planner/srv/systemControl.srv" NAME_WE)
+get_filename_component(_filename "/home/kalana/FYP/src/nav_planner/msg/gridPoint.msg" NAME_WE)
 add_dependencies(nav_planner_generate_messages_cpp _nav_planner_generate_messages_check_deps_${_filename})
 get_filename_component(_filename "/home/kalana/FYP/src/nav_planner/srv/goalControl.srv" NAME_WE)
 add_dependencies(nav_planner_generate_messages_cpp _nav_planner_generate_messages_check_deps_${_filename})
+get_filename_component(_filename "/home/kalana/FYP/src/nav_planner/srv/waterDetect.srv" NAME_WE)
+add_dependencies(nav_planner_generate_messages_cpp _nav_planner_generate_messages_check_deps_${_filename})
 get_filename_component(_filename "/home/kalana/FYP/src/nav_planner/srv/goalRemove.srv" NAME_WE)
+add_dependencies(nav_planner_generate_messages_cpp _nav_planner_generate_messages_check_deps_${_filename})
+get_filename_component(_filename "/home/kalana/FYP/src/nav_planner/msg/pointData.msg" NAME_WE)
+add_dependencies(nav_planner_generate_messages_cpp _nav_planner_generate_messages_check_deps_${_filename})
+get_filename_component(_filename "/home/kalana/FYP/src/nav_planner/msg/gridMap.msg" NAME_WE)
+add_dependencies(nav_planner_generate_messages_cpp _nav_planner_generate_messages_check_deps_${_filename})
+get_filename_component(_filename "/home/kalana/FYP/src/nav_planner/srv/mapSave.srv" NAME_WE)
+add_dependencies(nav_planner_generate_messages_cpp _nav_planner_generate_messages_check_deps_${_filename})
+get_filename_component(_filename "/home/kalana/FYP/src/nav_planner/srv/systemControl.srv" NAME_WE)
+add_dependencies(nav_planner_generate_messages_cpp _nav_planner_generate_messages_check_deps_${_filename})
+get_filename_component(_filename "/home/kalana/FYP/src/nav_planner/msg/pointDataArray.msg" NAME_WE)
 add_dependencies(nav_planner_generate_messages_cpp _nav_planner_generate_messages_check_deps_${_filename})
 get_filename_component(_filename "/home/kalana/FYP/src/nav_planner/srv/baseRotate.srv" NAME_WE)
 add_dependencies(nav_planner_generate_messages_cpp _nav_planner_generate_messages_check_deps_${_filename})
 get_filename_component(_filename "/home/kalana/FYP/src/nav_planner/srv/baseDrive.srv" NAME_WE)
 add_dependencies(nav_planner_generate_messages_cpp _nav_planner_generate_messages_check_deps_${_filename})
-get_filename_component(_filename "/home/kalana/FYP/src/nav_planner/msg/pointDataArray.msg" NAME_WE)
+get_filename_component(_filename "/home/kalana/FYP/src/nav_planner/msg/gridRow.msg" NAME_WE)
 add_dependencies(nav_planner_generate_messages_cpp _nav_planner_generate_messages_check_deps_${_filename})
 
 # target for backward compatibility
@@ -152,6 +204,24 @@ list(APPEND ${PROJECT_NAME}_EXPORTED_TARGETS nav_planner_generate_messages_cpp)
 
 ### Section generating for lang: geneus
 ### Generating Messages
+_generate_msg_eus(nav_planner
+  "/home/kalana/FYP/src/nav_planner/msg/gridRow.msg"
+  "${MSG_I_FLAGS}"
+  "/home/kalana/FYP/src/nav_planner/msg/gridPoint.msg"
+  ${CATKIN_DEVEL_PREFIX}/${geneus_INSTALL_DIR}/nav_planner
+)
+_generate_msg_eus(nav_planner
+  "/home/kalana/FYP/src/nav_planner/msg/gridMap.msg"
+  "${MSG_I_FLAGS}"
+  "/home/kalana/FYP/src/nav_planner/msg/gridPoint.msg;/home/kalana/FYP/src/nav_planner/msg/gridRow.msg"
+  ${CATKIN_DEVEL_PREFIX}/${geneus_INSTALL_DIR}/nav_planner
+)
+_generate_msg_eus(nav_planner
+  "/home/kalana/FYP/src/nav_planner/msg/gridPoint.msg"
+  "${MSG_I_FLAGS}"
+  ""
+  ${CATKIN_DEVEL_PREFIX}/${geneus_INSTALL_DIR}/nav_planner
+)
 _generate_msg_eus(nav_planner
   "/home/kalana/FYP/src/nav_planner/msg/pointData.msg"
   "${MSG_I_FLAGS}"
@@ -174,6 +244,12 @@ _generate_srv_eus(nav_planner
 )
 _generate_srv_eus(nav_planner
   "/home/kalana/FYP/src/nav_planner/srv/systemControl.srv"
+  "${MSG_I_FLAGS}"
+  ""
+  ${CATKIN_DEVEL_PREFIX}/${geneus_INSTALL_DIR}/nav_planner
+)
+_generate_srv_eus(nav_planner
+  "/home/kalana/FYP/src/nav_planner/srv/mapSave.srv"
   "${MSG_I_FLAGS}"
   ""
   ${CATKIN_DEVEL_PREFIX}/${geneus_INSTALL_DIR}/nav_planner
@@ -215,21 +291,29 @@ add_custom_target(nav_planner_generate_messages_eus
 add_dependencies(nav_planner_generate_messages nav_planner_generate_messages_eus)
 
 # add dependencies to all check dependencies targets
-get_filename_component(_filename "/home/kalana/FYP/src/nav_planner/srv/waterDetect.srv" NAME_WE)
-add_dependencies(nav_planner_generate_messages_eus _nav_planner_generate_messages_check_deps_${_filename})
-get_filename_component(_filename "/home/kalana/FYP/src/nav_planner/msg/pointData.msg" NAME_WE)
-add_dependencies(nav_planner_generate_messages_eus _nav_planner_generate_messages_check_deps_${_filename})
-get_filename_component(_filename "/home/kalana/FYP/src/nav_planner/srv/systemControl.srv" NAME_WE)
+get_filename_component(_filename "/home/kalana/FYP/src/nav_planner/msg/gridPoint.msg" NAME_WE)
 add_dependencies(nav_planner_generate_messages_eus _nav_planner_generate_messages_check_deps_${_filename})
 get_filename_component(_filename "/home/kalana/FYP/src/nav_planner/srv/goalControl.srv" NAME_WE)
 add_dependencies(nav_planner_generate_messages_eus _nav_planner_generate_messages_check_deps_${_filename})
+get_filename_component(_filename "/home/kalana/FYP/src/nav_planner/srv/waterDetect.srv" NAME_WE)
+add_dependencies(nav_planner_generate_messages_eus _nav_planner_generate_messages_check_deps_${_filename})
 get_filename_component(_filename "/home/kalana/FYP/src/nav_planner/srv/goalRemove.srv" NAME_WE)
+add_dependencies(nav_planner_generate_messages_eus _nav_planner_generate_messages_check_deps_${_filename})
+get_filename_component(_filename "/home/kalana/FYP/src/nav_planner/msg/pointData.msg" NAME_WE)
+add_dependencies(nav_planner_generate_messages_eus _nav_planner_generate_messages_check_deps_${_filename})
+get_filename_component(_filename "/home/kalana/FYP/src/nav_planner/msg/gridMap.msg" NAME_WE)
+add_dependencies(nav_planner_generate_messages_eus _nav_planner_generate_messages_check_deps_${_filename})
+get_filename_component(_filename "/home/kalana/FYP/src/nav_planner/srv/mapSave.srv" NAME_WE)
+add_dependencies(nav_planner_generate_messages_eus _nav_planner_generate_messages_check_deps_${_filename})
+get_filename_component(_filename "/home/kalana/FYP/src/nav_planner/srv/systemControl.srv" NAME_WE)
+add_dependencies(nav_planner_generate_messages_eus _nav_planner_generate_messages_check_deps_${_filename})
+get_filename_component(_filename "/home/kalana/FYP/src/nav_planner/msg/pointDataArray.msg" NAME_WE)
 add_dependencies(nav_planner_generate_messages_eus _nav_planner_generate_messages_check_deps_${_filename})
 get_filename_component(_filename "/home/kalana/FYP/src/nav_planner/srv/baseRotate.srv" NAME_WE)
 add_dependencies(nav_planner_generate_messages_eus _nav_planner_generate_messages_check_deps_${_filename})
 get_filename_component(_filename "/home/kalana/FYP/src/nav_planner/srv/baseDrive.srv" NAME_WE)
 add_dependencies(nav_planner_generate_messages_eus _nav_planner_generate_messages_check_deps_${_filename})
-get_filename_component(_filename "/home/kalana/FYP/src/nav_planner/msg/pointDataArray.msg" NAME_WE)
+get_filename_component(_filename "/home/kalana/FYP/src/nav_planner/msg/gridRow.msg" NAME_WE)
 add_dependencies(nav_planner_generate_messages_eus _nav_planner_generate_messages_check_deps_${_filename})
 
 # target for backward compatibility
@@ -241,6 +325,24 @@ list(APPEND ${PROJECT_NAME}_EXPORTED_TARGETS nav_planner_generate_messages_eus)
 
 ### Section generating for lang: genlisp
 ### Generating Messages
+_generate_msg_lisp(nav_planner
+  "/home/kalana/FYP/src/nav_planner/msg/gridRow.msg"
+  "${MSG_I_FLAGS}"
+  "/home/kalana/FYP/src/nav_planner/msg/gridPoint.msg"
+  ${CATKIN_DEVEL_PREFIX}/${genlisp_INSTALL_DIR}/nav_planner
+)
+_generate_msg_lisp(nav_planner
+  "/home/kalana/FYP/src/nav_planner/msg/gridMap.msg"
+  "${MSG_I_FLAGS}"
+  "/home/kalana/FYP/src/nav_planner/msg/gridPoint.msg;/home/kalana/FYP/src/nav_planner/msg/gridRow.msg"
+  ${CATKIN_DEVEL_PREFIX}/${genlisp_INSTALL_DIR}/nav_planner
+)
+_generate_msg_lisp(nav_planner
+  "/home/kalana/FYP/src/nav_planner/msg/gridPoint.msg"
+  "${MSG_I_FLAGS}"
+  ""
+  ${CATKIN_DEVEL_PREFIX}/${genlisp_INSTALL_DIR}/nav_planner
+)
 _generate_msg_lisp(nav_planner
   "/home/kalana/FYP/src/nav_planner/msg/pointData.msg"
   "${MSG_I_FLAGS}"
@@ -263,6 +365,12 @@ _generate_srv_lisp(nav_planner
 )
 _generate_srv_lisp(nav_planner
   "/home/kalana/FYP/src/nav_planner/srv/systemControl.srv"
+  "${MSG_I_FLAGS}"
+  ""
+  ${CATKIN_DEVEL_PREFIX}/${genlisp_INSTALL_DIR}/nav_planner
+)
+_generate_srv_lisp(nav_planner
+  "/home/kalana/FYP/src/nav_planner/srv/mapSave.srv"
   "${MSG_I_FLAGS}"
   ""
   ${CATKIN_DEVEL_PREFIX}/${genlisp_INSTALL_DIR}/nav_planner
@@ -304,21 +412,29 @@ add_custom_target(nav_planner_generate_messages_lisp
 add_dependencies(nav_planner_generate_messages nav_planner_generate_messages_lisp)
 
 # add dependencies to all check dependencies targets
-get_filename_component(_filename "/home/kalana/FYP/src/nav_planner/srv/waterDetect.srv" NAME_WE)
-add_dependencies(nav_planner_generate_messages_lisp _nav_planner_generate_messages_check_deps_${_filename})
-get_filename_component(_filename "/home/kalana/FYP/src/nav_planner/msg/pointData.msg" NAME_WE)
-add_dependencies(nav_planner_generate_messages_lisp _nav_planner_generate_messages_check_deps_${_filename})
-get_filename_component(_filename "/home/kalana/FYP/src/nav_planner/srv/systemControl.srv" NAME_WE)
+get_filename_component(_filename "/home/kalana/FYP/src/nav_planner/msg/gridPoint.msg" NAME_WE)
 add_dependencies(nav_planner_generate_messages_lisp _nav_planner_generate_messages_check_deps_${_filename})
 get_filename_component(_filename "/home/kalana/FYP/src/nav_planner/srv/goalControl.srv" NAME_WE)
 add_dependencies(nav_planner_generate_messages_lisp _nav_planner_generate_messages_check_deps_${_filename})
+get_filename_component(_filename "/home/kalana/FYP/src/nav_planner/srv/waterDetect.srv" NAME_WE)
+add_dependencies(nav_planner_generate_messages_lisp _nav_planner_generate_messages_check_deps_${_filename})
 get_filename_component(_filename "/home/kalana/FYP/src/nav_planner/srv/goalRemove.srv" NAME_WE)
+add_dependencies(nav_planner_generate_messages_lisp _nav_planner_generate_messages_check_deps_${_filename})
+get_filename_component(_filename "/home/kalana/FYP/src/nav_planner/msg/pointData.msg" NAME_WE)
+add_dependencies(nav_planner_generate_messages_lisp _nav_planner_generate_messages_check_deps_${_filename})
+get_filename_component(_filename "/home/kalana/FYP/src/nav_planner/msg/gridMap.msg" NAME_WE)
+add_dependencies(nav_planner_generate_messages_lisp _nav_planner_generate_messages_check_deps_${_filename})
+get_filename_component(_filename "/home/kalana/FYP/src/nav_planner/srv/mapSave.srv" NAME_WE)
+add_dependencies(nav_planner_generate_messages_lisp _nav_planner_generate_messages_check_deps_${_filename})
+get_filename_component(_filename "/home/kalana/FYP/src/nav_planner/srv/systemControl.srv" NAME_WE)
+add_dependencies(nav_planner_generate_messages_lisp _nav_planner_generate_messages_check_deps_${_filename})
+get_filename_component(_filename "/home/kalana/FYP/src/nav_planner/msg/pointDataArray.msg" NAME_WE)
 add_dependencies(nav_planner_generate_messages_lisp _nav_planner_generate_messages_check_deps_${_filename})
 get_filename_component(_filename "/home/kalana/FYP/src/nav_planner/srv/baseRotate.srv" NAME_WE)
 add_dependencies(nav_planner_generate_messages_lisp _nav_planner_generate_messages_check_deps_${_filename})
 get_filename_component(_filename "/home/kalana/FYP/src/nav_planner/srv/baseDrive.srv" NAME_WE)
 add_dependencies(nav_planner_generate_messages_lisp _nav_planner_generate_messages_check_deps_${_filename})
-get_filename_component(_filename "/home/kalana/FYP/src/nav_planner/msg/pointDataArray.msg" NAME_WE)
+get_filename_component(_filename "/home/kalana/FYP/src/nav_planner/msg/gridRow.msg" NAME_WE)
 add_dependencies(nav_planner_generate_messages_lisp _nav_planner_generate_messages_check_deps_${_filename})
 
 # target for backward compatibility
@@ -330,6 +446,24 @@ list(APPEND ${PROJECT_NAME}_EXPORTED_TARGETS nav_planner_generate_messages_lisp)
 
 ### Section generating for lang: gennodejs
 ### Generating Messages
+_generate_msg_nodejs(nav_planner
+  "/home/kalana/FYP/src/nav_planner/msg/gridRow.msg"
+  "${MSG_I_FLAGS}"
+  "/home/kalana/FYP/src/nav_planner/msg/gridPoint.msg"
+  ${CATKIN_DEVEL_PREFIX}/${gennodejs_INSTALL_DIR}/nav_planner
+)
+_generate_msg_nodejs(nav_planner
+  "/home/kalana/FYP/src/nav_planner/msg/gridMap.msg"
+  "${MSG_I_FLAGS}"
+  "/home/kalana/FYP/src/nav_planner/msg/gridPoint.msg;/home/kalana/FYP/src/nav_planner/msg/gridRow.msg"
+  ${CATKIN_DEVEL_PREFIX}/${gennodejs_INSTALL_DIR}/nav_planner
+)
+_generate_msg_nodejs(nav_planner
+  "/home/kalana/FYP/src/nav_planner/msg/gridPoint.msg"
+  "${MSG_I_FLAGS}"
+  ""
+  ${CATKIN_DEVEL_PREFIX}/${gennodejs_INSTALL_DIR}/nav_planner
+)
 _generate_msg_nodejs(nav_planner
   "/home/kalana/FYP/src/nav_planner/msg/pointData.msg"
   "${MSG_I_FLAGS}"
@@ -352,6 +486,12 @@ _generate_srv_nodejs(nav_planner
 )
 _generate_srv_nodejs(nav_planner
   "/home/kalana/FYP/src/nav_planner/srv/systemControl.srv"
+  "${MSG_I_FLAGS}"
+  ""
+  ${CATKIN_DEVEL_PREFIX}/${gennodejs_INSTALL_DIR}/nav_planner
+)
+_generate_srv_nodejs(nav_planner
+  "/home/kalana/FYP/src/nav_planner/srv/mapSave.srv"
   "${MSG_I_FLAGS}"
   ""
   ${CATKIN_DEVEL_PREFIX}/${gennodejs_INSTALL_DIR}/nav_planner
@@ -393,21 +533,29 @@ add_custom_target(nav_planner_generate_messages_nodejs
 add_dependencies(nav_planner_generate_messages nav_planner_generate_messages_nodejs)
 
 # add dependencies to all check dependencies targets
-get_filename_component(_filename "/home/kalana/FYP/src/nav_planner/srv/waterDetect.srv" NAME_WE)
-add_dependencies(nav_planner_generate_messages_nodejs _nav_planner_generate_messages_check_deps_${_filename})
-get_filename_component(_filename "/home/kalana/FYP/src/nav_planner/msg/pointData.msg" NAME_WE)
-add_dependencies(nav_planner_generate_messages_nodejs _nav_planner_generate_messages_check_deps_${_filename})
-get_filename_component(_filename "/home/kalana/FYP/src/nav_planner/srv/systemControl.srv" NAME_WE)
+get_filename_component(_filename "/home/kalana/FYP/src/nav_planner/msg/gridPoint.msg" NAME_WE)
 add_dependencies(nav_planner_generate_messages_nodejs _nav_planner_generate_messages_check_deps_${_filename})
 get_filename_component(_filename "/home/kalana/FYP/src/nav_planner/srv/goalControl.srv" NAME_WE)
 add_dependencies(nav_planner_generate_messages_nodejs _nav_planner_generate_messages_check_deps_${_filename})
+get_filename_component(_filename "/home/kalana/FYP/src/nav_planner/srv/waterDetect.srv" NAME_WE)
+add_dependencies(nav_planner_generate_messages_nodejs _nav_planner_generate_messages_check_deps_${_filename})
 get_filename_component(_filename "/home/kalana/FYP/src/nav_planner/srv/goalRemove.srv" NAME_WE)
+add_dependencies(nav_planner_generate_messages_nodejs _nav_planner_generate_messages_check_deps_${_filename})
+get_filename_component(_filename "/home/kalana/FYP/src/nav_planner/msg/pointData.msg" NAME_WE)
+add_dependencies(nav_planner_generate_messages_nodejs _nav_planner_generate_messages_check_deps_${_filename})
+get_filename_component(_filename "/home/kalana/FYP/src/nav_planner/msg/gridMap.msg" NAME_WE)
+add_dependencies(nav_planner_generate_messages_nodejs _nav_planner_generate_messages_check_deps_${_filename})
+get_filename_component(_filename "/home/kalana/FYP/src/nav_planner/srv/mapSave.srv" NAME_WE)
+add_dependencies(nav_planner_generate_messages_nodejs _nav_planner_generate_messages_check_deps_${_filename})
+get_filename_component(_filename "/home/kalana/FYP/src/nav_planner/srv/systemControl.srv" NAME_WE)
+add_dependencies(nav_planner_generate_messages_nodejs _nav_planner_generate_messages_check_deps_${_filename})
+get_filename_component(_filename "/home/kalana/FYP/src/nav_planner/msg/pointDataArray.msg" NAME_WE)
 add_dependencies(nav_planner_generate_messages_nodejs _nav_planner_generate_messages_check_deps_${_filename})
 get_filename_component(_filename "/home/kalana/FYP/src/nav_planner/srv/baseRotate.srv" NAME_WE)
 add_dependencies(nav_planner_generate_messages_nodejs _nav_planner_generate_messages_check_deps_${_filename})
 get_filename_component(_filename "/home/kalana/FYP/src/nav_planner/srv/baseDrive.srv" NAME_WE)
 add_dependencies(nav_planner_generate_messages_nodejs _nav_planner_generate_messages_check_deps_${_filename})
-get_filename_component(_filename "/home/kalana/FYP/src/nav_planner/msg/pointDataArray.msg" NAME_WE)
+get_filename_component(_filename "/home/kalana/FYP/src/nav_planner/msg/gridRow.msg" NAME_WE)
 add_dependencies(nav_planner_generate_messages_nodejs _nav_planner_generate_messages_check_deps_${_filename})
 
 # target for backward compatibility
@@ -419,6 +567,24 @@ list(APPEND ${PROJECT_NAME}_EXPORTED_TARGETS nav_planner_generate_messages_nodej
 
 ### Section generating for lang: genpy
 ### Generating Messages
+_generate_msg_py(nav_planner
+  "/home/kalana/FYP/src/nav_planner/msg/gridRow.msg"
+  "${MSG_I_FLAGS}"
+  "/home/kalana/FYP/src/nav_planner/msg/gridPoint.msg"
+  ${CATKIN_DEVEL_PREFIX}/${genpy_INSTALL_DIR}/nav_planner
+)
+_generate_msg_py(nav_planner
+  "/home/kalana/FYP/src/nav_planner/msg/gridMap.msg"
+  "${MSG_I_FLAGS}"
+  "/home/kalana/FYP/src/nav_planner/msg/gridPoint.msg;/home/kalana/FYP/src/nav_planner/msg/gridRow.msg"
+  ${CATKIN_DEVEL_PREFIX}/${genpy_INSTALL_DIR}/nav_planner
+)
+_generate_msg_py(nav_planner
+  "/home/kalana/FYP/src/nav_planner/msg/gridPoint.msg"
+  "${MSG_I_FLAGS}"
+  ""
+  ${CATKIN_DEVEL_PREFIX}/${genpy_INSTALL_DIR}/nav_planner
+)
 _generate_msg_py(nav_planner
   "/home/kalana/FYP/src/nav_planner/msg/pointData.msg"
   "${MSG_I_FLAGS}"
@@ -441,6 +607,12 @@ _generate_srv_py(nav_planner
 )
 _generate_srv_py(nav_planner
   "/home/kalana/FYP/src/nav_planner/srv/systemControl.srv"
+  "${MSG_I_FLAGS}"
+  ""
+  ${CATKIN_DEVEL_PREFIX}/${genpy_INSTALL_DIR}/nav_planner
+)
+_generate_srv_py(nav_planner
+  "/home/kalana/FYP/src/nav_planner/srv/mapSave.srv"
   "${MSG_I_FLAGS}"
   ""
   ${CATKIN_DEVEL_PREFIX}/${genpy_INSTALL_DIR}/nav_planner
@@ -482,21 +654,29 @@ add_custom_target(nav_planner_generate_messages_py
 add_dependencies(nav_planner_generate_messages nav_planner_generate_messages_py)
 
 # add dependencies to all check dependencies targets
-get_filename_component(_filename "/home/kalana/FYP/src/nav_planner/srv/waterDetect.srv" NAME_WE)
-add_dependencies(nav_planner_generate_messages_py _nav_planner_generate_messages_check_deps_${_filename})
-get_filename_component(_filename "/home/kalana/FYP/src/nav_planner/msg/pointData.msg" NAME_WE)
-add_dependencies(nav_planner_generate_messages_py _nav_planner_generate_messages_check_deps_${_filename})
-get_filename_component(_filename "/home/kalana/FYP/src/nav_planner/srv/systemControl.srv" NAME_WE)
+get_filename_component(_filename "/home/kalana/FYP/src/nav_planner/msg/gridPoint.msg" NAME_WE)
 add_dependencies(nav_planner_generate_messages_py _nav_planner_generate_messages_check_deps_${_filename})
 get_filename_component(_filename "/home/kalana/FYP/src/nav_planner/srv/goalControl.srv" NAME_WE)
 add_dependencies(nav_planner_generate_messages_py _nav_planner_generate_messages_check_deps_${_filename})
+get_filename_component(_filename "/home/kalana/FYP/src/nav_planner/srv/waterDetect.srv" NAME_WE)
+add_dependencies(nav_planner_generate_messages_py _nav_planner_generate_messages_check_deps_${_filename})
 get_filename_component(_filename "/home/kalana/FYP/src/nav_planner/srv/goalRemove.srv" NAME_WE)
+add_dependencies(nav_planner_generate_messages_py _nav_planner_generate_messages_check_deps_${_filename})
+get_filename_component(_filename "/home/kalana/FYP/src/nav_planner/msg/pointData.msg" NAME_WE)
+add_dependencies(nav_planner_generate_messages_py _nav_planner_generate_messages_check_deps_${_filename})
+get_filename_component(_filename "/home/kalana/FYP/src/nav_planner/msg/gridMap.msg" NAME_WE)
+add_dependencies(nav_planner_generate_messages_py _nav_planner_generate_messages_check_deps_${_filename})
+get_filename_component(_filename "/home/kalana/FYP/src/nav_planner/srv/mapSave.srv" NAME_WE)
+add_dependencies(nav_planner_generate_messages_py _nav_planner_generate_messages_check_deps_${_filename})
+get_filename_component(_filename "/home/kalana/FYP/src/nav_planner/srv/systemControl.srv" NAME_WE)
+add_dependencies(nav_planner_generate_messages_py _nav_planner_generate_messages_check_deps_${_filename})
+get_filename_component(_filename "/home/kalana/FYP/src/nav_planner/msg/pointDataArray.msg" NAME_WE)
 add_dependencies(nav_planner_generate_messages_py _nav_planner_generate_messages_check_deps_${_filename})
 get_filename_component(_filename "/home/kalana/FYP/src/nav_planner/srv/baseRotate.srv" NAME_WE)
 add_dependencies(nav_planner_generate_messages_py _nav_planner_generate_messages_check_deps_${_filename})
 get_filename_component(_filename "/home/kalana/FYP/src/nav_planner/srv/baseDrive.srv" NAME_WE)
 add_dependencies(nav_planner_generate_messages_py _nav_planner_generate_messages_check_deps_${_filename})
-get_filename_component(_filename "/home/kalana/FYP/src/nav_planner/msg/pointDataArray.msg" NAME_WE)
+get_filename_component(_filename "/home/kalana/FYP/src/nav_planner/msg/gridRow.msg" NAME_WE)
 add_dependencies(nav_planner_generate_messages_py _nav_planner_generate_messages_check_deps_${_filename})
 
 # target for backward compatibility

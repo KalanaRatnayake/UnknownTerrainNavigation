@@ -48,15 +48,16 @@ void currentPositionCallback(const nav_msgs::OdometryConstPtr &msg)
 
 bool executionCallback(nav_planner::goalControl::Request &request, nav_planner::goalControl::Response &response)
 { 
+	bool completed;
+
 	ROS_INFO("goal_identifier_node : request received");
 
-	if (request.execute){
-		identifierObject.calculate(centerArray, goal);
-	}
+	if (request.execute) identifierObject.calculate(centerArray, goal, completed);
 
 	response.x = goal.x();
 	response.y = goal.y();
 	response.z = goal.z();
+	response.isNull = completed;
 
 	ROS_INFO("goal_identifier_node : response sent");
 

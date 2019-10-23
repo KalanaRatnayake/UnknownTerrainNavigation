@@ -24,18 +24,23 @@ struct goalControlResponse_
   typedef goalControlResponse_<ContainerAllocator> Type;
 
   goalControlResponse_()
-    : x(0.0)
+    : isNull(false)
+    , x(0.0)
     , y(0.0)
     , z(0.0)  {
     }
   goalControlResponse_(const ContainerAllocator& _alloc)
-    : x(0.0)
+    : isNull(false)
+    , x(0.0)
     , y(0.0)
     , z(0.0)  {
   (void)_alloc;
     }
 
 
+
+   typedef uint8_t _isNull_type;
+  _isNull_type isNull;
 
    typedef float _x_type;
   _x_type x;
@@ -124,12 +129,12 @@ struct MD5Sum< ::nav_planner::goalControlResponse_<ContainerAllocator> >
 {
   static const char* value()
   {
-    return "cc153912f1453b708d221682bc23d9ac";
+    return "4dba3313c0977b613eb2d8aab1137f2d";
   }
 
   static const char* value(const ::nav_planner::goalControlResponse_<ContainerAllocator>&) { return value(); }
-  static const uint64_t static_value1 = 0xcc153912f1453b70ULL;
-  static const uint64_t static_value2 = 0x8d221682bc23d9acULL;
+  static const uint64_t static_value1 = 0x4dba3313c0977b61ULL;
+  static const uint64_t static_value2 = 0x3eb2d8aab1137f2dULL;
 };
 
 template<class ContainerAllocator>
@@ -148,7 +153,8 @@ struct Definition< ::nav_planner::goalControlResponse_<ContainerAllocator> >
 {
   static const char* value()
   {
-    return "float32 x\n\
+    return "bool isNull\n\
+float32 x\n\
 float32 y\n\
 float32 z\n\
 \n\
@@ -170,6 +176,7 @@ namespace serialization
   {
     template<typename Stream, typename T> inline static void allInOne(Stream& stream, T m)
     {
+      stream.next(m.isNull);
       stream.next(m.x);
       stream.next(m.y);
       stream.next(m.z);
@@ -191,6 +198,8 @@ struct Printer< ::nav_planner::goalControlResponse_<ContainerAllocator> >
 {
   template<typename Stream> static void stream(Stream& s, const std::string& indent, const ::nav_planner::goalControlResponse_<ContainerAllocator>& v)
   {
+    s << indent << "isNull: ";
+    Printer<uint8_t>::stream(s, indent + "  ", v.isNull);
     s << indent << "x: ";
     Printer<float>::stream(s, indent + "  ", v.x);
     s << indent << "y: ";

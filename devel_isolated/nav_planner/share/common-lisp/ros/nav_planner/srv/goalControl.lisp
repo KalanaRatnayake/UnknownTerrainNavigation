@@ -43,10 +43,10 @@
   "nav_planner/goalControlRequest")
 (cl:defmethod roslisp-msg-protocol:md5sum ((type (cl:eql '<goalControl-request>)))
   "Returns md5sum for a message object of type '<goalControl-request>"
-  "4264199fe659d58fcdd2ad61fb4fcaec")
+  "775389b3da33dec3f4e147b9ecc0a538")
 (cl:defmethod roslisp-msg-protocol:md5sum ((type (cl:eql 'goalControl-request)))
   "Returns md5sum for a message object of type 'goalControl-request"
-  "4264199fe659d58fcdd2ad61fb4fcaec")
+  "775389b3da33dec3f4e147b9ecc0a538")
 (cl:defmethod roslisp-msg-protocol:message-definition ((type (cl:eql '<goalControl-request>)))
   "Returns full string definition for message of type '<goalControl-request>"
   (cl:format cl:nil "bool execute~%~%~%"))
@@ -65,7 +65,12 @@
 ;//! \htmlinclude goalControl-response.msg.html
 
 (cl:defclass <goalControl-response> (roslisp-msg-protocol:ros-message)
-  ((x
+  ((isNull
+    :reader isNull
+    :initarg :isNull
+    :type cl:boolean
+    :initform cl:nil)
+   (x
     :reader x
     :initarg :x
     :type cl:float
@@ -90,6 +95,11 @@
   (cl:unless (cl:typep m 'goalControl-response)
     (roslisp-msg-protocol:msg-deprecation-warning "using old message class name nav_planner-srv:<goalControl-response> is deprecated: use nav_planner-srv:goalControl-response instead.")))
 
+(cl:ensure-generic-function 'isNull-val :lambda-list '(m))
+(cl:defmethod isNull-val ((m <goalControl-response>))
+  (roslisp-msg-protocol:msg-deprecation-warning "Using old-style slot reader nav_planner-srv:isNull-val is deprecated.  Use nav_planner-srv:isNull instead.")
+  (isNull m))
+
 (cl:ensure-generic-function 'x-val :lambda-list '(m))
 (cl:defmethod x-val ((m <goalControl-response>))
   (roslisp-msg-protocol:msg-deprecation-warning "Using old-style slot reader nav_planner-srv:x-val is deprecated.  Use nav_planner-srv:x instead.")
@@ -106,6 +116,7 @@
   (z m))
 (cl:defmethod roslisp-msg-protocol:serialize ((msg <goalControl-response>) ostream)
   "Serializes a message object of type '<goalControl-response>"
+  (cl:write-byte (cl:ldb (cl:byte 8 0) (cl:if (cl:slot-value msg 'isNull) 1 0)) ostream)
   (cl:let ((bits (roslisp-utils:encode-single-float-bits (cl:slot-value msg 'x))))
     (cl:write-byte (cl:ldb (cl:byte 8 0) bits) ostream)
     (cl:write-byte (cl:ldb (cl:byte 8 8) bits) ostream)
@@ -124,6 +135,7 @@
 )
 (cl:defmethod roslisp-msg-protocol:deserialize ((msg <goalControl-response>) istream)
   "Deserializes a message object of type '<goalControl-response>"
+    (cl:setf (cl:slot-value msg 'isNull) (cl:not (cl:zerop (cl:read-byte istream))))
     (cl:let ((bits 0))
       (cl:setf (cl:ldb (cl:byte 8 0) bits) (cl:read-byte istream))
       (cl:setf (cl:ldb (cl:byte 8 8) bits) (cl:read-byte istream))
@@ -152,18 +164,19 @@
   "nav_planner/goalControlResponse")
 (cl:defmethod roslisp-msg-protocol:md5sum ((type (cl:eql '<goalControl-response>)))
   "Returns md5sum for a message object of type '<goalControl-response>"
-  "4264199fe659d58fcdd2ad61fb4fcaec")
+  "775389b3da33dec3f4e147b9ecc0a538")
 (cl:defmethod roslisp-msg-protocol:md5sum ((type (cl:eql 'goalControl-response)))
   "Returns md5sum for a message object of type 'goalControl-response"
-  "4264199fe659d58fcdd2ad61fb4fcaec")
+  "775389b3da33dec3f4e147b9ecc0a538")
 (cl:defmethod roslisp-msg-protocol:message-definition ((type (cl:eql '<goalControl-response>)))
   "Returns full string definition for message of type '<goalControl-response>"
-  (cl:format cl:nil "float32 x~%float32 y~%float32 z~%~%~%~%"))
+  (cl:format cl:nil "bool isNull~%float32 x~%float32 y~%float32 z~%~%~%~%"))
 (cl:defmethod roslisp-msg-protocol:message-definition ((type (cl:eql 'goalControl-response)))
   "Returns full string definition for message of type 'goalControl-response"
-  (cl:format cl:nil "float32 x~%float32 y~%float32 z~%~%~%~%"))
+  (cl:format cl:nil "bool isNull~%float32 x~%float32 y~%float32 z~%~%~%~%"))
 (cl:defmethod roslisp-msg-protocol:serialization-length ((msg <goalControl-response>))
   (cl:+ 0
+     1
      4
      4
      4
@@ -171,6 +184,7 @@
 (cl:defmethod roslisp-msg-protocol:ros-message-to-list ((msg <goalControl-response>))
   "Converts a ROS message object to a list"
   (cl:list 'goalControl-response
+    (cl:cons ':isNull (isNull msg))
     (cl:cons ':x (x msg))
     (cl:cons ':y (y msg))
     (cl:cons ':z (z msg))

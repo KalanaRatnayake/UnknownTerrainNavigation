@@ -57,20 +57,25 @@
 
 (defclass nav_planner::goalControlResponse
   :super ros::object
-  :slots (_x _y _z ))
+  :slots (_isNull _x _y _z ))
 
 (defmethod nav_planner::goalControlResponse
   (:init
    (&key
+    ((:isNull __isNull) nil)
     ((:x __x) 0.0)
     ((:y __y) 0.0)
     ((:z __z) 0.0)
     )
    (send-super :init)
+   (setq _isNull __isNull)
    (setq _x (float __x))
    (setq _y (float __y))
    (setq _z (float __z))
    self)
+  (:isNull
+   (&optional __isNull)
+   (if __isNull (setq _isNull __isNull)) _isNull)
   (:x
    (&optional __x)
    (if __x (setq _x __x)) _x)
@@ -83,6 +88,8 @@
   (:serialization-length
    ()
    (+
+    ;; bool _isNull
+    1
     ;; float32 _x
     4
     ;; float32 _y
@@ -94,6 +101,8 @@
    (&optional strm)
    (let ((s (if strm strm
               (make-string-output-stream (send self :serialization-length)))))
+     ;; bool _isNull
+       (if _isNull (write-byte -1 s) (write-byte 0 s))
      ;; float32 _x
        (sys::poke _x (send s :buffer) (send s :count) :float) (incf (stream-count s) 4)
      ;; float32 _y
@@ -104,6 +113,8 @@
      (if (null strm) (get-output-stream-string s))))
   (:deserialize
    (buf &optional (ptr- 0))
+   ;; bool _isNull
+     (setq _isNull (not (= 0 (sys::peek buf ptr- :char)))) (incf ptr- 1)
    ;; float32 _x
      (setq _x (sys::peek buf ptr- :float)) (incf ptr- 4)
    ;; float32 _y
@@ -118,7 +129,7 @@
   :super ros::object
   :slots ())
 
-(setf (get nav_planner::goalControl :md5sum-) "4264199fe659d58fcdd2ad61fb4fcaec")
+(setf (get nav_planner::goalControl :md5sum-) "775389b3da33dec3f4e147b9ecc0a538")
 (setf (get nav_planner::goalControl :datatype-) "nav_planner/goalControl")
 (setf (get nav_planner::goalControl :request) nav_planner::goalControlRequest)
 (setf (get nav_planner::goalControl :response) nav_planner::goalControlResponse)
@@ -126,22 +137,24 @@
 (defmethod nav_planner::goalControlRequest
   (:response () (instance nav_planner::goalControlResponse :init)))
 
-(setf (get nav_planner::goalControlRequest :md5sum-) "4264199fe659d58fcdd2ad61fb4fcaec")
+(setf (get nav_planner::goalControlRequest :md5sum-) "775389b3da33dec3f4e147b9ecc0a538")
 (setf (get nav_planner::goalControlRequest :datatype-) "nav_planner/goalControlRequest")
 (setf (get nav_planner::goalControlRequest :definition-)
       "bool execute
 ---
+bool isNull
 float32 x
 float32 y
 float32 z
 
 ")
 
-(setf (get nav_planner::goalControlResponse :md5sum-) "4264199fe659d58fcdd2ad61fb4fcaec")
+(setf (get nav_planner::goalControlResponse :md5sum-) "775389b3da33dec3f4e147b9ecc0a538")
 (setf (get nav_planner::goalControlResponse :datatype-) "nav_planner/goalControlResponse")
 (setf (get nav_planner::goalControlResponse :definition-)
       "bool execute
 ---
+bool isNull
 float32 x
 float32 y
 float32 z
@@ -150,6 +163,6 @@ float32 z
 
 
 
-(provide :nav_planner/goalControl "4264199fe659d58fcdd2ad61fb4fcaec")
+(provide :nav_planner/goalControl "775389b3da33dec3f4e147b9ecc0a538")
 
 

@@ -53,76 +53,112 @@ CMAKE_BINARY_DIR = /home/kalana/FYP/build_isolated/nav_planner
 # Include the progress variables for this target.
 include CMakeFiles/nav_planner_generate_messages_cpp.dir/progress.make
 
+CMakeFiles/nav_planner_generate_messages_cpp: /home/kalana/FYP/devel_isolated/nav_planner/include/nav_planner/gridRow.h
+CMakeFiles/nav_planner_generate_messages_cpp: /home/kalana/FYP/devel_isolated/nav_planner/include/nav_planner/gridMap.h
+CMakeFiles/nav_planner_generate_messages_cpp: /home/kalana/FYP/devel_isolated/nav_planner/include/nav_planner/gridPoint.h
 CMakeFiles/nav_planner_generate_messages_cpp: /home/kalana/FYP/devel_isolated/nav_planner/include/nav_planner/pointData.h
 CMakeFiles/nav_planner_generate_messages_cpp: /home/kalana/FYP/devel_isolated/nav_planner/include/nav_planner/pointDataArray.h
 CMakeFiles/nav_planner_generate_messages_cpp: /home/kalana/FYP/devel_isolated/nav_planner/include/nav_planner/waterDetect.h
 CMakeFiles/nav_planner_generate_messages_cpp: /home/kalana/FYP/devel_isolated/nav_planner/include/nav_planner/systemControl.h
+CMakeFiles/nav_planner_generate_messages_cpp: /home/kalana/FYP/devel_isolated/nav_planner/include/nav_planner/mapSave.h
 CMakeFiles/nav_planner_generate_messages_cpp: /home/kalana/FYP/devel_isolated/nav_planner/include/nav_planner/goalControl.h
 CMakeFiles/nav_planner_generate_messages_cpp: /home/kalana/FYP/devel_isolated/nav_planner/include/nav_planner/baseRotate.h
 CMakeFiles/nav_planner_generate_messages_cpp: /home/kalana/FYP/devel_isolated/nav_planner/include/nav_planner/baseDrive.h
 CMakeFiles/nav_planner_generate_messages_cpp: /home/kalana/FYP/devel_isolated/nav_planner/include/nav_planner/goalRemove.h
 
 
+/home/kalana/FYP/devel_isolated/nav_planner/include/nav_planner/gridRow.h: /opt/ros/kinetic/lib/gencpp/gen_cpp.py
+/home/kalana/FYP/devel_isolated/nav_planner/include/nav_planner/gridRow.h: /home/kalana/FYP/src/nav_planner/msg/gridRow.msg
+/home/kalana/FYP/devel_isolated/nav_planner/include/nav_planner/gridRow.h: /home/kalana/FYP/src/nav_planner/msg/gridPoint.msg
+/home/kalana/FYP/devel_isolated/nav_planner/include/nav_planner/gridRow.h: /opt/ros/kinetic/share/gencpp/msg.h.template
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/home/kalana/FYP/build_isolated/nav_planner/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Generating C++ code from nav_planner/gridRow.msg"
+	cd /home/kalana/FYP/src/nav_planner && /home/kalana/FYP/build_isolated/nav_planner/catkin_generated/env_cached.sh /usr/bin/python /opt/ros/kinetic/share/gencpp/cmake/../../../lib/gencpp/gen_cpp.py /home/kalana/FYP/src/nav_planner/msg/gridRow.msg -Inav_planner:/home/kalana/FYP/src/nav_planner/msg -Istd_msgs:/opt/ros/kinetic/share/std_msgs/cmake/../msg -Ioctomap_msgs:/opt/ros/kinetic/share/octomap_msgs/cmake/../msg -Igeometry_msgs:/opt/ros/kinetic/share/geometry_msgs/cmake/../msg -p nav_planner -o /home/kalana/FYP/devel_isolated/nav_planner/include/nav_planner -e /opt/ros/kinetic/share/gencpp/cmake/..
+
+/home/kalana/FYP/devel_isolated/nav_planner/include/nav_planner/gridMap.h: /opt/ros/kinetic/lib/gencpp/gen_cpp.py
+/home/kalana/FYP/devel_isolated/nav_planner/include/nav_planner/gridMap.h: /home/kalana/FYP/src/nav_planner/msg/gridMap.msg
+/home/kalana/FYP/devel_isolated/nav_planner/include/nav_planner/gridMap.h: /home/kalana/FYP/src/nav_planner/msg/gridPoint.msg
+/home/kalana/FYP/devel_isolated/nav_planner/include/nav_planner/gridMap.h: /home/kalana/FYP/src/nav_planner/msg/gridRow.msg
+/home/kalana/FYP/devel_isolated/nav_planner/include/nav_planner/gridMap.h: /opt/ros/kinetic/share/gencpp/msg.h.template
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/home/kalana/FYP/build_isolated/nav_planner/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Generating C++ code from nav_planner/gridMap.msg"
+	cd /home/kalana/FYP/src/nav_planner && /home/kalana/FYP/build_isolated/nav_planner/catkin_generated/env_cached.sh /usr/bin/python /opt/ros/kinetic/share/gencpp/cmake/../../../lib/gencpp/gen_cpp.py /home/kalana/FYP/src/nav_planner/msg/gridMap.msg -Inav_planner:/home/kalana/FYP/src/nav_planner/msg -Istd_msgs:/opt/ros/kinetic/share/std_msgs/cmake/../msg -Ioctomap_msgs:/opt/ros/kinetic/share/octomap_msgs/cmake/../msg -Igeometry_msgs:/opt/ros/kinetic/share/geometry_msgs/cmake/../msg -p nav_planner -o /home/kalana/FYP/devel_isolated/nav_planner/include/nav_planner -e /opt/ros/kinetic/share/gencpp/cmake/..
+
+/home/kalana/FYP/devel_isolated/nav_planner/include/nav_planner/gridPoint.h: /opt/ros/kinetic/lib/gencpp/gen_cpp.py
+/home/kalana/FYP/devel_isolated/nav_planner/include/nav_planner/gridPoint.h: /home/kalana/FYP/src/nav_planner/msg/gridPoint.msg
+/home/kalana/FYP/devel_isolated/nav_planner/include/nav_planner/gridPoint.h: /opt/ros/kinetic/share/gencpp/msg.h.template
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/home/kalana/FYP/build_isolated/nav_planner/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Generating C++ code from nav_planner/gridPoint.msg"
+	cd /home/kalana/FYP/src/nav_planner && /home/kalana/FYP/build_isolated/nav_planner/catkin_generated/env_cached.sh /usr/bin/python /opt/ros/kinetic/share/gencpp/cmake/../../../lib/gencpp/gen_cpp.py /home/kalana/FYP/src/nav_planner/msg/gridPoint.msg -Inav_planner:/home/kalana/FYP/src/nav_planner/msg -Istd_msgs:/opt/ros/kinetic/share/std_msgs/cmake/../msg -Ioctomap_msgs:/opt/ros/kinetic/share/octomap_msgs/cmake/../msg -Igeometry_msgs:/opt/ros/kinetic/share/geometry_msgs/cmake/../msg -p nav_planner -o /home/kalana/FYP/devel_isolated/nav_planner/include/nav_planner -e /opt/ros/kinetic/share/gencpp/cmake/..
+
 /home/kalana/FYP/devel_isolated/nav_planner/include/nav_planner/pointData.h: /opt/ros/kinetic/lib/gencpp/gen_cpp.py
 /home/kalana/FYP/devel_isolated/nav_planner/include/nav_planner/pointData.h: /home/kalana/FYP/src/nav_planner/msg/pointData.msg
 /home/kalana/FYP/devel_isolated/nav_planner/include/nav_planner/pointData.h: /opt/ros/kinetic/share/gencpp/msg.h.template
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/home/kalana/FYP/build_isolated/nav_planner/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Generating C++ code from nav_planner/pointData.msg"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/home/kalana/FYP/build_isolated/nav_planner/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Generating C++ code from nav_planner/pointData.msg"
 	cd /home/kalana/FYP/src/nav_planner && /home/kalana/FYP/build_isolated/nav_planner/catkin_generated/env_cached.sh /usr/bin/python /opt/ros/kinetic/share/gencpp/cmake/../../../lib/gencpp/gen_cpp.py /home/kalana/FYP/src/nav_planner/msg/pointData.msg -Inav_planner:/home/kalana/FYP/src/nav_planner/msg -Istd_msgs:/opt/ros/kinetic/share/std_msgs/cmake/../msg -Ioctomap_msgs:/opt/ros/kinetic/share/octomap_msgs/cmake/../msg -Igeometry_msgs:/opt/ros/kinetic/share/geometry_msgs/cmake/../msg -p nav_planner -o /home/kalana/FYP/devel_isolated/nav_planner/include/nav_planner -e /opt/ros/kinetic/share/gencpp/cmake/..
 
 /home/kalana/FYP/devel_isolated/nav_planner/include/nav_planner/pointDataArray.h: /opt/ros/kinetic/lib/gencpp/gen_cpp.py
 /home/kalana/FYP/devel_isolated/nav_planner/include/nav_planner/pointDataArray.h: /home/kalana/FYP/src/nav_planner/msg/pointDataArray.msg
 /home/kalana/FYP/devel_isolated/nav_planner/include/nav_planner/pointDataArray.h: /home/kalana/FYP/src/nav_planner/msg/pointData.msg
 /home/kalana/FYP/devel_isolated/nav_planner/include/nav_planner/pointDataArray.h: /opt/ros/kinetic/share/gencpp/msg.h.template
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/home/kalana/FYP/build_isolated/nav_planner/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Generating C++ code from nav_planner/pointDataArray.msg"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/home/kalana/FYP/build_isolated/nav_planner/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Generating C++ code from nav_planner/pointDataArray.msg"
 	cd /home/kalana/FYP/src/nav_planner && /home/kalana/FYP/build_isolated/nav_planner/catkin_generated/env_cached.sh /usr/bin/python /opt/ros/kinetic/share/gencpp/cmake/../../../lib/gencpp/gen_cpp.py /home/kalana/FYP/src/nav_planner/msg/pointDataArray.msg -Inav_planner:/home/kalana/FYP/src/nav_planner/msg -Istd_msgs:/opt/ros/kinetic/share/std_msgs/cmake/../msg -Ioctomap_msgs:/opt/ros/kinetic/share/octomap_msgs/cmake/../msg -Igeometry_msgs:/opt/ros/kinetic/share/geometry_msgs/cmake/../msg -p nav_planner -o /home/kalana/FYP/devel_isolated/nav_planner/include/nav_planner -e /opt/ros/kinetic/share/gencpp/cmake/..
 
 /home/kalana/FYP/devel_isolated/nav_planner/include/nav_planner/waterDetect.h: /opt/ros/kinetic/lib/gencpp/gen_cpp.py
 /home/kalana/FYP/devel_isolated/nav_planner/include/nav_planner/waterDetect.h: /home/kalana/FYP/src/nav_planner/srv/waterDetect.srv
 /home/kalana/FYP/devel_isolated/nav_planner/include/nav_planner/waterDetect.h: /opt/ros/kinetic/share/gencpp/msg.h.template
 /home/kalana/FYP/devel_isolated/nav_planner/include/nav_planner/waterDetect.h: /opt/ros/kinetic/share/gencpp/srv.h.template
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/home/kalana/FYP/build_isolated/nav_planner/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Generating C++ code from nav_planner/waterDetect.srv"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/home/kalana/FYP/build_isolated/nav_planner/CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Generating C++ code from nav_planner/waterDetect.srv"
 	cd /home/kalana/FYP/src/nav_planner && /home/kalana/FYP/build_isolated/nav_planner/catkin_generated/env_cached.sh /usr/bin/python /opt/ros/kinetic/share/gencpp/cmake/../../../lib/gencpp/gen_cpp.py /home/kalana/FYP/src/nav_planner/srv/waterDetect.srv -Inav_planner:/home/kalana/FYP/src/nav_planner/msg -Istd_msgs:/opt/ros/kinetic/share/std_msgs/cmake/../msg -Ioctomap_msgs:/opt/ros/kinetic/share/octomap_msgs/cmake/../msg -Igeometry_msgs:/opt/ros/kinetic/share/geometry_msgs/cmake/../msg -p nav_planner -o /home/kalana/FYP/devel_isolated/nav_planner/include/nav_planner -e /opt/ros/kinetic/share/gencpp/cmake/..
 
 /home/kalana/FYP/devel_isolated/nav_planner/include/nav_planner/systemControl.h: /opt/ros/kinetic/lib/gencpp/gen_cpp.py
 /home/kalana/FYP/devel_isolated/nav_planner/include/nav_planner/systemControl.h: /home/kalana/FYP/src/nav_planner/srv/systemControl.srv
 /home/kalana/FYP/devel_isolated/nav_planner/include/nav_planner/systemControl.h: /opt/ros/kinetic/share/gencpp/msg.h.template
 /home/kalana/FYP/devel_isolated/nav_planner/include/nav_planner/systemControl.h: /opt/ros/kinetic/share/gencpp/srv.h.template
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/home/kalana/FYP/build_isolated/nav_planner/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Generating C++ code from nav_planner/systemControl.srv"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/home/kalana/FYP/build_isolated/nav_planner/CMakeFiles --progress-num=$(CMAKE_PROGRESS_7) "Generating C++ code from nav_planner/systemControl.srv"
 	cd /home/kalana/FYP/src/nav_planner && /home/kalana/FYP/build_isolated/nav_planner/catkin_generated/env_cached.sh /usr/bin/python /opt/ros/kinetic/share/gencpp/cmake/../../../lib/gencpp/gen_cpp.py /home/kalana/FYP/src/nav_planner/srv/systemControl.srv -Inav_planner:/home/kalana/FYP/src/nav_planner/msg -Istd_msgs:/opt/ros/kinetic/share/std_msgs/cmake/../msg -Ioctomap_msgs:/opt/ros/kinetic/share/octomap_msgs/cmake/../msg -Igeometry_msgs:/opt/ros/kinetic/share/geometry_msgs/cmake/../msg -p nav_planner -o /home/kalana/FYP/devel_isolated/nav_planner/include/nav_planner -e /opt/ros/kinetic/share/gencpp/cmake/..
+
+/home/kalana/FYP/devel_isolated/nav_planner/include/nav_planner/mapSave.h: /opt/ros/kinetic/lib/gencpp/gen_cpp.py
+/home/kalana/FYP/devel_isolated/nav_planner/include/nav_planner/mapSave.h: /home/kalana/FYP/src/nav_planner/srv/mapSave.srv
+/home/kalana/FYP/devel_isolated/nav_planner/include/nav_planner/mapSave.h: /opt/ros/kinetic/share/gencpp/msg.h.template
+/home/kalana/FYP/devel_isolated/nav_planner/include/nav_planner/mapSave.h: /opt/ros/kinetic/share/gencpp/srv.h.template
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/home/kalana/FYP/build_isolated/nav_planner/CMakeFiles --progress-num=$(CMAKE_PROGRESS_8) "Generating C++ code from nav_planner/mapSave.srv"
+	cd /home/kalana/FYP/src/nav_planner && /home/kalana/FYP/build_isolated/nav_planner/catkin_generated/env_cached.sh /usr/bin/python /opt/ros/kinetic/share/gencpp/cmake/../../../lib/gencpp/gen_cpp.py /home/kalana/FYP/src/nav_planner/srv/mapSave.srv -Inav_planner:/home/kalana/FYP/src/nav_planner/msg -Istd_msgs:/opt/ros/kinetic/share/std_msgs/cmake/../msg -Ioctomap_msgs:/opt/ros/kinetic/share/octomap_msgs/cmake/../msg -Igeometry_msgs:/opt/ros/kinetic/share/geometry_msgs/cmake/../msg -p nav_planner -o /home/kalana/FYP/devel_isolated/nav_planner/include/nav_planner -e /opt/ros/kinetic/share/gencpp/cmake/..
 
 /home/kalana/FYP/devel_isolated/nav_planner/include/nav_planner/goalControl.h: /opt/ros/kinetic/lib/gencpp/gen_cpp.py
 /home/kalana/FYP/devel_isolated/nav_planner/include/nav_planner/goalControl.h: /home/kalana/FYP/src/nav_planner/srv/goalControl.srv
 /home/kalana/FYP/devel_isolated/nav_planner/include/nav_planner/goalControl.h: /opt/ros/kinetic/share/gencpp/msg.h.template
 /home/kalana/FYP/devel_isolated/nav_planner/include/nav_planner/goalControl.h: /opt/ros/kinetic/share/gencpp/srv.h.template
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/home/kalana/FYP/build_isolated/nav_planner/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Generating C++ code from nav_planner/goalControl.srv"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/home/kalana/FYP/build_isolated/nav_planner/CMakeFiles --progress-num=$(CMAKE_PROGRESS_9) "Generating C++ code from nav_planner/goalControl.srv"
 	cd /home/kalana/FYP/src/nav_planner && /home/kalana/FYP/build_isolated/nav_planner/catkin_generated/env_cached.sh /usr/bin/python /opt/ros/kinetic/share/gencpp/cmake/../../../lib/gencpp/gen_cpp.py /home/kalana/FYP/src/nav_planner/srv/goalControl.srv -Inav_planner:/home/kalana/FYP/src/nav_planner/msg -Istd_msgs:/opt/ros/kinetic/share/std_msgs/cmake/../msg -Ioctomap_msgs:/opt/ros/kinetic/share/octomap_msgs/cmake/../msg -Igeometry_msgs:/opt/ros/kinetic/share/geometry_msgs/cmake/../msg -p nav_planner -o /home/kalana/FYP/devel_isolated/nav_planner/include/nav_planner -e /opt/ros/kinetic/share/gencpp/cmake/..
 
 /home/kalana/FYP/devel_isolated/nav_planner/include/nav_planner/baseRotate.h: /opt/ros/kinetic/lib/gencpp/gen_cpp.py
 /home/kalana/FYP/devel_isolated/nav_planner/include/nav_planner/baseRotate.h: /home/kalana/FYP/src/nav_planner/srv/baseRotate.srv
 /home/kalana/FYP/devel_isolated/nav_planner/include/nav_planner/baseRotate.h: /opt/ros/kinetic/share/gencpp/msg.h.template
 /home/kalana/FYP/devel_isolated/nav_planner/include/nav_planner/baseRotate.h: /opt/ros/kinetic/share/gencpp/srv.h.template
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/home/kalana/FYP/build_isolated/nav_planner/CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Generating C++ code from nav_planner/baseRotate.srv"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/home/kalana/FYP/build_isolated/nav_planner/CMakeFiles --progress-num=$(CMAKE_PROGRESS_10) "Generating C++ code from nav_planner/baseRotate.srv"
 	cd /home/kalana/FYP/src/nav_planner && /home/kalana/FYP/build_isolated/nav_planner/catkin_generated/env_cached.sh /usr/bin/python /opt/ros/kinetic/share/gencpp/cmake/../../../lib/gencpp/gen_cpp.py /home/kalana/FYP/src/nav_planner/srv/baseRotate.srv -Inav_planner:/home/kalana/FYP/src/nav_planner/msg -Istd_msgs:/opt/ros/kinetic/share/std_msgs/cmake/../msg -Ioctomap_msgs:/opt/ros/kinetic/share/octomap_msgs/cmake/../msg -Igeometry_msgs:/opt/ros/kinetic/share/geometry_msgs/cmake/../msg -p nav_planner -o /home/kalana/FYP/devel_isolated/nav_planner/include/nav_planner -e /opt/ros/kinetic/share/gencpp/cmake/..
 
 /home/kalana/FYP/devel_isolated/nav_planner/include/nav_planner/baseDrive.h: /opt/ros/kinetic/lib/gencpp/gen_cpp.py
 /home/kalana/FYP/devel_isolated/nav_planner/include/nav_planner/baseDrive.h: /home/kalana/FYP/src/nav_planner/srv/baseDrive.srv
 /home/kalana/FYP/devel_isolated/nav_planner/include/nav_planner/baseDrive.h: /opt/ros/kinetic/share/gencpp/msg.h.template
 /home/kalana/FYP/devel_isolated/nav_planner/include/nav_planner/baseDrive.h: /opt/ros/kinetic/share/gencpp/srv.h.template
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/home/kalana/FYP/build_isolated/nav_planner/CMakeFiles --progress-num=$(CMAKE_PROGRESS_7) "Generating C++ code from nav_planner/baseDrive.srv"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/home/kalana/FYP/build_isolated/nav_planner/CMakeFiles --progress-num=$(CMAKE_PROGRESS_11) "Generating C++ code from nav_planner/baseDrive.srv"
 	cd /home/kalana/FYP/src/nav_planner && /home/kalana/FYP/build_isolated/nav_planner/catkin_generated/env_cached.sh /usr/bin/python /opt/ros/kinetic/share/gencpp/cmake/../../../lib/gencpp/gen_cpp.py /home/kalana/FYP/src/nav_planner/srv/baseDrive.srv -Inav_planner:/home/kalana/FYP/src/nav_planner/msg -Istd_msgs:/opt/ros/kinetic/share/std_msgs/cmake/../msg -Ioctomap_msgs:/opt/ros/kinetic/share/octomap_msgs/cmake/../msg -Igeometry_msgs:/opt/ros/kinetic/share/geometry_msgs/cmake/../msg -p nav_planner -o /home/kalana/FYP/devel_isolated/nav_planner/include/nav_planner -e /opt/ros/kinetic/share/gencpp/cmake/..
 
 /home/kalana/FYP/devel_isolated/nav_planner/include/nav_planner/goalRemove.h: /opt/ros/kinetic/lib/gencpp/gen_cpp.py
 /home/kalana/FYP/devel_isolated/nav_planner/include/nav_planner/goalRemove.h: /home/kalana/FYP/src/nav_planner/srv/goalRemove.srv
 /home/kalana/FYP/devel_isolated/nav_planner/include/nav_planner/goalRemove.h: /opt/ros/kinetic/share/gencpp/msg.h.template
 /home/kalana/FYP/devel_isolated/nav_planner/include/nav_planner/goalRemove.h: /opt/ros/kinetic/share/gencpp/srv.h.template
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/home/kalana/FYP/build_isolated/nav_planner/CMakeFiles --progress-num=$(CMAKE_PROGRESS_8) "Generating C++ code from nav_planner/goalRemove.srv"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/home/kalana/FYP/build_isolated/nav_planner/CMakeFiles --progress-num=$(CMAKE_PROGRESS_12) "Generating C++ code from nav_planner/goalRemove.srv"
 	cd /home/kalana/FYP/src/nav_planner && /home/kalana/FYP/build_isolated/nav_planner/catkin_generated/env_cached.sh /usr/bin/python /opt/ros/kinetic/share/gencpp/cmake/../../../lib/gencpp/gen_cpp.py /home/kalana/FYP/src/nav_planner/srv/goalRemove.srv -Inav_planner:/home/kalana/FYP/src/nav_planner/msg -Istd_msgs:/opt/ros/kinetic/share/std_msgs/cmake/../msg -Ioctomap_msgs:/opt/ros/kinetic/share/octomap_msgs/cmake/../msg -Igeometry_msgs:/opt/ros/kinetic/share/geometry_msgs/cmake/../msg -p nav_planner -o /home/kalana/FYP/devel_isolated/nav_planner/include/nav_planner -e /opt/ros/kinetic/share/gencpp/cmake/..
 
 nav_planner_generate_messages_cpp: CMakeFiles/nav_planner_generate_messages_cpp
+nav_planner_generate_messages_cpp: /home/kalana/FYP/devel_isolated/nav_planner/include/nav_planner/gridRow.h
+nav_planner_generate_messages_cpp: /home/kalana/FYP/devel_isolated/nav_planner/include/nav_planner/gridMap.h
+nav_planner_generate_messages_cpp: /home/kalana/FYP/devel_isolated/nav_planner/include/nav_planner/gridPoint.h
 nav_planner_generate_messages_cpp: /home/kalana/FYP/devel_isolated/nav_planner/include/nav_planner/pointData.h
 nav_planner_generate_messages_cpp: /home/kalana/FYP/devel_isolated/nav_planner/include/nav_planner/pointDataArray.h
 nav_planner_generate_messages_cpp: /home/kalana/FYP/devel_isolated/nav_planner/include/nav_planner/waterDetect.h
 nav_planner_generate_messages_cpp: /home/kalana/FYP/devel_isolated/nav_planner/include/nav_planner/systemControl.h
+nav_planner_generate_messages_cpp: /home/kalana/FYP/devel_isolated/nav_planner/include/nav_planner/mapSave.h
 nav_planner_generate_messages_cpp: /home/kalana/FYP/devel_isolated/nav_planner/include/nav_planner/goalControl.h
 nav_planner_generate_messages_cpp: /home/kalana/FYP/devel_isolated/nav_planner/include/nav_planner/baseRotate.h
 nav_planner_generate_messages_cpp: /home/kalana/FYP/devel_isolated/nav_planner/include/nav_planner/baseDrive.h

@@ -6,5 +6,5 @@ CXX_FLAGS =
 
 CXX_DEFINES = -DROSCONSOLE_BACKEND_LOG4CXX -DROS_BUILD_SHARED_LIBS=1 -DROS_PACKAGE_NAME=\"nav_planner\"
 
-CXX_INCLUDES = -I/home/kalana/FYP/devel_isolated/nav_planner/include -I/home/kalana/FYP/src/nav_planner/include -I/opt/ros/kinetic/include -I/opt/ros/kinetic/share/xmlrpcpp/cmake/../../../include/xmlrpcpp -I/home/kalana/FYP/src/nav_planner/goal_identifier -I/home/kalana/FYP/src/nav_planner/goal_visualizer 
+CXX_INCLUDES = -I/home/kalana/FYP/devel_isolated/nav_planner/include -I/home/kalana/FYP/src/nav_planner/include -I/opt/ros/kinetic/include -I/opt/ros/kinetic/share/xmlrpcpp/cmake/../../../include/xmlrpcpp -I/opt/ros/kinetic/include/opencv-3.3.1-dev -I/opt/ros/kinetic/include/opencv-3.3.1-dev/opencv -I/home/kalana/FYP/src/nav_planner/goal_identifier -I/home/kalana/FYP/src/nav_planner/goal_visualizer -I/home/kalana/FYP/src/nav_planner/global_path_planner 
 

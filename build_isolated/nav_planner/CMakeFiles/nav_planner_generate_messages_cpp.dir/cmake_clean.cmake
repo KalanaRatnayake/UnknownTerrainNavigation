@@ -1,9 +1,13 @@
 file(REMOVE_RECURSE
   "CMakeFiles/nav_planner_generate_messages_cpp"
+  "/home/kalana/FYP/devel_isolated/nav_planner/include/nav_planner/gridRow.h"
+  "/home/kalana/FYP/devel_isolated/nav_planner/include/nav_planner/gridMap.h"
+  "/home/kalana/FYP/devel_isolated/nav_planner/include/nav_planner/gridPoint.h"
   "/home/kalana/FYP/devel_isolated/nav_planner/include/nav_planner/pointData.h"
   "/home/kalana/FYP/devel_isolated/nav_planner/include/nav_planner/pointDataArray.h"
   "/home/kalana/FYP/devel_isolated/nav_planner/include/nav_planner/waterDetect.h"
   "/home/kalana/FYP/devel_isolated/nav_planner/include/nav_planner/systemControl.h"
+  "/home/kalana/FYP/devel_isolated/nav_planner/include/nav_planner/mapSave.h"
   "/home/kalana/FYP/devel_isolated/nav_planner/include/nav_planner/goalControl.h"
   "/home/kalana/FYP/devel_isolated/nav_planner/include/nav_planner/baseRotate.h"
   "/home/kalana/FYP/devel_isolated/nav_planner/include/nav_planner/baseDrive.h"

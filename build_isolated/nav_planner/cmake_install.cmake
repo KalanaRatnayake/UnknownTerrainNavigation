@@ -127,6 +127,9 @@ if(NOT CMAKE_INSTALL_COMPONENT OR "${CMAKE_INSTALL_COMPONENT}" STREQUAL "Unspeci
   file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/nav_planner/msg" TYPE FILE FILES
     "/home/kalana/FYP/src/nav_planner/msg/pointData.msg"
     "/home/kalana/FYP/src/nav_planner/msg/pointDataArray.msg"
+    "/home/kalana/FYP/src/nav_planner/msg/gridPoint.msg"
+    "/home/kalana/FYP/src/nav_planner/msg/gridRow.msg"
+    "/home/kalana/FYP/src/nav_planner/msg/gridMap.msg"
     )
 endif()
 
@@ -138,6 +141,7 @@ if(NOT CMAKE_INSTALL_COMPONENT OR "${CMAKE_INSTALL_COMPONENT}" STREQUAL "Unspeci
     "/home/kalana/FYP/src/nav_planner/srv/baseRotate.srv"
     "/home/kalana/FYP/src/nav_planner/srv/waterDetect.srv"
     "/home/kalana/FYP/src/nav_planner/srv/systemControl.srv"
+    "/home/kalana/FYP/src/nav_planner/srv/mapSave.srv"
     )
 endif()
 

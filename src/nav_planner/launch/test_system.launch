@@ -1,11 +1,17 @@
 <launch>
-    <node pkg="nav_planner" type="test_system_node" name="test_system" output="screen">
-	</node>
+    <node type="rviz" name="rviz" pkg="rviz" args="-d $(find nav_planner)/rviz/nav_planner.rviz" />
 
     <node pkg="nav_planner" type="goal_visualizer_node" name="goal_visualizer" output="screen">
 		<remap from="array" to="/centerArray" />
         <remap from="goal" to="/goalPoint" />
 	</node>
 
-    <node type="rviz" name="rviz" pkg="rviz" args="-d $(find nav_planner)/rviz/nav_planner.rviz" />
+    <node pkg="nav_planner" type="grid_image_creator_node.py" name="Grid_Image_Creator" output="screen">
+        <remap from="initial" to="/initialOccupancyGrid" />
+        <remap from="goal" to="/processedOccupancyGrid" />
+        <remap from="processed" to="/path" />
+	</node>
+
+    <node pkg="nav_planner" type="test_system_node" name="test_system" output="screen">
+	</node>
 </launch>

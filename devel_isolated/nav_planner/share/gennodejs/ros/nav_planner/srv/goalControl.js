@@ -92,11 +92,18 @@ class goalControlResponse {
   constructor(initObj={}) {
     if (initObj === null) {
       // initObj === null is a special case for deserialization where we don't initialize fields
+      this.isNull = null;
       this.x = null;
       this.y = null;
       this.z = null;
     }
     else {
+      if (initObj.hasOwnProperty('isNull')) {
+        this.isNull = initObj.isNull
+      }
+      else {
+        this.isNull = false;
+      }
       if (initObj.hasOwnProperty('x')) {
         this.x = initObj.x
       }
@@ -120,6 +127,8 @@ class goalControlResponse {
 
   static serialize(obj, buffer, bufferOffset) {
     // Serializes a message object of type goalControlResponse
+    // Serialize message field [isNull]
+    bufferOffset = _serializer.bool(obj.isNull, buffer, bufferOffset);
     // Serialize message field [x]
     bufferOffset = _serializer.float32(obj.x, buffer, bufferOffset);
     // Serialize message field [y]
@@ -133,6 +142,8 @@ class goalControlResponse {
     //deserializes a message object of type goalControlResponse
     let len;
     let data = new goalControlResponse(null);
+    // Deserialize message field [isNull]
+    data.isNull = _deserializer.bool(buffer, bufferOffset);
     // Deserialize message field [x]
     data.x = _deserializer.float32(buffer, bufferOffset);
     // Deserialize message field [y]
@@ -143,7 +154,7 @@ class goalControlResponse {
   }
 
   static getMessageSize(object) {
-    return 12;
+    return 13;
   }
 
   static datatype() {
@@ -153,12 +164,13 @@ class goalControlResponse {
 
   static md5sum() {
     //Returns md5sum for a message object
-    return 'cc153912f1453b708d221682bc23d9ac';
+    return '4dba3313c0977b613eb2d8aab1137f2d';
   }
 
   static messageDefinition() {
     // Returns full string definition for message
     return `
+    bool isNull
     float32 x
     float32 y
     float32 z
@@ -173,6 +185,13 @@ class goalControlResponse {
       msg = {};
     }
     const resolved = new goalControlResponse(null);
+    if (msg.isNull !== undefined) {
+      resolved.isNull = msg.isNull;
+    }
+    else {
+      resolved.isNull = false
+    }
+
     if (msg.x !== undefined) {
       resolved.x = msg.x;
     }
@@ -201,6 +220,6 @@ class goalControlResponse {
 module.exports = {
   Request: goalControlRequest,
   Response: goalControlResponse,
-  md5sum() { return '4264199fe659d58fcdd2ad61fb4fcaec'; },
+  md5sum() { return '775389b3da33dec3f4e147b9ecc0a538'; },
   datatype() { return 'nav_planner/goalControl'; }
 };

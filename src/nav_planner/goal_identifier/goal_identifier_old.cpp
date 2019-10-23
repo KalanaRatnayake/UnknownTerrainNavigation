@@ -71,7 +71,6 @@ void goal_identifier::discover_clusters(std::vector<octomap::point3d> &outCenter
 }
 
 void goal_identifier::find_nearest_cluster(std::vector<octomap::point3d>  &unknownClusterCenters, octomap::point3d &outCluster){
-
     std::vector<octomap::point3d> lowerClusters;
     std::vector<octomap::point3d> upperClusters;
     std::vector<octomap::point3d> selectedClusters;
@@ -135,25 +134,29 @@ void goal_identifier::find_nearest_cluster(std::vector<octomap::point3d>  &unkno
             }
         }
     }
-        
-    octomap::point3d nearestCluster = selectedClusters[0];
-
-    float min_distance = sqrt(pow(position.x() - nearestCluster.x(), 2) + pow(position.y() - nearestCluster.y(), 2) + pow(position.z() - nearestCluster.z(), 2));
 
     int lenM = selectedClusters.size();
+    
+    if (lenM>0){
+        octomap::point3d nearestCluster = selectedClusters[0];
 
-    for(int i=0; i<lenM; i++){
-        octomap::point3d cluster = selectedClusters[i];
+        float min_distance = sqrt(pow(position.x() - nearestCluster.x(), 2) + pow(position.y() - nearestCluster.y(), 2) + pow(position.z() - nearestCluster.z(), 2));
 
-        float distance = sqrt(pow(position.x() - cluster.x(), 2) + pow(position.y() - cluster.y(), 2) + pow(position.z() - cluster.z(), 2));
+        for(int i=0; i<lenM; i++){
+            octomap::point3d cluster = selectedClusters[i];
 
-        if (distance<min_distance){
-            min_distance = distance;
-            nearestCluster = cluster;
+            float distance = sqrt(pow(position.x() - cluster.x(), 2) + pow(position.y() - cluster.y(), 2) + pow(position.z() - cluster.z(), 2));
+
+            if (distance<min_distance){
+                min_distance = distance;
+                nearestCluster = cluster;
+            }
         }
-    }
 
-    outCluster = nearestCluster;
+        outCluster = nearestCluster;
+    } else {
+        outCluster = NULL;
+    }
 }
 
 void goal_identifier::calculate(std::vector<octomap::point3d> &centerPointsArray, octomap::point3d &goal){

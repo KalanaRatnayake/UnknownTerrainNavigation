@@ -23,6 +23,8 @@ int main(int argc, char **argv)
   ROS_INFO("test_goalPositionClient_node : requested");
 
   if (client.call(srv)){
+    ROS_INFO("isNull : ");
+    ROS_INFO_STREAM (srv.response.isNull);
     ROS_INFO("x : %f", srv.response.x);
     ROS_INFO("y : %f", srv.response.y);
     ROS_INFO("z : %f", srv.response.z);

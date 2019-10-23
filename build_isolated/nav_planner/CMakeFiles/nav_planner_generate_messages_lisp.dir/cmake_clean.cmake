@@ -1,9 +1,13 @@
 file(REMOVE_RECURSE
   "CMakeFiles/nav_planner_generate_messages_lisp"
+  "/home/kalana/FYP/devel_isolated/nav_planner/share/common-lisp/ros/nav_planner/msg/gridRow.lisp"
+  "/home/kalana/FYP/devel_isolated/nav_planner/share/common-lisp/ros/nav_planner/msg/gridMap.lisp"
+  "/home/kalana/FYP/devel_isolated/nav_planner/share/common-lisp/ros/nav_planner/msg/gridPoint.lisp"
   "/home/kalana/FYP/devel_isolated/nav_planner/share/common-lisp/ros/nav_planner/msg/pointData.lisp"
   "/home/kalana/FYP/devel_isolated/nav_planner/share/common-lisp/ros/nav_planner/msg/pointDataArray.lisp"
   "/home/kalana/FYP/devel_isolated/nav_planner/share/common-lisp/ros/nav_planner/srv/waterDetect.lisp"
   "/home/kalana/FYP/devel_isolated/nav_planner/share/common-lisp/ros/nav_planner/srv/systemControl.lisp"
+  "/home/kalana/FYP/devel_isolated/nav_planner/share/common-lisp/ros/nav_planner/srv/mapSave.lisp"
   "/home/kalana/FYP/devel_isolated/nav_planner/share/common-lisp/ros/nav_planner/srv/goalControl.lisp"
   "/home/kalana/FYP/devel_isolated/nav_planner/share/common-lisp/ros/nav_planner/srv/baseRotate.lisp"
   "/home/kalana/FYP/devel_isolated/nav_planner/share/common-lisp/ros/nav_planner/srv/baseDrive.lisp"

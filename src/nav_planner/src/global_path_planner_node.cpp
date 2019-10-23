@@ -1,5 +1,3 @@
-#include<bits/stdc++.h> 
-
 #include <ros/ros.h>
 #include <ros/console.h>
 #include <ros/callback_queue.h>
@@ -12,11 +10,17 @@
 
 #include <nav_msgs/Odometry.h>
 
+#include <nav_planner/gridRow.h>
+#include <nav_planner/gridMap.h>
+#include <nav_planner/gridPoint.h>
+
 #include <nav_planner/baseDrive.h>
 #include <nav_planner/baseRotate.h>
 #include <nav_planner/goalControl.h>
 #include <nav_planner/goalRemove.h>
 #include <nav_planner/systemControl.h>
+
+#include <global_path_planner.h>
 
 //map
 #define ROW 400 
@@ -25,227 +29,155 @@
 //map + 2*(padding) 
 #define INITROW 408
 #define INITCOL 408
+#define PADDING 4
 
-//Map boundries
-#define MAPLOW -0.2
-#define MAPHIGH 20.2
-#define offset 0.175
-#define invcell 20  //multiply by 20 instead of dividing by cell size 0.05
-
-//map + 4*(padding)
-#define PADROW 416
-#define PADCOL 416
-
-//Robot description
-#define HEIGHT 0.35
-
+#define CLEARENCE_DISTANCE 2
 
 // Description of the Grid- {1--> not occupied} {0--> occupied} 
 
-octomap::OcTree* tree_oct;
+global_path_planner plannerObject = global_path_planner(); 
+
 octomap::point3d currentPosition;
+octomap::point3d goal;
+octomap::point3d nextPosition;
+octomap::point3d markedPosition;
+std::vector<octomap::point3d> path;
 
 ros::ServiceClient clientGoalPosition;
 ros::ServiceClient clientGoalRemove;
 ros::ServiceClient forwardClient;
 ros::ServiceClient rotateClient;
 
-typedef std::pair<int, int> Pair; 
-typedef std::pair<double, std::pair<int, int> > pPair; 
+ros::Publisher grid_pub;
 
-struct cell { 
-	int parent_i, parent_j;
-	double f, g, h; 
-}; 
+ros::Subscriber map_sub;
+ros::Subscriber pos_sub;
 
-bool isValid(int row, int col) {
-	return (row >= 0) && (row < ROW) && (col >= 0) && (col < COL); 
-} 
+bool unExplored = true;
 
-bool isUnBlocked(int grid[][COL], int row, int col) { 
-	if (grid[row][col] == 1) return (true); else return (false); 
+/*
+/ once the map is completely explored, this function will be called to save the octomap and execute ros::shutdown()
+*/
+
+void exit(){
+	unExplored = false;
 }
 
-bool isDestination(int row, int col, Pair dest) { 
-	if (row == dest.first && col == dest.second) return (true); else return (false); 
-} 
+/*
+/ request rotateBase service to make the robot rotate inplace
+*/
 
-double calculateHValue(int row, int col, Pair dest) {
-	return ((double) std::sqrt((row-dest.first)*(row-dest.first) + (col-dest.second)*(col-dest.second))); 
-} 
+void rotate360(){
+	nav_planner::baseRotate srvRotate;
 
-void tracePath(cell cellDetails[][COL], Pair dest, std::vector<octomap::point3d> &outPath){
-	int row = dest.first; 
-	int col = dest.second; 
+	srvRotate.request.angle = 3.14;
 
-	std::stack<Pair> PathStack;
-    std::vector<octomap::point3d> path;
-
-	while (!(cellDetails[row][col].parent_i == row && cellDetails[row][col].parent_j == col )) { 
-		PathStack.push(std::make_pair (row, col)); 
-		int temp_row = cellDetails[row][col].parent_i; 
-		int temp_col = cellDetails[row][col].parent_j; 
-		row = temp_row; 
-		col = temp_col; 
-	} 
-
-	PathStack.push(std::make_pair (row, col)); 
-	while (!PathStack.empty()) { 
-		std::pair<int,int> p = PathStack.top(); 
-		PathStack.pop();
-        octomap::point3d position = octomap::point3d(p.first, p.second, 0);
-        path.push_back(position); 
+	// rotate by 180 degrees
+	if (rotateClient.call(srvRotate)){
+		ROS_INFO("global_path_planner_node : first half rotated");
+	} else {
+		ROS_ERROR("global_path_planner_node : failed to call service baseRotate");
 	}
-    outPath = path;
-} 
 
-bool aStarSearch(int grid[][COL], Pair src, Pair dest, std::vector<octomap::point3d> &outPath) {
-	if (isValid (src.first, src.second) == false) return false;
-	if (isValid (dest.first, dest.second) == false) return false;
-	if (isUnBlocked(grid, src.first, src.second) == false || isUnBlocked(grid, dest.first, dest.second) == false) return false; 
-	if (isDestination(src.first, src.second, dest) == true) return false; 
+	srvRotate.request.angle = 3.14;
 
-	bool closedList[ROW][COL]; 
-	memset(closedList, false, sizeof (closedList)); 
-	cell cellDetails[ROW][COL]; 
-	int i, j; 
-
-	for (i=0; i<ROW; i++) { 
-		for (j=0; j<COL; j++) { 
-			cellDetails[i][j].f = FLT_MAX; 
-			cellDetails[i][j].g = FLT_MAX; 
-			cellDetails[i][j].h = FLT_MAX; 
-			cellDetails[i][j].parent_i = -1; 
-			cellDetails[i][j].parent_j = -1; 
-		} 
-	} 
-
-	i = src.first, j = src.second;
-
-	cellDetails[i][j].f = 0.0; 
-	cellDetails[i][j].g = 0.0; 
-	cellDetails[i][j].h = 0.0; 
-	cellDetails[i][j].parent_i = i; 
-	cellDetails[i][j].parent_j = j; 
-
-	std::set<pPair> openList; 
-	openList.insert(std::make_pair (0.0, std::make_pair (i, j))); 
-	bool foundDest = false; 
-
-	while (!openList.empty()) { 
-		pPair p = *openList.begin(); 
-		openList.erase(openList.begin()); 
-		i = p.second.first; 
-		j = p.second.second; 
-		closedList[i][j] = true; 
-	
-		double gNew, hNew, fNew;
-
-        int array [8][2] = {{i-1, j-1},	{i-1, j  }, {i-1, j+1},
-							{i  , j-1}, 		    {i  , j+1},  
-							{i+1, j-1},	{i+1, j  }, {i+1, j+1} };
-
-        for (int a = 0; a < 8; a++ ) {
-            if (isValid(array[a][0], array[a][1]) == true) { 
-                if (isDestination(array[a][0], array[a][1], dest) == true) {  
-                    cellDetails[array[a][0]][array[a][1]].parent_i = i; 
-                    cellDetails[array[a][0]][array[a][1]].parent_j = j;
-                    tracePath (cellDetails, dest, outPath); 
-                    foundDest = true; 
-                    return true; 
-                } else if (closedList[array[a][0]][array[a][1]] == false && isUnBlocked(grid, array[a][0], array[a][1]) == true) { 
-                    gNew = cellDetails[i][j].g + 1.0; 
-                    hNew = calculateHValue (array[a][0], array[a][1], dest); 
-                    fNew = gNew + hNew; 
-    
-                    if (cellDetails[array[a][0]][array[a][1]].f == FLT_MAX || cellDetails[array[a][0]][array[a][1]].f > fNew) { 
-                        openList.insert( std::make_pair(fNew, std::make_pair(array[a][0], array[a][1]))); 
-                        cellDetails[array[a][0]][array[a][1]].f = fNew; 
-                        cellDetails[array[a][0]][array[a][1]].g = gNew; 
-                        cellDetails[array[a][0]][array[a][1]].h = hNew; 
-                        cellDetails[array[a][0]][array[a][1]].parent_i = i; 
-                        cellDetails[array[a][0]][array[a][1]].parent_j = j; 
-                    } 
-                } 
-            }
-        }  
-	} 
-
-	if (foundDest == false)	return false; 
+	// rotate by 180 degrees
+	if (rotateClient.call(srvRotate)){
+		ROS_INFO("global_path_planner_node : second half rotated");
+	} else {
+		ROS_ERROR("global_path_planner_node : failed to call service baseRotate");
+	}
 }
 
-void buildMap(int (&outGrid)[INITROW][INITCOL]){
-	// Description of the Grid- {1--> not occupied} {0--> occupied} 
+/*
+/ request the goalPosition service to get a new goal
+*/
 
-	//initialize all to not occupied state
-	for (int i = 0; i < INITROW; i++){
-		for (int j = 0; j < INITCOL; j++){
-			outGrid[i][j] = 1;
+void requestGoal(){
+	nav_planner::goalControl srvGoal;
+
+	srvGoal.request.execute = true;
+
+	ROS_INFO("global_path_planner_node : requested goalPosition service");
+
+	if (clientGoalPosition.call(srvGoal)){
+		ROS_INFO("global_path_planner_node : receieved goalPosition");
+
+		goal = octomap::point3d(srvGoal.response.x, srvGoal.response.y, srvGoal.response.z);
+		
+		if (srvGoal.response.isNull){
+			exit();
 		}
+
+	} else {
+		ROS_ERROR("global_path_planners_node : failed to call service goalPosition");
 	}
 
-	for(octomap::OcTree::leaf_iterator it = tree_oct->begin_leafs(), end = tree_oct->end_leafs(); it!=end; ++it){
-        octomap::OcTreeNode* key = tree_oct->search(it.getX(), it.getY(), it.getZ());
+	plannerObject.update_goal(goal);
+}
 
-		if(tree_oct->isNodeOccupied(key)){   
-			if ((it.getZ()>currentPosition.z()) && (it.getZ()<(currentPosition.z()+HEIGHT))) {
-				if ((it.getX()>MAPLOW) && (it.getX()<MAPHIGH)){
-					if ((it.getY()>MAPLOW) && (it.getY()<MAPHIGH)){
+/*
+/ removes goal if the goal cannot be reached or a path to goal cannot be calculated
+*/
 
-						int x = (int) (it.getX() + offset)*invcell;
-						int y = (int) (it.getY() + offset)*invcell;
-					
-						outGrid[y][x] = 0;
-					}
-				} 
+void removeGoal(){
+	nav_planner::goalRemove rmvGoal;
+
+	rmvGoal.request.x = goal.x();
+	rmvGoal.request.y = goal.y();
+	rmvGoal.request.z = goal.z();
+
+	if (clientGoalRemove.call(rmvGoal)){
+		ROS_INFO("global_path_planner_node : removed goalPosition");
+	}
+}
+
+/*
+/ message to drive the robot from currentPosition to nextPosition
+*/
+
+void drive(){
+	nav_planner::baseDrive srvDrive;
+
+	srvDrive.request.x = nextPosition.x();
+	srvDrive.request.y = nextPosition.y();
+	srvDrive.request.z = nextPosition.z();
+
+	ROS_INFO("global_path_planner_node : requested Control service");
+
+	if (forwardClient.call(srvDrive)){
+		ROS_INFO("global_path_planner_node : point reached");
+	} else {
+		ROS_ERROR("global_path_planner_node : failed to call service goalPosition");
+	}
+}
+
+/*
+/ converts the gridmaps into a 'gridMap' msgs, path into 'pointDataArray and publishes it
+*/
+
+void publish(int (&initGrid)[INITROW][INITCOL], int (&procGrid)[ROW][COL], std::vector<octomap::point3d> path){
+	nav_planner::gridMap map;
+
+	for (int i=0; i<ROW; i++){
+		nav_planner::gridRow rowArray;
+
+		for(int j=0; j<COL; j++) {
+			nav_planner::gridPoint point;
+			
+			point.init = initGrid[i+4][j+4];
+			point.proc = procGrid[i][j];
+
+			for (int k=0; k<path.size(); k++){
+				if ((i==path[k].y())&&(j==path[k].x())) point.path = 0; else point.path = 1;
 			}
-		}
-    }
-}
 
-void preprocessMap(int (&inGrid)[INITROW][INITCOL], int (&outGrid)[ROW][COL]){
-	// Description of the Grid- {1--> not occupied} {0--> occupied} 
-	int paddedGrid [PADROW][PADCOL];
-
-	//initialize all to not occupied state
-	for (int i = 0; i < PADROW; i++){
-		for (int j = 0; j < PADCOL; j++){
-			paddedGrid[i][j] = 1;
+			rowArray.row.push_back(point);
 		}
+		map.grid.push_back(rowArray);
 	}
 
-	//assign occupied space with a padding of 4 blocks
-	for (int i = 0; i < INITROW; i++){
-		for (int j = 0; j < INITCOL; j++){
-			if (inGrid[i][j] == 0){
-
-				int x = i+4;
-				int y = j+4;
-
-				int mask [81][2] = {{x-4, j-4}, {x-4, j-3}, {x-4, j-2}, {x-4, j-1}, {x-4, j  }, {x-4, j+1}, {x-4, j+2}, {x-4, j+3}, {x-4, j+4},
-									{x-3, j-4}, {x-3, j-3}, {x-3, j-2}, {x-3, j-1}, {x-3, j  }, {x-3, j+1}, {x-3, j+2}, {x-3, j+3}, {x-3, j+4},
-									{x-2, j-4}, {x-2, j-3}, {x-2, j-2}, {x-2, j-1}, {x-2, j  }, {x-2, j+1}, {x-2, j+2}, {x-2, j+3}, {x-2, j+4},
-									{x-1, j-4}, {x-1, j-3}, {x-1, j-2}, {x-1, j-1}, {x-1, j  }, {x-1, j+1}, {x-1, j+2}, {x-1, j+3}, {x-1, j+4},
-									{x  , j-4}, {x  , j-3}, {x  , j-2}, {x  , j-1}, {x  , j  }, {x  , j+1}, {x  , j+2}, {x  , j+3}, {x  , j+4},
-									{x+1, j-4}, {x+1, j-3}, {x+1, j-2}, {x+1, j-1}, {x+1, j  }, {x+1, j+1}, {x+1, j+2}, {x+1, j+3}, {x+1, j+4},
-									{x+2, j-4}, {x+2, j-3}, {x+2, j-2}, {x+2, j-1}, {x+2, j  }, {x+2, j+1}, {x+2, j+2}, {x+2, j+3}, {x+2, j+4},
-									{x+3, j-4}, {x+3, j-3}, {x+3, j-2}, {x+3, j-1}, {x+3, j  }, {x+3, j+1}, {x+3, j+2}, {x+3, j+3}, {x+3, j+4},
-									{x+4, j-4}, {x+4, j-3}, {x+4, j-2}, {x+4, j-1}, {x+4, j  }, {x+4, j+1}, {x+4, j+2}, {x+4, j+3}, {x+4, j+4}
-									};
-
-				for (int a = 0; a < 81; a++){
-					paddedGrid[mask[a][0]][mask[a][1]] = 0;
-				}
-				
-			}
-		}
-	}
-
-	for (int i = 0; i < ROW; i++){
-		for (int j = 0; j < COL; j++){
-			outGrid[i][j] = paddedGrid[i+8][j+8];
-		}
-	}
+	grid_pub.publish(map);
 }
 
 /*
@@ -255,111 +187,52 @@ void preprocessMap(int (&inGrid)[INITROW][INITCOL], int (&outGrid)[ROW][COL]){
 
 void mapCallback(const octomap_msgs::Octomap::ConstPtr &msg){
     octomap::AbstractOcTree* tree = octomap_msgs::msgToMap(*msg);
-    tree_oct = dynamic_cast<octomap::OcTree*>(tree);
+    octomap::OcTree* tree_oct = dynamic_cast<octomap::OcTree*>(tree);
+	plannerObject.update_tree(tree_oct);
 }
 
 void currentPositionCallback(const nav_msgs::OdometryConstPtr &msg){
 	currentPosition = octomap::point3d(msg->pose.pose.position.x, msg->pose.pose.position.y, msg->pose.pose.position.z);
+	plannerObject.update_position(currentPosition);
 }
 
-bool systemCallback(nav_planner::systemControl::Request &request, nav_planner::systemControl::Response &response)
-{
-	while (ros::ok){
-		nav_planner::goalControl srvGoal;
-		nav_planner::goalRemove rmvGoal;
-		nav_planner::baseDrive srvDrive;
-		nav_planner::baseRotate srvRotate;
-
-		octomap::point3d goal;
-		octomap::point3d nextPosition;
-		std::vector<octomap::point3d> path;
-
+bool systemCallback(nav_planner::systemControl::Request &request, nav_planner::systemControl::Response &response){
+	while (unExplored && request.activate){
 		int initialGrid [INITROW][INITCOL];
 		int processedGrid [ROW][COL];
 		int index =  0;
 		bool pathFound;
+		double remainingDistance, gapDistance = 0;
 
-		double distance;
+		rotate360();
+		requestGoal();
+		plannerObject.buildMap(initialGrid);
+		plannerObject.preprocessMap(initialGrid, processedGrid);
 
-		srvRotate.request.angle = 3.14;
-
-		// rotate by 180 degrees
-		if (rotateClient.call(srvRotate)){
-			ROS_INFO("global_path_planner_node : first half rotated");
-		} else {
-			ROS_ERROR("global_path_planner_node : failed to call service baseRotate");
-		}
-
-		srvRotate.request.angle = 3.14;
-
-		// rotate by 180 degrees
-		if (rotateClient.call(srvRotate)){
-			ROS_INFO("global_path_planner_node : second half rotated");
-		} else {
-			ROS_ERROR("global_path_planner_node : failed to call service baseRotate");
-		}
-
-		srvGoal.request.execute = true;
-
-		ROS_INFO("global_path_planner_node : requested goalPosition service");
-
-		if (clientGoalPosition.call(srvGoal)){
-			ROS_INFO("global_path_planner_node : receieved goalPosition");
-			goal = octomap::point3d(srvGoal.response.x, srvGoal.response.y, srvGoal.response.z);
-		} else {
-			ROS_ERROR("global_path_planner_A_node : failed to call service goalPosition");
-		}
-
-		buildMap(initialGrid);
-
-		preprocessMap(initialGrid, processedGrid);
-
-		pathFound = aStarSearch(processedGrid, std::make_pair(currentPosition.x(), currentPosition.y()), std::make_pair(goal.x(), goal.y()), path);
+		pathFound = plannerObject.search(processedGrid, std::make_pair(currentPosition.y(), currentPosition.x()), std::make_pair(goal.y(), goal.x()), path);
 
 		while (!pathFound){
-			rmvGoal.request.x = goal.x();
-			rmvGoal.request.y = goal.y();
-			rmvGoal.request.z = goal.z();
-
-			if (clientGoalRemove.call(rmvGoal)){
-				ROS_INFO("global_path_planner_node : removed goalPosition");
-			}
-
-			srvGoal.request.execute = true;
-
-			ROS_INFO("global_path_planner_node : requested goalPosition service (recalculation)");
-
-			if (clientGoalPosition.call(srvGoal)){
-				ROS_INFO("global_path_planner_node : receieved goalPosition");
-
-				goal = octomap::point3d(srvGoal.response.x, srvGoal.response.y, srvGoal.response.z);
-			} else {
-				ROS_ERROR("global_path_planner_A_node : failed to call service goalPosition");
-			}
-
-			pathFound = aStarSearch(processedGrid, std::make_pair(currentPosition.x(), currentPosition.y()), std::make_pair(goal.x(), goal.y()), path);
+			removeGoal();
+			requestGoal();
+			pathFound = plannerObject.search(processedGrid, std::make_pair(currentPosition.y(), currentPosition.x()), std::make_pair(goal.y(), goal.x()), path);
 		}
 		
+		markedPosition = currentPosition;
+		plannerObject.cleanPath(path);
 
-		while ((distance <= 0.01) && pathFound) {
+		publish(initialGrid, processedGrid, path);
 
+		while ((remainingDistance <= 0.01) && pathFound) {
 			nextPosition = path[index];
-			index += 1;
-			distance = goal.distance(currentPosition);
-
-			srvDrive.request.x = nextPosition.x();
-			srvDrive.request.y = nextPosition.y();
-			srvDrive.request.z = nextPosition.z();
-
-			ROS_INFO("global_path_planner_A_node : requested Control service");
-
-			if (forwardClient.call(srvDrive)){
-				ROS_INFO("global_path_planner_A_node : point reached");
-			} else {
-				ROS_ERROR("global_path_planner_A_node : failed to call service goalPosition");
-			}
+			gapDistance = markedPosition.distance(nextPosition);
+			drive();
+			if (gapDistance < CLEARENCE_DISTANCE) index++; else break;
+			remainingDistance = goal.distance(currentPosition);
 		}
 	}
+
+	response.success = true;
+	ros::shutdown();
 }
 
 /*  
@@ -370,17 +243,22 @@ bool systemCallback(nav_planner::systemControl::Request &request, nav_planner::s
 
 int main(int argc, char **argv)
 {
-	ros::init (argc, argv, "global_path_planner_A");
+	ros::init (argc, argv, "Global_Path_Planner");
 	ros::NodeHandle node;
 	
-	ROS_INFO("Initialized the global_path_planner_A_node");
+	ROS_INFO("Initialized the global_path_planner_node");
 
-    ros::Subscriber map_sub = node.subscribe("octomap", 1, mapCallback);
-	ros::Subscriber pos_sub = node.subscribe("position", 1, currentPositionCallback);
+    map_sub = node.subscribe("octomap", 1, mapCallback);
+	pos_sub = node.subscribe("position", 1, currentPositionCallback);
 	
-	ROS_INFO("global_path_planner_A_node : created subscribers");
+	ROS_INFO("global_path_planner_node : created subscribers");
+
+	grid_pub = node.advertise<nav_planner::gridMap>("grid", 1, true);
+	
+	ROS_INFO("global_path_planner_node : created publishers");
 
 	ros::service::waitForService("goalPosition");
+	ros::service::waitForService("goalRemove");
 	ros::service::waitForService("baseForword");
 	ros::service::waitForService("baseRotate");
 
@@ -389,9 +267,9 @@ int main(int argc, char **argv)
 	forwardClient = node.serviceClient<nav_planner::baseDriveRequest, nav_planner::baseDriveResponse>("baseForword");
     rotateClient = node.serviceClient<nav_planner::baseRotateRequest, nav_planner::baseRotateResponse>("baseRotate");
 	
-	ROS_INFO("global_path_planner_A_node : created service clients");
+	ROS_INFO("global_path_planner_node : created service clients");
 
-	ros::ServiceServer serviceCalculate = node.advertiseService<nav_planner::systemControlRequest, nav_planner::systemControlResponse>("System_Control", systemCallback);
+	ros::ServiceServer serviceCalculate = node.advertiseService<nav_planner::systemControlRequest, nav_planner::systemControlResponse>("explore", systemCallback);
 
 	ros::AsyncSpinner spinner (5);
 	ros::Rate r(100);

@@ -1,6 +1,7 @@
 
 "use strict";
 
+let mapSave = require('./mapSave.js')
 let baseDrive = require('./baseDrive.js')
 let goalRemove = require('./goalRemove.js')
 let systemControl = require('./systemControl.js')
@@ -9,6 +10,7 @@ let waterDetect = require('./waterDetect.js')
 let goalControl = require('./goalControl.js')
 
 module.exports = {
+  mapSave: mapSave,
   baseDrive: baseDrive,
   goalRemove: goalRemove,
   systemControl: systemControl,

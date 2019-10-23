@@ -1,9 +1,13 @@
 file(REMOVE_RECURSE
   "CMakeFiles/nav_planner_generate_messages_py"
+  "/home/kalana/FYP/devel_isolated/nav_planner/lib/python2.7/dist-packages/nav_planner/msg/_gridRow.py"
+  "/home/kalana/FYP/devel_isolated/nav_planner/lib/python2.7/dist-packages/nav_planner/msg/_gridMap.py"
+  "/home/kalana/FYP/devel_isolated/nav_planner/lib/python2.7/dist-packages/nav_planner/msg/_gridPoint.py"
   "/home/kalana/FYP/devel_isolated/nav_planner/lib/python2.7/dist-packages/nav_planner/msg/_pointData.py"
   "/home/kalana/FYP/devel_isolated/nav_planner/lib/python2.7/dist-packages/nav_planner/msg/_pointDataArray.py"
   "/home/kalana/FYP/devel_isolated/nav_planner/lib/python2.7/dist-packages/nav_planner/srv/_waterDetect.py"
   "/home/kalana/FYP/devel_isolated/nav_planner/lib/python2.7/dist-packages/nav_planner/srv/_systemControl.py"
+  "/home/kalana/FYP/devel_isolated/nav_planner/lib/python2.7/dist-packages/nav_planner/srv/_mapSave.py"
   "/home/kalana/FYP/devel_isolated/nav_planner/lib/python2.7/dist-packages/nav_planner/srv/_goalControl.py"
   "/home/kalana/FYP/devel_isolated/nav_planner/lib/python2.7/dist-packages/nav_planner/srv/_baseRotate.py"
   "/home/kalana/FYP/devel_isolated/nav_planner/lib/python2.7/dist-packages/nav_planner/srv/_baseDrive.py"

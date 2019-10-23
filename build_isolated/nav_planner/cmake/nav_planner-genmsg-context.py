@@ -1,7 +1,7 @@
 # generated from genmsg/cmake/pkg-genmsg.context.in
 
-messages_str = "/home/kalana/FYP/src/nav_planner/msg/pointData.msg;/home/kalana/FYP/src/nav_planner/msg/pointDataArray.msg"
-services_str = "/home/kalana/FYP/src/nav_planner/srv/goalControl.srv;/home/kalana/FYP/src/nav_planner/srv/goalRemove.srv;/home/kalana/FYP/src/nav_planner/srv/baseDrive.srv;/home/kalana/FYP/src/nav_planner/srv/baseRotate.srv;/home/kalana/FYP/src/nav_planner/srv/waterDetect.srv;/home/kalana/FYP/src/nav_planner/srv/systemControl.srv"
+messages_str = "/home/kalana/FYP/src/nav_planner/msg/pointData.msg;/home/kalana/FYP/src/nav_planner/msg/pointDataArray.msg;/home/kalana/FYP/src/nav_planner/msg/gridPoint.msg;/home/kalana/FYP/src/nav_planner/msg/gridRow.msg;/home/kalana/FYP/src/nav_planner/msg/gridMap.msg"
+services_str = "/home/kalana/FYP/src/nav_planner/srv/goalControl.srv;/home/kalana/FYP/src/nav_planner/srv/goalRemove.srv;/home/kalana/FYP/src/nav_planner/srv/baseDrive.srv;/home/kalana/FYP/src/nav_planner/srv/baseRotate.srv;/home/kalana/FYP/src/nav_planner/srv/waterDetect.srv;/home/kalana/FYP/src/nav_planner/srv/systemControl.srv;/home/kalana/FYP/src/nav_planner/srv/mapSave.srv"
 pkg_name = "nav_planner"
 dependencies_str = "std_msgs;octomap_msgs"
 langs = "gencpp;geneus;genlisp;gennodejs;genpy"

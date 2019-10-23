@@ -12,6 +12,8 @@
     (:file "_package_goalControl" :depends-on ("_package"))
     (:file "goalRemove" :depends-on ("_package_goalRemove"))
     (:file "_package_goalRemove" :depends-on ("_package"))
+    (:file "mapSave" :depends-on ("_package_mapSave"))
+    (:file "_package_mapSave" :depends-on ("_package"))
     (:file "systemControl" :depends-on ("_package_systemControl"))
     (:file "_package_systemControl" :depends-on ("_package"))
     (:file "waterDetect" :depends-on ("_package_waterDetect"))

@@ -1,9 +1,13 @@
 file(REMOVE_RECURSE
   "CMakeFiles/nav_planner_generate_messages_nodejs"
+  "/home/kalana/FYP/devel_isolated/nav_planner/share/gennodejs/ros/nav_planner/msg/gridRow.js"
+  "/home/kalana/FYP/devel_isolated/nav_planner/share/gennodejs/ros/nav_planner/msg/gridMap.js"
+  "/home/kalana/FYP/devel_isolated/nav_planner/share/gennodejs/ros/nav_planner/msg/gridPoint.js"
   "/home/kalana/FYP/devel_isolated/nav_planner/share/gennodejs/ros/nav_planner/msg/pointData.js"
   "/home/kalana/FYP/devel_isolated/nav_planner/share/gennodejs/ros/nav_planner/msg/pointDataArray.js"
   "/home/kalana/FYP/devel_isolated/nav_planner/share/gennodejs/ros/nav_planner/srv/waterDetect.js"
   "/home/kalana/FYP/devel_isolated/nav_planner/share/gennodejs/ros/nav_planner/srv/systemControl.js"
+  "/home/kalana/FYP/devel_isolated/nav_planner/share/gennodejs/ros/nav_planner/srv/mapSave.js"
   "/home/kalana/FYP/devel_isolated/nav_planner/share/gennodejs/ros/nav_planner/srv/goalControl.js"
   "/home/kalana/FYP/devel_isolated/nav_planner/share/gennodejs/ros/nav_planner/srv/baseRotate.js"
   "/home/kalana/FYP/devel_isolated/nav_planner/share/gennodejs/ros/nav_planner/srv/baseDrive.js"

@@ -172,7 +172,7 @@ bool rotateCallback(nav_planner::baseRotate::Request &request, nav_planner::base
 	do{
 		angleDiff = angle - currentYaw;
 
-		cmd.angular.z = 0.05;
+		cmd.angular.z = 0.1;
 		velocity_pub.publish(cmd);
 		ros::Duration(0.005).sleep();
 		} while (std::abs(angleDiff)>=0.01);

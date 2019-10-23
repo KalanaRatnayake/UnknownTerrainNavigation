@@ -115,16 +115,17 @@ import struct
 
 
 class goalControlResponse(genpy.Message):
-  _md5sum = "cc153912f1453b708d221682bc23d9ac"
+  _md5sum = "4dba3313c0977b613eb2d8aab1137f2d"
   _type = "nav_planner/goalControlResponse"
   _has_header = False #flag to mark the presence of a Header object
-  _full_text = """float32 x
+  _full_text = """bool isNull
+float32 x
 float32 y
 float32 z
 
 """
-  __slots__ = ['x','y','z']
-  _slot_types = ['float32','float32','float32']
+  __slots__ = ['isNull','x','y','z']
+  _slot_types = ['bool','float32','float32','float32']
 
   def __init__(self, *args, **kwds):
     """
@@ -134,7 +135,7 @@ float32 z
     changes.  You cannot mix in-order arguments and keyword arguments.
 
     The available fields are:
-       x,y,z
+       isNull,x,y,z
 
     :param args: complete set of field values, in .msg order
     :param kwds: use keyword arguments corresponding to message field names
@@ -143,6 +144,8 @@ float32 z
     if args or kwds:
       super(goalControlResponse, self).__init__(*args, **kwds)
       #message fields cannot be None, assign default values for those that are
+      if self.isNull is None:
+        self.isNull = False
       if self.x is None:
         self.x = 0.
       if self.y is None:
@@ -150,6 +153,7 @@ float32 z
       if self.z is None:
         self.z = 0.
     else:
+      self.isNull = False
       self.x = 0.
       self.y = 0.
       self.z = 0.
@@ -167,7 +171,7 @@ float32 z
     """
     try:
       _x = self
-      buff.write(_get_struct_3f().pack(_x.x, _x.y, _x.z))
+      buff.write(_get_struct_B3f().pack(_x.isNull, _x.x, _x.y, _x.z))
     except struct.error as se: self._check_types(struct.error("%s: '%s' when writing '%s'" % (type(se), str(se), str(locals().get('_x', self)))))
     except TypeError as te: self._check_types(ValueError("%s: '%s' when writing '%s'" % (type(te), str(te), str(locals().get('_x', self)))))
 
@@ -180,8 +184,9 @@ float32 z
       end = 0
       _x = self
       start = end
-      end += 12
-      (_x.x, _x.y, _x.z,) = _get_struct_3f().unpack(str[start:end])
+      end += 13
+      (_x.isNull, _x.x, _x.y, _x.z,) = _get_struct_B3f().unpack(str[start:end])
+      self.isNull = bool(self.isNull)
       return self
     except struct.error as e:
       raise genpy.DeserializationError(e) #most likely buffer underfill
@@ -195,7 +200,7 @@ float32 z
     """
     try:
       _x = self
-      buff.write(_get_struct_3f().pack(_x.x, _x.y, _x.z))
+      buff.write(_get_struct_B3f().pack(_x.isNull, _x.x, _x.y, _x.z))
     except struct.error as se: self._check_types(struct.error("%s: '%s' when writing '%s'" % (type(se), str(se), str(locals().get('_x', self)))))
     except TypeError as te: self._check_types(ValueError("%s: '%s' when writing '%s'" % (type(te), str(te), str(locals().get('_x', self)))))
 
@@ -209,8 +214,9 @@ float32 z
       end = 0
       _x = self
       start = end
-      end += 12
-      (_x.x, _x.y, _x.z,) = _get_struct_3f().unpack(str[start:end])
+      end += 13
+      (_x.isNull, _x.x, _x.y, _x.z,) = _get_struct_B3f().unpack(str[start:end])
+      self.isNull = bool(self.isNull)
       return self
     except struct.error as e:
       raise genpy.DeserializationError(e) #most likely buffer underfill
@@ -219,14 +225,14 @@ _struct_I = genpy.struct_I
 def _get_struct_I():
     global _struct_I
     return _struct_I
-_struct_3f = None
-def _get_struct_3f():
-    global _struct_3f
-    if _struct_3f is None:
-        _struct_3f = struct.Struct("<3f")
-    return _struct_3f
+_struct_B3f = None
+def _get_struct_B3f():
+    global _struct_B3f
+    if _struct_B3f is None:
+        _struct_B3f = struct.Struct("<B3f")
+    return _struct_B3f
 class goalControl(object):
   _type          = 'nav_planner/goalControl'
-  _md5sum = '4264199fe659d58fcdd2ad61fb4fcaec'
+  _md5sum = '775389b3da33dec3f4e147b9ecc0a538'
   _request_class  = goalControlRequest
   _response_class = goalControlResponse

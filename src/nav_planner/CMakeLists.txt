@@ -15,8 +15,11 @@ find_package(catkin REQUIRED COMPONENTS
   sensor_msgs
   octomap_ros
   octomap_msgs
+)
+
+find_package(
+  OpenCV REQUIRED
   #cv_bridge
-  #OpenCV 2 REQUIRED
 )
 
 ## System dependencies are found with CMake's conventions
@@ -57,6 +60,9 @@ add_message_files(
   FILES
   pointData.msg
   pointDataArray.msg
+  gridPoint.msg
+  gridRow.msg
+  gridMap.msg
 )
 
 ## Generate services in the 'srv' folder
@@ -68,6 +74,7 @@ add_service_files(
   baseRotate.srv
   waterDetect.srv
   systemControl.srv
+  mapSave.srv
 )
 
 ## Generate actions in the 'action' folder
@@ -133,6 +140,7 @@ include_directories(
   ${OpenCV_INCLUDE_DIRS}  
   goal_identifier 
   goal_visualizer
+  global_path_planner
 )
 
 ## Declare a C++ library
@@ -160,6 +168,7 @@ add_executable(goal_visualizer_node
 
 add_executable(global_path_planner_node
   src/global_path_planner_node.cpp
+  global_path_planner/global_path_planner.cpp
 )
 
 add_executable(velocity_control_node
@@ -195,6 +204,7 @@ add_dependencies(velocity_control_node ${${PROJECT_NAME}_EXPORTED_TARGETS} ${cat
 add_dependencies(test_goalIdentifier_node ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
 add_dependencies(test_velocityControl_node ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
 add_dependencies(test_system_node ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
+
 
 ## Specify libraries to link a library or executable target against
 target_link_libraries(goal_identifier_node 
@@ -234,9 +244,6 @@ target_link_libraries(test_system_node
   ${OCTOMAP_LIBRARIES}
 )
 
-# target_link_libraries(my_awesome_library 
-#   ${OpenCV_LIBRARIES}
-# )
 #############
 ## Install ##
 #############
