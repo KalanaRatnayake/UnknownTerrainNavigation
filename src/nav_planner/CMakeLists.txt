@@ -15,11 +15,11 @@ find_package(catkin REQUIRED COMPONENTS
   sensor_msgs
   octomap_ros
   octomap_msgs
+  cv_bridge
 )
 
 find_package(
   OpenCV REQUIRED
-  #cv_bridge
 )
 
 ## System dependencies are found with CMake's conventions
