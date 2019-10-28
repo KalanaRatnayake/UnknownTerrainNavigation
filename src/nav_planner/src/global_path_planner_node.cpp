@@ -30,8 +30,12 @@
 #define INITROW 408
 #define INITCOL 408
 #define PADDING 4
+#define OFFSET 0.175
+#define CELL 0.05
+#define INVCELL 20  //multiply by 20 instead of dividing by cell size 0.05
+#define UNITOFFSET 0.025
 
-#define CLEARENCE_DISTANCE 2
+#define CLEARENCE_DISTANCE 1.5
 
 // Description of the Grid- {1--> not occupied} {0--> occupied} 
 
@@ -41,7 +45,6 @@ octomap::point3d currentPosition;
 octomap::point3d goal;
 octomap::point3d nextPosition;
 octomap::point3d markedPosition;
-std::vector<octomap::point3d> path;
 
 ros::ServiceClient clientGoalPosition;
 ros::ServiceClient clientGoalRemove;
@@ -112,6 +115,10 @@ void requestGoal(){
 	} else {
 		ROS_ERROR("global_path_planners_node : failed to call service goalPosition");
 	}
+	ROS_INFO_STREAM("--goal--");
+	ROS_INFO_STREAM(goal.x());
+	ROS_INFO_STREAM(goal.y());
+	ROS_INFO_STREAM(goal.z());
 
 	plannerObject.update_goal(goal);
 }
@@ -136,7 +143,7 @@ void removeGoal(){
 / message to drive the robot from currentPosition to nextPosition
 */
 
-void drive(){
+void drive(octomap::point3d &nextPosition){
 	nav_planner::baseDrive srvDrive;
 
 	srvDrive.request.x = nextPosition.x();
@@ -200,35 +207,72 @@ bool systemCallback(nav_planner::systemControl::Request &request, nav_planner::s
 	while (unExplored && request.activate){
 		int initialGrid [INITROW][INITCOL];
 		int processedGrid [ROW][COL];
-		int index =  0;
+		int index =  1;
 		bool pathFound;
-		double remainingDistance, gapDistance = 0;
+		double remainingDistance, gapDistance;
+		std::vector<octomap::point3d> path, processedPath;
 
+		ROS_INFO_STREAM("starting rotation");
 		rotate360();
+		ROS_INFO_STREAM("requesting goal");
 		requestGoal();
+		ROS_INFO_STREAM("building map");
 		plannerObject.buildMap(initialGrid);
+		ROS_INFO_STREAM("preprocessing map");
 		plannerObject.preprocessMap(initialGrid, processedGrid);
 
-		pathFound = plannerObject.search(processedGrid, std::make_pair(currentPosition.y(), currentPosition.x()), std::make_pair(goal.y(), goal.x()), path);
+		ROS_INFO_STREAM("searching");
+
+		int srcX = (int) (currentPosition.x()*INVCELL);
+		int srcY = (int) (currentPosition.y()*INVCELL);
+
+		int desX = (int) (goal.x()*INVCELL);
+		int desY = (int) (goal.y()*INVCELL);
+
+		pathFound = plannerObject.search(processedGrid, std::make_pair(srcY, srcX), std::make_pair(desY, desX), path);
+		plannerObject.processPath(path, processedPath);
 
 		while (!pathFound){
+			ROS_INFO_STREAM("removing goal");
 			removeGoal();
+			ROS_INFO_STREAM("re-requesting goal");
 			requestGoal();
-			pathFound = plannerObject.search(processedGrid, std::make_pair(currentPosition.y(), currentPosition.x()), std::make_pair(goal.y(), goal.x()), path);
+			ROS_INFO_STREAM("re-calculating goal");
+			pathFound = plannerObject.search(processedGrid, std::make_pair(srcY, srcX), std::make_pair(desY, desX), path);
+			plannerObject.processPath(path, processedPath);
 		}
+
+		ROS_INFO_STREAM("publishing grid");
+		publish(initialGrid, processedGrid, processedPath);
 		
+		ROS_INFO_STREAM("markig Position");
 		markedPosition = currentPosition;
-		plannerObject.cleanPath(path);
+		plannerObject.cleanPath(processedPath);
 
-		publish(initialGrid, processedGrid, path);
+		ROS_INFO_STREAM("moving robot");
+		remainingDistance = goal.distance(currentPosition);
+		
+		ROS_INFO_STREAM("--going inside while loop-");
+		while ((remainingDistance >= 0.1) && pathFound) {
 
-		while ((remainingDistance <= 0.01) && pathFound) {
-			nextPosition = path[index];
+			ROS_INFO_STREAM("--inside for loop--");
+			ROS_INFO_STREAM(processedPath[index].x());
+			ROS_INFO_STREAM(processedPath[index].y());
+			ROS_INFO_STREAM(processedPath[index].z());
+
+			nextPosition = processedPath[index];
+
 			gapDistance = markedPosition.distance(nextPosition);
-			drive();
+			ROS_INFO_STREAM("--gap distance--");
+			ROS_INFO_STREAM(gapDistance);
+
+			drive(nextPosition);
+
 			if (gapDistance < CLEARENCE_DISTANCE) index++; else break;
+
 			remainingDistance = goal.distance(currentPosition);
 		}
+		ROS_INFO_STREAM("--exiting while loop--");
 	}
 
 	response.success = true;

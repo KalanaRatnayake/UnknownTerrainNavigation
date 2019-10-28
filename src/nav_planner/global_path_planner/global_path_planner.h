@@ -2,6 +2,8 @@
 #include <octomap/octomap.h>
 #include <octomap/OcTree.h>
 
+#include <ros/console.h>
+
 //map
 #define ROW 400 
 #define COL 400
@@ -11,11 +13,13 @@
 #define INITCOL 408
 
 //Map boundries
-#define MAPLOW -0.2
-#define MAPHIGH 20.2
+#define MAPLOW -0.175
+#define MAPHIGH 20.225
 #define OFFSET 0.175
 #define CELL 0.05
 #define INVCELL 20  //multiply by 20 instead of dividing by cell size 0.05
+#define UNITOFFSET 0.025
+#define MASKSIDE 9
 
 //map + 4*(padding)
 #define PADROW 416
@@ -23,7 +27,7 @@
 
 //Robot description
 #define HEIGHT 0.35
-#define CLEARENCE_DISTANCE 2
+#define CLEARENCE_DISTANCE 1.5
 
 class global_path_planner{
     private:
@@ -48,5 +52,6 @@ class global_path_planner{
         void buildMap(int (&outGrid)[INITROW][INITCOL]);
         void preprocessMap(int (&inGrid)[INITROW][INITCOL], int (&outGrid)[ROW][COL]);
         void cleanPath(std::vector<octomap::point3d> path);
+        void processPath(std::vector<octomap::point3d> &inPath, std::vector<octomap::point3d> &outPath);
         void saveOctomap(const std::string &filename);
 };

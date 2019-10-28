@@ -26,6 +26,15 @@ CMakeFiles/global_path_planner_node.dir/global_path_planner/global_path_planner.
  /opt/ros/kinetic/include/octomap/octomap_deprecated.h
  /opt/ros/kinetic/include/octomap/octomap_types.h
  /opt/ros/kinetic/include/octomap/octomap_utils.h
+ /opt/ros/kinetic/include/ros/console.h
+ /opt/ros/kinetic/include/ros/console_backend.h
+ /opt/ros/kinetic/include/ros/duration.h
+ /opt/ros/kinetic/include/ros/exception.h
+ /opt/ros/kinetic/include/ros/macros.h
+ /opt/ros/kinetic/include/ros/platform.h
+ /opt/ros/kinetic/include/ros/rostime_decl.h
+ /opt/ros/kinetic/include/ros/time.h
+ /opt/ros/kinetic/include/rosconsole/macros_generated.h
 CMakeFiles/global_path_planner_node.dir/src/global_path_planner_node.cpp.o
  /home/kalana/FYP/devel_isolated/nav_planner/include/nav_planner/baseDrive.h
  /home/kalana/FYP/devel_isolated/nav_planner/include/nav_planner/baseDriveRequest.h
