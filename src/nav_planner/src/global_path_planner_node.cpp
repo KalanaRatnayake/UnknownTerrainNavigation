@@ -23,17 +23,18 @@
 #include <global_path_planner.h>
 
 //map
-#define ROW 400 
-#define COL 400
+#define ROW 800 
+#define COL 800
 
 //map + 2*(padding) 
-#define INITROW 408
-#define INITCOL 408
-#define PADDING 4
+#define INITROW 816
+#define INITCOL 816
+
+#define PADDING 8
 #define OFFSET 0.175
-#define CELL 0.05
-#define INVCELL 20  //multiply by 20 instead of dividing by cell size 0.05
-#define UNITOFFSET 0.025
+#define CELL 0.025
+#define INVCELL 40  //multiply by 20 instead of dividing by cell size 0.05
+#define UNITOFFSET 0.0125
 
 #define CLEARENCE_DISTANCE 1.5
 
@@ -172,7 +173,7 @@ void publish(int (&initGrid)[INITROW][INITCOL], int (&procGrid)[ROW][COL], std::
 		for(int j=0; j<COL; j++) {
 			nav_planner::gridPoint point;
 			
-			point.init = initGrid[i+4][j+4];
+			point.init = initGrid[i+PADDING][j+PADDING];
 			point.proc = procGrid[i][j];
 
 			for (int k=0; k<path.size(); k++){

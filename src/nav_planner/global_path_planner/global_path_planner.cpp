@@ -64,7 +64,7 @@ void tracePath(global_path_planner::cell cellDetails[][COL], global_path_planner
 	}
 } 
 
-bool global_path_planner::search(int grid[][COL], global_path_planner::Pair src, global_path_planner::Pair dest, std::vector<octomap::point3d> &outPath) {
+bool global_path_planner::search(int (&grid)[ROW][COL], global_path_planner::Pair src, global_path_planner::Pair dest, std::vector<octomap::point3d> &outPath) {
 	if (isValid (src.first, src.second) == false) return false;
 	if (isValid (dest.first, dest.second) == false) return false;
 	if (isUnBlocked(grid, src.first, src.second) == false || isUnBlocked(grid, dest.first, dest.second) == false) return false; 
@@ -154,7 +154,10 @@ void global_path_planner::buildMap(int (&outGrid)[INITROW][INITCOL]){
 		}
 	}
 
+	int count = 0;
+
 	ROS_INFO_STREAM("calcualting surrounding");
+	ROS_INFO_STREAM(currentPosition.z());
 	//inspect surrounding
 	float lower = currentPosition.z() + UNITOFFSET;
 	float upper = currentPosition.z() + HEIGHT;
@@ -170,11 +173,14 @@ void global_path_planner::buildMap(int (&outGrid)[INITROW][INITCOL]){
 						int yN = (int) (y + OFFSET)*INVCELL;
 
 						outGrid[yN][xN] = 0;
+						count++;
 					}
                 }
             }
         }
     }
+	ROS_INFO_STREAM("count of initial grid");
+	ROS_INFO_STREAM(count);
 
 	// //inspect floor
 /* 	ROS_INFO_STREAM("calculating floor");
@@ -210,6 +216,7 @@ void global_path_planner::preprocessMap(int (&inGrid)[INITROW][INITCOL], int (&o
 	// Description of the Grid- {1--> not occupied} {0--> occupied} 
 	int paddedGrid [PADROW][PADCOL];
 
+
 	//initialize all to not occupied state
 	for (int i = 0; i < PADROW; i++){
 		for (int j = 0; j < PADCOL; j++){
@@ -217,10 +224,14 @@ void global_path_planner::preprocessMap(int (&inGrid)[INITROW][INITCOL], int (&o
 		}
 	}
 
-	//assign occupied space with a padding of 4 blocks
+	int count = 0;
+
+	//fill occupied space with a padding of 4 blocks
 	for (int i = 0; i < INITROW; i++){
 		for (int j = 0; j < INITCOL; j++){
 			if (inGrid[i][j] == 0){
+
+				count++;
 
 				int xlow = i;
 				int xhigh = i+MASKSIDE;
@@ -236,8 +247,12 @@ void global_path_planner::preprocessMap(int (&inGrid)[INITROW][INITCOL], int (&o
 		}
 	}
 
-	for (int i = 0; i < ROW; i++){
-		for (int j = 0; j < COL; j++){
+	ROS_INFO_STREAM("count of padded grid");
+	ROS_INFO_STREAM(count);
+	
+
+	for (int i=0; i<ROW; i++){
+		for (int j=0; j<COL; j++){
 			outGrid[i][j] = paddedGrid[i+MASKSIDE-1][j+MASKSIDE-1];
 		}
 	}
