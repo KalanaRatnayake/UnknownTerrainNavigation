@@ -27,7 +27,7 @@
 
 //Robot description
 #define HEIGHT 0.35
-#define CLEARENCE_DISTANCE 1.5
+#define CLEARENCE_DISTANCE 2
 
 class global_path_planner{
     private:
@@ -48,10 +48,8 @@ class global_path_planner{
         void update_goal(octomap::point3d &position);
         void update_position(octomap::point3d &position);
         void update_tree(octomap::OcTree* receivedTree);
-        bool search(int (&grid)[ROW][COL], Pair src, Pair dest, std::vector<octomap::point3d> &outPath);
-        void buildMap(int (&outGrid)[INITROW][INITCOL]);
-        void preprocessMap(int (&inGrid)[INITROW][INITCOL], int (&outGrid)[ROW][COL]);
-        void cleanPath(std::vector<octomap::point3d> path);
+        bool search(std::vector<std::vector<int> > &grid, global_path_planner::Pair src, global_path_planner::Pair dest, std::vector<octomap::point3d> &outPath);
+        void buildMap(std::vector<std::vector<int> > &initialGrid, std::vector<std::vector<int> > &processedGrid);
         void processPath(std::vector<octomap::point3d> &inPath, std::vector<octomap::point3d> &outPath);
         void saveOctomap(const std::string &filename);
 };

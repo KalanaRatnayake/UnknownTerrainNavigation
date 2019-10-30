@@ -33,10 +33,10 @@
 #define PADDING 8
 #define OFFSET 0.175
 #define CELL 0.025
-#define INVCELL 40  //multiply by 20 instead of dividing by cell size 0.05
+#define INVCELL 40  //multiply by 40 instead of dividing by cell size 0.025
 #define UNITOFFSET 0.0125
 
-#define CLEARENCE_DISTANCE 1.5
+#define CLEARENCE_DISTANCE 2
 
 // Description of the Grid- {1--> not occupied} {0--> occupied} 
 
@@ -164,7 +164,7 @@ void drive(octomap::point3d &nextPosition){
 / converts the gridmaps into a 'gridMap' msgs, path into 'pointDataArray and publishes it
 */
 
-void publish(int (&initGrid)[INITROW][INITCOL], int (&procGrid)[ROW][COL], std::vector<octomap::point3d> path){
+void publish(std::vector<std::vector<int> > &initGrid, std::vector<std::vector<int> > &procGrid, std::vector<octomap::point3d> &path){
 	nav_planner::gridMap map;
 
 	for (int i=0; i<ROW; i++){
@@ -205,9 +205,12 @@ void currentPositionCallback(const nav_msgs::OdometryConstPtr &msg){
 }
 
 bool systemCallback(nav_planner::systemControl::Request &request, nav_planner::systemControl::Response &response){
+	// Description of the Grid- {1--> not occupied} {0--> occupied}
+
 	while (unExplored && request.activate){
-		int initialGrid [INITROW][INITCOL];
-		int processedGrid [ROW][COL];
+		std::vector<std::vector<int> > initialGrid( INITROW, std::vector<int> (INITCOL, 1));
+		std::vector<std::vector<int> > processedGrid( ROW, std::vector<int> (COL, 1));
+
 		int index =  1;
 		bool pathFound;
 		double remainingDistance, gapDistance;
@@ -218,19 +221,26 @@ bool systemCallback(nav_planner::systemControl::Request &request, nav_planner::s
 		ROS_INFO_STREAM("requesting goal");
 		requestGoal();
 		ROS_INFO_STREAM("building map");
-		plannerObject.buildMap(initialGrid);
-		ROS_INFO_STREAM("preprocessing map");
-		plannerObject.preprocessMap(initialGrid, processedGrid);
+		plannerObject.buildMap(initialGrid, processedGrid);
 
-		ROS_INFO_STREAM("searching");
-
+		ROS_INFO_STREAM("currentPosition calculating");
 		int srcX = (int) (currentPosition.x()*INVCELL);
 		int srcY = (int) (currentPosition.y()*INVCELL);
 
+		ROS_INFO_STREAM(srcX);
+		ROS_INFO_STREAM(srcY);
+
+		ROS_INFO_STREAM("goalPosition calculating");
 		int desX = (int) (goal.x()*INVCELL);
 		int desY = (int) (goal.y()*INVCELL);
 
+		ROS_INFO_STREAM(desX);
+		ROS_INFO_STREAM(desY);
+
+		ROS_INFO_STREAM("searching");
 		pathFound = plannerObject.search(processedGrid, std::make_pair(srcY, srcX), std::make_pair(desY, desX), path);
+
+		ROS_INFO_STREAM("processing path");
 		plannerObject.processPath(path, processedPath);
 
 		while (!pathFound){
@@ -248,7 +258,6 @@ bool systemCallback(nav_planner::systemControl::Request &request, nav_planner::s
 		
 		ROS_INFO_STREAM("markig Position");
 		markedPosition = currentPosition;
-		plannerObject.cleanPath(processedPath);
 
 		ROS_INFO_STREAM("moving robot");
 		remainingDistance = goal.distance(currentPosition);
