@@ -3,6 +3,4 @@
           INIT
           PROC-VAL
           PROC
-          PATH-VAL
-          PATH
 ))

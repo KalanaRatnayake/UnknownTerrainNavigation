@@ -58,7 +58,7 @@ class gridRow {
 
   static getMessageSize(object) {
     let length = 0;
-    length += 3 * object.row.length;
+    length += 2 * object.row.length;
     return length + 4;
   }
 
@@ -69,7 +69,7 @@ class gridRow {
 
   static md5sum() {
     //Returns md5sum for a message object
-    return 'fcfb135ee0ff0df05b23851f5da70053';
+    return 'b79fca104e1ff6a6b0cdcd662d07d607';
   }
 
   static messageDefinition() {
@@ -81,7 +81,6 @@ class gridRow {
     MSG: nav_planner/gridPoint
     int8 init
     int8 proc
-    int8 path
     `;
   }
 

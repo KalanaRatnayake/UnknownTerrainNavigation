@@ -107,11 +107,10 @@ int main(int argc, char **argv)
 	ROS_INFO("goal_identifier_node : created publishers");
 
 	while(ros::ok()){
-		int lenM = centerArray.size();
 		nav_planner::pointDataArray valueArray;
 		nav_planner::pointData goalMsg;
 
-		for(int i=1; i<lenM; i++){
+		for(int i=1; i<centerArray.size(); i++){
 			nav_planner::pointData msgInstance;
 
 			msgInstance.x = centerArray[i].x();

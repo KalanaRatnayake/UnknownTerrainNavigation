@@ -44,7 +44,7 @@ add_custom_target(_nav_planner_generate_messages_check_deps_${_filename}
 
 get_filename_component(_filename "/home/kalana/FYP/src/nav_planner/msg/gridMap.msg" NAME_WE)
 add_custom_target(_nav_planner_generate_messages_check_deps_${_filename}
-  COMMAND ${CATKIN_ENV} ${PYTHON_EXECUTABLE} ${GENMSG_CHECK_DEPS_SCRIPT} "nav_planner" "/home/kalana/FYP/src/nav_planner/msg/gridMap.msg" "nav_planner/gridPoint:nav_planner/gridRow"
+  COMMAND ${CATKIN_ENV} ${PYTHON_EXECUTABLE} ${GENMSG_CHECK_DEPS_SCRIPT} "nav_planner" "/home/kalana/FYP/src/nav_planner/msg/gridMap.msg" "nav_planner/gridPoint:nav_planner/pointDataArray:nav_planner/gridRow:nav_planner/pointData"
 )
 
 get_filename_component(_filename "/home/kalana/FYP/src/nav_planner/srv/mapSave.srv" NAME_WE)
@@ -92,7 +92,7 @@ _generate_msg_cpp(nav_planner
 _generate_msg_cpp(nav_planner
   "/home/kalana/FYP/src/nav_planner/msg/gridMap.msg"
   "${MSG_I_FLAGS}"
-  "/home/kalana/FYP/src/nav_planner/msg/gridPoint.msg;/home/kalana/FYP/src/nav_planner/msg/gridRow.msg"
+  "/home/kalana/FYP/src/nav_planner/msg/gridPoint.msg;/home/kalana/FYP/src/nav_planner/msg/pointDataArray.msg;/home/kalana/FYP/src/nav_planner/msg/gridRow.msg;/home/kalana/FYP/src/nav_planner/msg/pointData.msg"
   ${CATKIN_DEVEL_PREFIX}/${gencpp_INSTALL_DIR}/nav_planner
 )
 _generate_msg_cpp(nav_planner
@@ -213,7 +213,7 @@ _generate_msg_eus(nav_planner
 _generate_msg_eus(nav_planner
   "/home/kalana/FYP/src/nav_planner/msg/gridMap.msg"
   "${MSG_I_FLAGS}"
-  "/home/kalana/FYP/src/nav_planner/msg/gridPoint.msg;/home/kalana/FYP/src/nav_planner/msg/gridRow.msg"
+  "/home/kalana/FYP/src/nav_planner/msg/gridPoint.msg;/home/kalana/FYP/src/nav_planner/msg/pointDataArray.msg;/home/kalana/FYP/src/nav_planner/msg/gridRow.msg;/home/kalana/FYP/src/nav_planner/msg/pointData.msg"
   ${CATKIN_DEVEL_PREFIX}/${geneus_INSTALL_DIR}/nav_planner
 )
 _generate_msg_eus(nav_planner
@@ -334,7 +334,7 @@ _generate_msg_lisp(nav_planner
 _generate_msg_lisp(nav_planner
   "/home/kalana/FYP/src/nav_planner/msg/gridMap.msg"
   "${MSG_I_FLAGS}"
-  "/home/kalana/FYP/src/nav_planner/msg/gridPoint.msg;/home/kalana/FYP/src/nav_planner/msg/gridRow.msg"
+  "/home/kalana/FYP/src/nav_planner/msg/gridPoint.msg;/home/kalana/FYP/src/nav_planner/msg/pointDataArray.msg;/home/kalana/FYP/src/nav_planner/msg/gridRow.msg;/home/kalana/FYP/src/nav_planner/msg/pointData.msg"
   ${CATKIN_DEVEL_PREFIX}/${genlisp_INSTALL_DIR}/nav_planner
 )
 _generate_msg_lisp(nav_planner
@@ -455,7 +455,7 @@ _generate_msg_nodejs(nav_planner
 _generate_msg_nodejs(nav_planner
   "/home/kalana/FYP/src/nav_planner/msg/gridMap.msg"
   "${MSG_I_FLAGS}"
-  "/home/kalana/FYP/src/nav_planner/msg/gridPoint.msg;/home/kalana/FYP/src/nav_planner/msg/gridRow.msg"
+  "/home/kalana/FYP/src/nav_planner/msg/gridPoint.msg;/home/kalana/FYP/src/nav_planner/msg/pointDataArray.msg;/home/kalana/FYP/src/nav_planner/msg/gridRow.msg;/home/kalana/FYP/src/nav_planner/msg/pointData.msg"
   ${CATKIN_DEVEL_PREFIX}/${gennodejs_INSTALL_DIR}/nav_planner
 )
 _generate_msg_nodejs(nav_planner
@@ -576,7 +576,7 @@ _generate_msg_py(nav_planner
 _generate_msg_py(nav_planner
   "/home/kalana/FYP/src/nav_planner/msg/gridMap.msg"
   "${MSG_I_FLAGS}"
-  "/home/kalana/FYP/src/nav_planner/msg/gridPoint.msg;/home/kalana/FYP/src/nav_planner/msg/gridRow.msg"
+  "/home/kalana/FYP/src/nav_planner/msg/gridPoint.msg;/home/kalana/FYP/src/nav_planner/msg/pointDataArray.msg;/home/kalana/FYP/src/nav_planner/msg/gridRow.msg;/home/kalana/FYP/src/nav_planner/msg/pointData.msg"
   ${CATKIN_DEVEL_PREFIX}/${genpy_INSTALL_DIR}/nav_planner
 )
 _generate_msg_py(nav_planner

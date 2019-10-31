@@ -7,14 +7,13 @@ import struct
 
 
 class gridPoint(genpy.Message):
-  _md5sum = "6473cd93ef160624bb8e42a565e25ccb"
+  _md5sum = "38ba4a3cfac6a3fecf591ee30dc4f1b4"
   _type = "nav_planner/gridPoint"
   _has_header = False #flag to mark the presence of a Header object
   _full_text = """int8 init
-int8 proc
-int8 path"""
-  __slots__ = ['init','proc','path']
-  _slot_types = ['int8','int8','int8']
+int8 proc"""
+  __slots__ = ['init','proc']
+  _slot_types = ['int8','int8']
 
   def __init__(self, *args, **kwds):
     """
@@ -24,7 +23,7 @@ int8 path"""
     changes.  You cannot mix in-order arguments and keyword arguments.
 
     The available fields are:
-       init,proc,path
+       init,proc
 
     :param args: complete set of field values, in .msg order
     :param kwds: use keyword arguments corresponding to message field names
@@ -37,12 +36,9 @@ int8 path"""
         self.init = 0
       if self.proc is None:
         self.proc = 0
-      if self.path is None:
-        self.path = 0
     else:
       self.init = 0
       self.proc = 0
-      self.path = 0
 
   def _get_types(self):
     """
@@ -57,7 +53,7 @@ int8 path"""
     """
     try:
       _x = self
-      buff.write(_get_struct_3b().pack(_x.init, _x.proc, _x.path))
+      buff.write(_get_struct_2b().pack(_x.init, _x.proc))
     except struct.error as se: self._check_types(struct.error("%s: '%s' when writing '%s'" % (type(se), str(se), str(locals().get('_x', self)))))
     except TypeError as te: self._check_types(ValueError("%s: '%s' when writing '%s'" % (type(te), str(te), str(locals().get('_x', self)))))
 
@@ -70,8 +66,8 @@ int8 path"""
       end = 0
       _x = self
       start = end
-      end += 3
-      (_x.init, _x.proc, _x.path,) = _get_struct_3b().unpack(str[start:end])
+      end += 2
+      (_x.init, _x.proc,) = _get_struct_2b().unpack(str[start:end])
       return self
     except struct.error as e:
       raise genpy.DeserializationError(e) #most likely buffer underfill
@@ -85,7 +81,7 @@ int8 path"""
     """
     try:
       _x = self
-      buff.write(_get_struct_3b().pack(_x.init, _x.proc, _x.path))
+      buff.write(_get_struct_2b().pack(_x.init, _x.proc))
     except struct.error as se: self._check_types(struct.error("%s: '%s' when writing '%s'" % (type(se), str(se), str(locals().get('_x', self)))))
     except TypeError as te: self._check_types(ValueError("%s: '%s' when writing '%s'" % (type(te), str(te), str(locals().get('_x', self)))))
 
@@ -99,8 +95,8 @@ int8 path"""
       end = 0
       _x = self
       start = end
-      end += 3
-      (_x.init, _x.proc, _x.path,) = _get_struct_3b().unpack(str[start:end])
+      end += 2
+      (_x.init, _x.proc,) = _get_struct_2b().unpack(str[start:end])
       return self
     except struct.error as e:
       raise genpy.DeserializationError(e) #most likely buffer underfill
@@ -109,9 +105,9 @@ _struct_I = genpy.struct_I
 def _get_struct_I():
     global _struct_I
     return _struct_I
-_struct_3b = None
-def _get_struct_3b():
-    global _struct_3b
-    if _struct_3b is None:
-        _struct_3b = struct.Struct("<3b")
-    return _struct_3b
+_struct_2b = None
+def _get_struct_2b():
+    global _struct_2b
+    if _struct_2b is None:
+        _struct_2b = struct.Struct("<2b")
+    return _struct_2b

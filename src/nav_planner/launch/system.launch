@@ -25,5 +25,8 @@
 		<remap from="cmd_vel" to="/mobile_base/commands/velocity"/>
 		<remap from="position" to="/odom" />
   	</node>
+
+	<node pkg="nav_planner" type="grid_image_creator_node.py" name="Grid_Image_Creator" output="screen">
+	</node>
 </launch>
 

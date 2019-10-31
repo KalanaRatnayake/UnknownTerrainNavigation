@@ -29,11 +29,16 @@
 #define HEIGHT 0.35
 #define CLEARENCE_DISTANCE 2
 
+//Pit detection range
+#define MINDISTANCE 0.75
+#define MAXDISTANCE 2.75
+
 class global_path_planner{
     private:
         octomap::OcTree* tree_oct;
         octomap::point3d currentPosition;
         octomap::point3d goal;
+        std::vector<octomap::point3d> pitPoints;
 
     public:
         typedef std::pair<int, int> Pair; 

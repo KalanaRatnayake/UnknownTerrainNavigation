@@ -25,13 +25,11 @@ struct gridPoint_
 
   gridPoint_()
     : init(0)
-    , proc(0)
-    , path(0)  {
+    , proc(0)  {
     }
   gridPoint_(const ContainerAllocator& _alloc)
     : init(0)
-    , proc(0)
-    , path(0)  {
+    , proc(0)  {
   (void)_alloc;
     }
 
@@ -42,9 +40,6 @@ struct gridPoint_
 
    typedef int8_t _proc_type;
   _proc_type proc;
-
-   typedef int8_t _path_type;
-  _path_type path;
 
 
 
@@ -124,12 +119,12 @@ struct MD5Sum< ::nav_planner::gridPoint_<ContainerAllocator> >
 {
   static const char* value()
   {
-    return "6473cd93ef160624bb8e42a565e25ccb";
+    return "38ba4a3cfac6a3fecf591ee30dc4f1b4";
   }
 
   static const char* value(const ::nav_planner::gridPoint_<ContainerAllocator>&) { return value(); }
-  static const uint64_t static_value1 = 0x6473cd93ef160624ULL;
-  static const uint64_t static_value2 = 0xbb8e42a565e25ccbULL;
+  static const uint64_t static_value1 = 0x38ba4a3cfac6a3feULL;
+  static const uint64_t static_value2 = 0xcf591ee30dc4f1b4ULL;
 };
 
 template<class ContainerAllocator>
@@ -150,7 +145,6 @@ struct Definition< ::nav_planner::gridPoint_<ContainerAllocator> >
   {
     return "int8 init\n\
 int8 proc\n\
-int8 path\n\
 ";
   }
 
@@ -171,7 +165,6 @@ namespace serialization
     {
       stream.next(m.init);
       stream.next(m.proc);
-      stream.next(m.path);
     }
 
     ROS_DECLARE_ALLINONE_SERIALIZER
@@ -194,8 +187,6 @@ struct Printer< ::nav_planner::gridPoint_<ContainerAllocator> >
     Printer<int8_t>::stream(s, indent + "  ", v.init);
     s << indent << "proc: ";
     Printer<int8_t>::stream(s, indent + "  ", v.proc);
-    s << indent << "path: ";
-    Printer<int8_t>::stream(s, indent + "  ", v.path);
   }
 };
 

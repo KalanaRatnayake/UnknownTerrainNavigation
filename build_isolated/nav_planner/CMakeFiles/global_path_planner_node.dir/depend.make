@@ -50,6 +50,7 @@ CMakeFiles/global_path_planner_node.dir/src/global_path_planner_node.cpp.o: /hom
 CMakeFiles/global_path_planner_node.dir/src/global_path_planner_node.cpp.o: /home/kalana/FYP/devel_isolated/nav_planner/include/nav_planner/gridMap.h
 CMakeFiles/global_path_planner_node.dir/src/global_path_planner_node.cpp.o: /home/kalana/FYP/devel_isolated/nav_planner/include/nav_planner/gridPoint.h
 CMakeFiles/global_path_planner_node.dir/src/global_path_planner_node.cpp.o: /home/kalana/FYP/devel_isolated/nav_planner/include/nav_planner/gridRow.h
+CMakeFiles/global_path_planner_node.dir/src/global_path_planner_node.cpp.o: /home/kalana/FYP/devel_isolated/nav_planner/include/nav_planner/pointData.h
 CMakeFiles/global_path_planner_node.dir/src/global_path_planner_node.cpp.o: /home/kalana/FYP/devel_isolated/nav_planner/include/nav_planner/systemControl.h
 CMakeFiles/global_path_planner_node.dir/src/global_path_planner_node.cpp.o: /home/kalana/FYP/devel_isolated/nav_planner/include/nav_planner/systemControlRequest.h
 CMakeFiles/global_path_planner_node.dir/src/global_path_planner_node.cpp.o: /home/kalana/FYP/devel_isolated/nav_planner/include/nav_planner/systemControlResponse.h

@@ -16,6 +16,7 @@
 #include <ros/message_operations.h>
 
 #include <nav_planner/gridRow.h>
+#include <nav_planner/pointData.h>
 
 namespace nav_planner
 {
@@ -25,10 +26,14 @@ struct gridMap_
   typedef gridMap_<ContainerAllocator> Type;
 
   gridMap_()
-    : grid()  {
+    : grid()
+    , path()
+    , pathLength(0)  {
     }
   gridMap_(const ContainerAllocator& _alloc)
-    : grid(_alloc)  {
+    : grid(_alloc)
+    , path(_alloc)
+    , pathLength(0)  {
   (void)_alloc;
     }
 
@@ -36,6 +41,12 @@ struct gridMap_
 
    typedef std::vector< ::nav_planner::gridRow_<ContainerAllocator> , typename ContainerAllocator::template rebind< ::nav_planner::gridRow_<ContainerAllocator> >::other >  _grid_type;
   _grid_type grid;
+
+   typedef std::vector< ::nav_planner::pointData_<ContainerAllocator> , typename ContainerAllocator::template rebind< ::nav_planner::pointData_<ContainerAllocator> >::other >  _path_type;
+  _path_type path;
+
+   typedef int16_t _pathLength_type;
+  _pathLength_type pathLength;
 
 
 
@@ -115,12 +126,12 @@ struct MD5Sum< ::nav_planner::gridMap_<ContainerAllocator> >
 {
   static const char* value()
   {
-    return "871833bd332a580973308691ab02d68a";
+    return "7283370e017ac387872171d01ea443ab";
   }
 
   static const char* value(const ::nav_planner::gridMap_<ContainerAllocator>&) { return value(); }
-  static const uint64_t static_value1 = 0x871833bd332a5809ULL;
-  static const uint64_t static_value2 = 0x73308691ab02d68aULL;
+  static const uint64_t static_value1 = 0x7283370e017ac387ULL;
+  static const uint64_t static_value2 = 0x872171d01ea443abULL;
 };
 
 template<class ContainerAllocator>
@@ -140,7 +151,8 @@ struct Definition< ::nav_planner::gridMap_<ContainerAllocator> >
   static const char* value()
   {
     return "gridRow[] grid\n\
-\n\
+pointData[] path\n\
+int16 pathLength\n\
 ================================================================================\n\
 MSG: nav_planner/gridRow\n\
 gridPoint[] row\n\
@@ -149,7 +161,11 @@ gridPoint[] row\n\
 MSG: nav_planner/gridPoint\n\
 int8 init\n\
 int8 proc\n\
-int8 path\n\
+================================================================================\n\
+MSG: nav_planner/pointData\n\
+float32 x\n\
+float32 y\n\
+float32 z\n\
 ";
   }
 
@@ -169,6 +185,8 @@ namespace serialization
     template<typename Stream, typename T> inline static void allInOne(Stream& stream, T m)
     {
       stream.next(m.grid);
+      stream.next(m.path);
+      stream.next(m.pathLength);
     }
 
     ROS_DECLARE_ALLINONE_SERIALIZER
@@ -195,6 +213,16 @@ struct Printer< ::nav_planner::gridMap_<ContainerAllocator> >
       s << indent;
       Printer< ::nav_planner::gridRow_<ContainerAllocator> >::stream(s, indent + "    ", v.grid[i]);
     }
+    s << indent << "path[]" << std::endl;
+    for (size_t i = 0; i < v.path.size(); ++i)
+    {
+      s << indent << "  path[" << i << "]: ";
+      s << std::endl;
+      s << indent;
+      Printer< ::nav_planner::pointData_<ContainerAllocator> >::stream(s, indent + "    ", v.path[i]);
+    }
+    s << indent << "pathLength: ";
+    Printer<int16_t>::stream(s, indent + "  ", v.pathLength);
   }
 };
 

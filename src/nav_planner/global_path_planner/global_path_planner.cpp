@@ -57,7 +57,6 @@ void tracePath( std::vector<std::vector<global_path_planner::cell> > &cellDetail
 
 	PathStack.push(std::make_pair (row, col)); 
 
-	ROS_INFO_STREAM("inside tracePath");
 	while (!PathStack.empty()) { 
 		std::pair<int,int> p = PathStack.top(); 
 		PathStack.pop();
@@ -67,19 +66,14 @@ void tracePath( std::vector<std::vector<global_path_planner::cell> > &cellDetail
 } 
 
 bool global_path_planner::search(std::vector<std::vector<int> > &grid, global_path_planner::Pair src, global_path_planner::Pair dest, std::vector<octomap::point3d> &outPath) {
-	ROS_INFO_STREAM("started search");
 	if (isValid (src.first, src.second) == false) return false;
 	if (isValid (dest.first, dest.second) == false) return false;
 	if (isUnBlocked(grid, src.first, src.second) == false || isUnBlocked(grid, dest.first, dest.second) == false) return false; 
 	if (isDestination(src.first, src.second, dest) == true) return false; 
-	
-	ROS_INFO_STREAM("finished validating");
 
 	std::vector<std::vector<bool> > closedList( ROW, std::vector<bool> (COL, false));
 	std::vector<std::vector<global_path_planner::cell> > cellDetails( ROW, std::vector<global_path_planner::cell> (COL));
 	int i, j; 
-
-	ROS_INFO_STREAM("initializing cell details");
 
 	for (i=0; i<ROW; i++) { 
 		for (j=0; j<COL; j++) { 
@@ -89,9 +83,7 @@ bool global_path_planner::search(std::vector<std::vector<int> > &grid, global_pa
 			cellDetails[i][j].parent_i = -1; 
 			cellDetails[i][j].parent_j = -1; 
 		} 
-	} 
-
-	ROS_INFO_STREAM("initialized cell details");
+	}
 
 	i = src.first, j = src.second;
 
@@ -101,13 +93,9 @@ bool global_path_planner::search(std::vector<std::vector<int> > &grid, global_pa
 	cellDetails[i][j].parent_i = i; 
 	cellDetails[i][j].parent_j = j; 
 
-	ROS_INFO_STREAM("source cell details");
-
 	std::set<global_path_planner::pPair> openList; 
 	openList.insert(std::make_pair (0.0, std::make_pair (i, j))); 
 	bool foundDest = false; 
-
-	ROS_INFO_STREAM("checking adjacent nodes");
 
 	while (!openList.empty()) { 
 		global_path_planner::pPair p = *openList.begin(); 
@@ -159,7 +147,6 @@ void global_path_planner::buildMap(std::vector<std::vector<int> > &initialGrid, 
 	// Description of the Grid- {1--> not occupied} {0--> occupied}
 	std::vector<std::vector<int> > paddedGrid( PADROW, std::vector<int> (PADCOL, 1));
 
-	ROS_INFO_STREAM("calcualting surrounding");
 	//inspect surrounding
 	float lower = currentPosition.z() + UNITOFFSET;
 	float upper = currentPosition.z() + HEIGHT;
@@ -193,27 +180,45 @@ void global_path_planner::buildMap(std::vector<std::vector<int> > &initialGrid, 
     }
 
 	// //inspect floor
-/* 	ROS_INFO_STREAM("calculating floor");
 
-	lower = currentPosition.z() - UNITOFFSET - CELL;
-	upper = currentPosition.z();
+	float zf = currentPosition.z() - UNITOFFSET;
 
-	for (float z=lower; z<upper; z+=CELL){
-		for (float x=MAPLOW; x<MAPHIGH; x+=CELL){
-			for (float y=MAPLOW; y<MAPHIGH; y+=CELL){
-				if (tree_oct->search(x, y, z)){
-					octomap::OcTreeNode* key = tree_oct->search(x, y, z);
+	for (float xf=MAPLOW; xf<MAPHIGH; xf+=CELL){
+        for (float yf=MAPLOW; yf<MAPHIGH; yf+=CELL){
+            if (tree_oct->search(xf, yf, zf)){
+                octomap::OcTreeNode* key = tree_oct->search(xf, yf, zf);
 
-					if(!tree_oct->isNodeOccupied(key)){
-						int xN = (int) (x + OFFSET)*INVCELL;
-						int yN = (int) (y + OFFSET)*INVCELL;
+				if(!(tree_oct->isNodeOccupied(key))){
+					octomap::point3d point (xf, yf, 0);
+					float distance = currentPosition.distance(point);
 
-						outGrid[yN][xN] = 0;
+					if ((distance>MINDISTANCE) && (distance<MAXDISTANCE)){
+						pitPoints.push_back(point);
 					}
 				}
+            }
+        }
+    }
+
+	for (int i=0; i<pitPoints.size(); i++){
+
+		int xfN = (int) ((pitPoints[i].x() + OFFSET)*INVCELL);
+	    int yfN = (int) ((pitPoints[i].y() + OFFSET)*INVCELL);
+
+		initialGrid[yfN][xfN] = 0;
+
+		int xflow = xfN;
+		int xfhigh = xfN+MASKSIDE;
+		int yflow = yfN;
+		int yfhigh = yfN+MASKSIDE;
+
+		for (int af=xflow; af<xfhigh; af++){
+			for (int bf=yflow; bf<yfhigh; bf++){
+				paddedGrid[bf][af] = 0;
 			}
 		}
-	} */
+	}
+	
 
 	for (int i=0; i<ROW; i++){
 		for (int j=0; j<COL; j++){
@@ -227,7 +232,6 @@ void global_path_planner::buildMap(std::vector<std::vector<int> > &initialGrid, 
 */
 
 void global_path_planner::processPath(std::vector<octomap::point3d> &inPath, std::vector<octomap::point3d> &outPath){
-	ROS_INFO_STREAM("processing path started");
 	outPath.clear();
 
 	for (int i=0; i<inPath.size(); i++){
@@ -236,16 +240,11 @@ void global_path_planner::processPath(std::vector<octomap::point3d> &inPath, std
 		float y = (float) inPath[i].y()*CELL;
 		float z = (float) inPath[i].z();
 
-		ROS_INFO_STREAM("-------");
-		ROS_INFO_STREAM(x);
-		ROS_INFO_STREAM(y);
-
 		octomap::point3d node (x, y, z);
 		outPath.push_back(node);
 	}
 	
 	inPath.clear();
-	ROS_INFO_STREAM("processing path complete");
 }
 
 void global_path_planner::saveOctomap(const std::string &filename){

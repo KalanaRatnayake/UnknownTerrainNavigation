@@ -12,6 +12,7 @@ const _arrayDeserializer = _deserializer.Array;
 const _finder = _ros_msg_utils.Find;
 const _getByteLength = _ros_msg_utils.getByteLength;
 let gridRow = require('./gridRow.js');
+let pointData = require('./pointData.js');
 
 //-----------------------------------------------------------
 
@@ -20,6 +21,8 @@ class gridMap {
     if (initObj === null) {
       // initObj === null is a special case for deserialization where we don't initialize fields
       this.grid = null;
+      this.path = null;
+      this.pathLength = null;
     }
     else {
       if (initObj.hasOwnProperty('grid')) {
@@ -27,6 +30,18 @@ class gridMap {
       }
       else {
         this.grid = [];
+      }
+      if (initObj.hasOwnProperty('path')) {
+        this.path = initObj.path
+      }
+      else {
+        this.path = [];
+      }
+      if (initObj.hasOwnProperty('pathLength')) {
+        this.pathLength = initObj.pathLength
+      }
+      else {
+        this.pathLength = 0;
       }
     }
   }
@@ -39,6 +54,14 @@ class gridMap {
     obj.grid.forEach((val) => {
       bufferOffset = gridRow.serialize(val, buffer, bufferOffset);
     });
+    // Serialize message field [path]
+    // Serialize the length for message field [path]
+    bufferOffset = _serializer.uint32(obj.path.length, buffer, bufferOffset);
+    obj.path.forEach((val) => {
+      bufferOffset = pointData.serialize(val, buffer, bufferOffset);
+    });
+    // Serialize message field [pathLength]
+    bufferOffset = _serializer.int16(obj.pathLength, buffer, bufferOffset);
     return bufferOffset;
   }
 
@@ -53,6 +76,15 @@ class gridMap {
     for (let i = 0; i < len; ++i) {
       data.grid[i] = gridRow.deserialize(buffer, bufferOffset)
     }
+    // Deserialize message field [path]
+    // Deserialize array length for message field [path]
+    len = _deserializer.uint32(buffer, bufferOffset);
+    data.path = new Array(len);
+    for (let i = 0; i < len; ++i) {
+      data.path[i] = pointData.deserialize(buffer, bufferOffset)
+    }
+    // Deserialize message field [pathLength]
+    data.pathLength = _deserializer.int16(buffer, bufferOffset);
     return data;
   }
 
@@ -61,7 +93,8 @@ class gridMap {
     object.grid.forEach((val) => {
       length += gridRow.getMessageSize(val);
     });
-    return length + 4;
+    length += 12 * object.path.length;
+    return length + 10;
   }
 
   static datatype() {
@@ -71,14 +104,15 @@ class gridMap {
 
   static md5sum() {
     //Returns md5sum for a message object
-    return '871833bd332a580973308691ab02d68a';
+    return '7283370e017ac387872171d01ea443ab';
   }
 
   static messageDefinition() {
     // Returns full string definition for message
     return `
     gridRow[] grid
-    
+    pointData[] path
+    int16 pathLength
     ================================================================================
     MSG: nav_planner/gridRow
     gridPoint[] row
@@ -87,7 +121,12 @@ class gridMap {
     MSG: nav_planner/gridPoint
     int8 init
     int8 proc
-    int8 path
+    ================================================================================
+    MSG: nav_planner/pointData
+    float32 x
+    float32 y
+    float32 z
+    
     `;
   }
 
@@ -105,6 +144,23 @@ class gridMap {
     }
     else {
       resolved.grid = []
+    }
+
+    if (msg.path !== undefined) {
+      resolved.path = new Array(msg.path.length);
+      for (let i = 0; i < resolved.path.length; ++i) {
+        resolved.path[i] = pointData.Resolve(msg.path[i]);
+      }
+    }
+    else {
+      resolved.path = []
+    }
+
+    if (msg.pathLength !== undefined) {
+      resolved.pathLength = msg.pathLength;
+    }
+    else {
+      resolved.pathLength = 0
     }
 
     return resolved;

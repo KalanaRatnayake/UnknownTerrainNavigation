@@ -20,7 +20,6 @@ class gridPoint {
       // initObj === null is a special case for deserialization where we don't initialize fields
       this.init = null;
       this.proc = null;
-      this.path = null;
     }
     else {
       if (initObj.hasOwnProperty('init')) {
@@ -35,12 +34,6 @@ class gridPoint {
       else {
         this.proc = 0;
       }
-      if (initObj.hasOwnProperty('path')) {
-        this.path = initObj.path
-      }
-      else {
-        this.path = 0;
-      }
     }
   }
 
@@ -50,8 +43,6 @@ class gridPoint {
     bufferOffset = _serializer.int8(obj.init, buffer, bufferOffset);
     // Serialize message field [proc]
     bufferOffset = _serializer.int8(obj.proc, buffer, bufferOffset);
-    // Serialize message field [path]
-    bufferOffset = _serializer.int8(obj.path, buffer, bufferOffset);
     return bufferOffset;
   }
 
@@ -63,13 +54,11 @@ class gridPoint {
     data.init = _deserializer.int8(buffer, bufferOffset);
     // Deserialize message field [proc]
     data.proc = _deserializer.int8(buffer, bufferOffset);
-    // Deserialize message field [path]
-    data.path = _deserializer.int8(buffer, bufferOffset);
     return data;
   }
 
   static getMessageSize(object) {
-    return 3;
+    return 2;
   }
 
   static datatype() {
@@ -79,7 +68,7 @@ class gridPoint {
 
   static md5sum() {
     //Returns md5sum for a message object
-    return '6473cd93ef160624bb8e42a565e25ccb';
+    return '38ba4a3cfac6a3fecf591ee30dc4f1b4';
   }
 
   static messageDefinition() {
@@ -87,7 +76,6 @@ class gridPoint {
     return `
     int8 init
     int8 proc
-    int8 path
     `;
   }
 
@@ -109,13 +97,6 @@ class gridPoint {
     }
     else {
       resolved.proc = 0
-    }
-
-    if (msg.path !== undefined) {
-      resolved.path = msg.path;
-    }
-    else {
-      resolved.path = 0
     }
 
     return resolved;

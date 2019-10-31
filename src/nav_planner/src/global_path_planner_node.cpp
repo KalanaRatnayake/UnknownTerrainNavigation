@@ -13,6 +13,7 @@
 #include <nav_planner/gridRow.h>
 #include <nav_planner/gridMap.h>
 #include <nav_planner/gridPoint.h>
+#include <nav_planner/pointData.h>
 
 #include <nav_planner/baseDrive.h>
 #include <nav_planner/baseRotate.h>
@@ -116,10 +117,6 @@ void requestGoal(){
 	} else {
 		ROS_ERROR("global_path_planners_node : failed to call service goalPosition");
 	}
-	ROS_INFO_STREAM("--goal--");
-	ROS_INFO_STREAM(goal.x());
-	ROS_INFO_STREAM(goal.y());
-	ROS_INFO_STREAM(goal.z());
 
 	plannerObject.update_goal(goal);
 }
@@ -165,7 +162,7 @@ void drive(octomap::point3d &nextPosition){
 */
 
 void publish(std::vector<std::vector<int> > &initGrid, std::vector<std::vector<int> > &procGrid, std::vector<octomap::point3d> &path){
-	nav_planner::gridMap map;
+	nav_planner::gridMap gridMap;
 
 	for (int i=0; i<ROW; i++){
 		nav_planner::gridRow rowArray;
@@ -176,16 +173,24 @@ void publish(std::vector<std::vector<int> > &initGrid, std::vector<std::vector<i
 			point.init = initGrid[i+PADDING][j+PADDING];
 			point.proc = procGrid[i][j];
 
-			for (int k=0; k<path.size(); k++){
-				if ((i==path[k].y())&&(j==path[k].x())) point.path = 0; else point.path = 1;
-			}
-
 			rowArray.row.push_back(point);
 		}
-		map.grid.push_back(rowArray);
+		gridMap.grid.push_back(rowArray);
 	}
 
-	grid_pub.publish(map);
+	for(int i=0; i<path.size(); i++){
+		nav_planner::pointData msgInstance;
+
+		msgInstance.x = path[i].x();
+		msgInstance.y = path[i].y();
+		msgInstance.z = 0;
+
+		gridMap.path.push_back(msgInstance);
+	}
+
+	gridMap.pathLength = path.size();
+	
+	grid_pub.publish(gridMap);
 }
 
 /*
@@ -216,73 +221,37 @@ bool systemCallback(nav_planner::systemControl::Request &request, nav_planner::s
 		double remainingDistance, gapDistance;
 		std::vector<octomap::point3d> path, processedPath;
 
-		ROS_INFO_STREAM("starting rotation");
 		rotate360();
-		ROS_INFO_STREAM("requesting goal");
 		requestGoal();
-		ROS_INFO_STREAM("building map");
 		plannerObject.buildMap(initialGrid, processedGrid);
 
-		ROS_INFO_STREAM("currentPosition calculating");
 		int srcX = (int) (currentPosition.x()*INVCELL);
 		int srcY = (int) (currentPosition.y()*INVCELL);
 
-		ROS_INFO_STREAM(srcX);
-		ROS_INFO_STREAM(srcY);
-
-		ROS_INFO_STREAM("goalPosition calculating");
 		int desX = (int) (goal.x()*INVCELL);
 		int desY = (int) (goal.y()*INVCELL);
 
-		ROS_INFO_STREAM(desX);
-		ROS_INFO_STREAM(desY);
-
-		ROS_INFO_STREAM("searching");
 		pathFound = plannerObject.search(processedGrid, std::make_pair(srcY, srcX), std::make_pair(desY, desX), path);
 
-		ROS_INFO_STREAM("processing path");
-		plannerObject.processPath(path, processedPath);
-
 		while (!pathFound){
-			ROS_INFO_STREAM("removing goal");
 			removeGoal();
-			ROS_INFO_STREAM("re-requesting goal");
 			requestGoal();
-			ROS_INFO_STREAM("re-calculating goal");
 			pathFound = plannerObject.search(processedGrid, std::make_pair(srcY, srcX), std::make_pair(desY, desX), path);
-			plannerObject.processPath(path, processedPath);
 		}
 
-		ROS_INFO_STREAM("publishing grid");
-		publish(initialGrid, processedGrid, processedPath);
-		
-		ROS_INFO_STREAM("markig Position");
+		publish(initialGrid, processedGrid, path);
+		plannerObject.processPath(path, processedPath);
 		markedPosition = currentPosition;
-
-		ROS_INFO_STREAM("moving robot");
 		remainingDistance = goal.distance(currentPosition);
 		
-		ROS_INFO_STREAM("--going inside while loop-");
 		while ((remainingDistance >= 0.1) && pathFound) {
 
-			ROS_INFO_STREAM("--inside for loop--");
-			ROS_INFO_STREAM(processedPath[index].x());
-			ROS_INFO_STREAM(processedPath[index].y());
-			ROS_INFO_STREAM(processedPath[index].z());
-
 			nextPosition = processedPath[index];
-
 			gapDistance = markedPosition.distance(nextPosition);
-			ROS_INFO_STREAM("--gap distance--");
-			ROS_INFO_STREAM(gapDistance);
-
 			drive(nextPosition);
-
 			if (gapDistance < CLEARENCE_DISTANCE) index++; else break;
-
 			remainingDistance = goal.distance(currentPosition);
 		}
-		ROS_INFO_STREAM("--exiting while loop--");
 	}
 
 	response.success = true;

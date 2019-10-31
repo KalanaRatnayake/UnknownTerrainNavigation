@@ -8,11 +8,12 @@ import struct
 import nav_planner.msg
 
 class gridMap(genpy.Message):
-  _md5sum = "871833bd332a580973308691ab02d68a"
+  _md5sum = "7283370e017ac387872171d01ea443ab"
   _type = "nav_planner/gridMap"
   _has_header = False #flag to mark the presence of a Header object
   _full_text = """gridRow[] grid
-
+pointData[] path
+int16 pathLength
 ================================================================================
 MSG: nav_planner/gridRow
 gridPoint[] row
@@ -21,9 +22,14 @@ gridPoint[] row
 MSG: nav_planner/gridPoint
 int8 init
 int8 proc
-int8 path"""
-  __slots__ = ['grid']
-  _slot_types = ['nav_planner/gridRow[]']
+================================================================================
+MSG: nav_planner/pointData
+float32 x
+float32 y
+float32 z
+"""
+  __slots__ = ['grid','path','pathLength']
+  _slot_types = ['nav_planner/gridRow[]','nav_planner/pointData[]','int16']
 
   def __init__(self, *args, **kwds):
     """
@@ -33,7 +39,7 @@ int8 path"""
     changes.  You cannot mix in-order arguments and keyword arguments.
 
     The available fields are:
-       grid
+       grid,path,pathLength
 
     :param args: complete set of field values, in .msg order
     :param kwds: use keyword arguments corresponding to message field names
@@ -44,8 +50,14 @@ int8 path"""
       #message fields cannot be None, assign default values for those that are
       if self.grid is None:
         self.grid = []
+      if self.path is None:
+        self.path = []
+      if self.pathLength is None:
+        self.pathLength = 0
     else:
       self.grid = []
+      self.path = []
+      self.pathLength = 0
 
   def _get_types(self):
     """
@@ -66,7 +78,13 @@ int8 path"""
         buff.write(_struct_I.pack(length))
         for val2 in val1.row:
           _x = val2
-          buff.write(_get_struct_3b().pack(_x.init, _x.proc, _x.path))
+          buff.write(_get_struct_2b().pack(_x.init, _x.proc))
+      length = len(self.path)
+      buff.write(_struct_I.pack(length))
+      for val1 in self.path:
+        _x = val1
+        buff.write(_get_struct_3f().pack(_x.x, _x.y, _x.z))
+      buff.write(_get_struct_h().pack(self.pathLength))
     except struct.error as se: self._check_types(struct.error("%s: '%s' when writing '%s'" % (type(se), str(se), str(locals().get('_x', self)))))
     except TypeError as te: self._check_types(ValueError("%s: '%s' when writing '%s'" % (type(te), str(te), str(locals().get('_x', self)))))
 
@@ -78,6 +96,8 @@ int8 path"""
     try:
       if self.grid is None:
         self.grid = None
+      if self.path is None:
+        self.path = None
       end = 0
       start = end
       end += 4
@@ -93,10 +113,24 @@ int8 path"""
           val2 = nav_planner.msg.gridPoint()
           _x = val2
           start = end
-          end += 3
-          (_x.init, _x.proc, _x.path,) = _get_struct_3b().unpack(str[start:end])
+          end += 2
+          (_x.init, _x.proc,) = _get_struct_2b().unpack(str[start:end])
           val1.row.append(val2)
         self.grid.append(val1)
+      start = end
+      end += 4
+      (length,) = _struct_I.unpack(str[start:end])
+      self.path = []
+      for i in range(0, length):
+        val1 = nav_planner.msg.pointData()
+        _x = val1
+        start = end
+        end += 12
+        (_x.x, _x.y, _x.z,) = _get_struct_3f().unpack(str[start:end])
+        self.path.append(val1)
+      start = end
+      end += 2
+      (self.pathLength,) = _get_struct_h().unpack(str[start:end])
       return self
     except struct.error as e:
       raise genpy.DeserializationError(e) #most likely buffer underfill
@@ -116,7 +150,13 @@ int8 path"""
         buff.write(_struct_I.pack(length))
         for val2 in val1.row:
           _x = val2
-          buff.write(_get_struct_3b().pack(_x.init, _x.proc, _x.path))
+          buff.write(_get_struct_2b().pack(_x.init, _x.proc))
+      length = len(self.path)
+      buff.write(_struct_I.pack(length))
+      for val1 in self.path:
+        _x = val1
+        buff.write(_get_struct_3f().pack(_x.x, _x.y, _x.z))
+      buff.write(_get_struct_h().pack(self.pathLength))
     except struct.error as se: self._check_types(struct.error("%s: '%s' when writing '%s'" % (type(se), str(se), str(locals().get('_x', self)))))
     except TypeError as te: self._check_types(ValueError("%s: '%s' when writing '%s'" % (type(te), str(te), str(locals().get('_x', self)))))
 
@@ -129,6 +169,8 @@ int8 path"""
     try:
       if self.grid is None:
         self.grid = None
+      if self.path is None:
+        self.path = None
       end = 0
       start = end
       end += 4
@@ -144,10 +186,24 @@ int8 path"""
           val2 = nav_planner.msg.gridPoint()
           _x = val2
           start = end
-          end += 3
-          (_x.init, _x.proc, _x.path,) = _get_struct_3b().unpack(str[start:end])
+          end += 2
+          (_x.init, _x.proc,) = _get_struct_2b().unpack(str[start:end])
           val1.row.append(val2)
         self.grid.append(val1)
+      start = end
+      end += 4
+      (length,) = _struct_I.unpack(str[start:end])
+      self.path = []
+      for i in range(0, length):
+        val1 = nav_planner.msg.pointData()
+        _x = val1
+        start = end
+        end += 12
+        (_x.x, _x.y, _x.z,) = _get_struct_3f().unpack(str[start:end])
+        self.path.append(val1)
+      start = end
+      end += 2
+      (self.pathLength,) = _get_struct_h().unpack(str[start:end])
       return self
     except struct.error as e:
       raise genpy.DeserializationError(e) #most likely buffer underfill
@@ -156,9 +212,21 @@ _struct_I = genpy.struct_I
 def _get_struct_I():
     global _struct_I
     return _struct_I
-_struct_3b = None
-def _get_struct_3b():
-    global _struct_3b
-    if _struct_3b is None:
-        _struct_3b = struct.Struct("<3b")
-    return _struct_3b
+_struct_h = None
+def _get_struct_h():
+    global _struct_h
+    if _struct_h is None:
+        _struct_h = struct.Struct("<h")
+    return _struct_h
+_struct_3f = None
+def _get_struct_3f():
+    global _struct_3f
+    if _struct_3f is None:
+        _struct_3f = struct.Struct("<3f")
+    return _struct_3f
+_struct_2b = None
+def _get_struct_2b():
+    global _struct_2b
+    if _struct_2b is None:
+        _struct_2b = struct.Struct("<2b")
+    return _struct_2b
