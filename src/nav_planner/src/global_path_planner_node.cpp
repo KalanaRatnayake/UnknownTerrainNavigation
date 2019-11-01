@@ -37,7 +37,7 @@
 #define INVCELL 40  //multiply by 40 instead of dividing by cell size 0.025
 #define UNITOFFSET 0.0125
 
-#define CLEARENCE_DISTANCE 2
+#define CLEARENCE_DISTANCE 1.5
 
 // Description of the Grid- {1--> not occupied} {0--> occupied} 
 
@@ -218,7 +218,7 @@ bool systemCallback(nav_planner::systemControl::Request &request, nav_planner::s
 
 		int index =  1;
 		bool pathFound;
-		double remainingDistance, gapDistance;
+		double remainingDistance, travelledDistance = 0;
 		std::vector<octomap::point3d> path, processedPath;
 
 		rotate360();
@@ -241,15 +241,23 @@ bool systemCallback(nav_planner::systemControl::Request &request, nav_planner::s
 
 		publish(initialGrid, processedGrid, path);
 		plannerObject.processPath(path, processedPath);
-		markedPosition = currentPosition;
+
 		remainingDistance = goal.distance(currentPosition);
+
+		markedPosition = currentPosition;
 		
 		while ((remainingDistance >= 0.1) && pathFound) {
 
 			nextPosition = processedPath[index];
-			gapDistance = markedPosition.distance(nextPosition);
+
+			travelledDistance += markedPosition.distance(nextPosition);
+
 			drive(nextPosition);
-			if (gapDistance < CLEARENCE_DISTANCE) index++; else break;
+
+			markedPosition = currentPosition;
+
+			if (travelledDistance < CLEARENCE_DISTANCE) index++; else break;
+			
 			remainingDistance = goal.distance(currentPosition);
 		}
 	}

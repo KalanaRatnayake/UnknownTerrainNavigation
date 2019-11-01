@@ -31,9 +31,9 @@ bool connected = false;
 int count = 0;
 
 double linear_vel_max = 0.5;
-double vel_constant = 0.5;
-double angular_vel_max = 0.3;
-double ang_constant = 0.2;
+double vel_constant = 0.75;
+double angular_vel_max = 0.5;
+double ang_constant = 0.5;
 double Roll, Pitch, Yaw;
 double pi = 3.14159265;
 ros::Publisher velocity_pub;
@@ -102,37 +102,7 @@ bool driveCallback(nav_planner::baseDrive::Request &request, nav_planner::baseDr
 		cmd.linear.x = velocity;
 		velocity_pub.publish(cmd);
 		ros::Duration(0.005).sleep();
-	} while (std::abs(distance)>=(initDistance*0.5));
-
-	cmd.linear.x = 0;
-	velocity_pub.publish(cmd);
-	ROS_INFO("velocity_control_node : successfully moved");
-
-	desiredYaw = atan2(goalPosition.y()-currentPosition.y(), goalPosition.x()-currentPosition.x());
-
-	do{
-		angleDiff = desiredYaw - currentYaw;
-		angularV = ang_constant*angleDiff;
-
-		if (angularV >= angular_vel_max) angularV = angular_vel_max;
-		cmd.angular.z = angularV;
-		velocity_pub.publish(cmd);
-		ros::Duration(0.005).sleep();
-	} while (std::abs(angleDiff)>=0.01);
-
-	cmd.angular.z = 0;
-	velocity_pub.publish(cmd);
-	ros::Duration(0.005).sleep();
-	ROS_INFO("velocity_control_node : successfully rotated");
-
-	do{
-		distance = goalPosition.distanceXY(currentPosition);
-		velocity = distance*vel_constant;
-		if (velocity >= linear_vel_max) velocity = linear_vel_max;
-		cmd.linear.x = velocity;
-		velocity_pub.publish(cmd);
-		ros::Duration(0.005).sleep();
-	} while (std::abs(distance)>=0.1);
+	} while (std::abs(distance)>=(initDistance*0.1));
 
 	cmd.linear.x = 0;
 	velocity_pub.publish(cmd);

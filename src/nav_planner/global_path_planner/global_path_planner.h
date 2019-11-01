@@ -27,11 +27,11 @@
 
 //Robot description
 #define HEIGHT 0.35
-#define CLEARENCE_DISTANCE 2
+#define CLEARENCE_DISTANCE 1.5
 
 //Pit detection range
-#define MINDISTANCE 0.75
-#define MAXDISTANCE 2.75
+#define MINDISTANCE 0.70
+#define MAXDISTANCE 2.80
 
 class global_path_planner{
     private:

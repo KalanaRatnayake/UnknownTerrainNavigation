@@ -106,9 +106,7 @@ bool global_path_planner::search(std::vector<std::vector<int> > &grid, global_pa
 	
 		double gNew, hNew, fNew;
 
-        int array [8][2] = {{i-1, j-1},	{i-1, j  }, {i-1, j+1},
-							{i  , j-1}, 		    {i  , j+1},  
-							{i+1, j-1},	{i+1, j  }, {i+1, j+1} };
+        int array [8][2] = {{i-1, j}, {i+1, j}, {i, j+1}, {i, j-1}, {i-1, j+1}, {i-1, j-1}, {i+1, j+1}, {i+1, j-1}};
 
         for (int a = 0; a < 8; a++ ) {
             if (isValid(array[a][0], array[a][1]) == true) { 

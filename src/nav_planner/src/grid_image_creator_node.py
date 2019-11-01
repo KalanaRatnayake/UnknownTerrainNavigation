@@ -52,7 +52,7 @@ class grid_image_creator:
             gridPath.append([x,y])
 
         for k in range(0, (len(gridPath)-1)):
-            cv2.line(gridImage, (gridPath[k][0], gridPath[k][1]), (gridPath[k+1][0], gridPath[k+1][1]), (0,0,255), 2) """ """
+            cv2.line(gridImage, (gridPath[k][0], gridPath[k][1]), (gridPath[k+1][0], gridPath[k+1][1]), (0,0,255), 2)
 
         try:
             gridImageRot = cv2.rotate(gridImage, cv2.ROTATE_90_CLOCKWISE)
