@@ -48,13 +48,12 @@ double currentYaw;
 
 void currentPositionCallback(const nav_msgs::OdometryConstPtr &msg)
 {
-	octomap::point3d position = octomap::point3d(msg->pose.pose.position.x, msg->pose.pose.position.y, msg->pose.pose.position.z);
+	currentPosition = octomap::point3d(msg->pose.pose.position.x, msg->pose.pose.position.y, msg->pose.pose.position.z);
     
 	tf2::Quaternion q(msg->pose.pose.orientation.x, msg->pose.pose.orientation.y, msg->pose.pose.orientation.z, msg->pose.pose.orientation.w);
 	tf2::Matrix3x3 m(q);
 
 	m.getRPY(Roll, Pitch, Yaw);
-	currentPosition = position;
 
 	if ((Yaw<3.14)&&(Yaw>-3.14)){
 		currentYaw = Yaw;

@@ -8,6 +8,9 @@
 #include <octomap_msgs/Octomap.h>
 #include <octomap_msgs/conversions.h>
 
+#include <tf2/LinearMath/Quaternion.h>
+#include <tf2/LinearMath/Matrix3x3.h>
+
 #include <nav_msgs/Odometry.h>
 
 #include <nav_planner/gridRow.h>
@@ -38,6 +41,7 @@
 #define UNITOFFSET 0.0125
 
 #define CLEARENCE_DISTANCE 1.5
+#define CLEARENCE_ANGLE 1.05
 
 // Description of the Grid- {1--> not occupied} {0--> occupied} 
 
@@ -46,7 +50,7 @@ global_path_planner plannerObject = global_path_planner();
 octomap::point3d currentPosition;
 octomap::point3d goal;
 octomap::point3d nextPosition;
-octomap::point3d markedPosition;
+octomap::point3d previousPosition;
 
 ros::ServiceClient clientGoalPosition;
 ros::ServiceClient clientGoalRemove;
@@ -59,6 +63,9 @@ ros::Subscriber map_sub;
 ros::Subscriber pos_sub;
 
 bool unExplored = true;
+
+double Roll, Pitch, Yaw;
+double currentYaw;
 
 /*
 / once the map is completely explored, this function will be called to save the octomap and execute ros::shutdown()
@@ -206,6 +213,16 @@ void mapCallback(const octomap_msgs::Octomap::ConstPtr &msg){
 
 void currentPositionCallback(const nav_msgs::OdometryConstPtr &msg){
 	currentPosition = octomap::point3d(msg->pose.pose.position.x, msg->pose.pose.position.y, msg->pose.pose.position.z);
+
+	tf2::Quaternion q(msg->pose.pose.orientation.x, msg->pose.pose.orientation.y, msg->pose.pose.orientation.z, msg->pose.pose.orientation.w);
+	tf2::Matrix3x3 m(q);
+
+	m.getRPY(Roll, Pitch, Yaw);
+
+	if ((Yaw<3.14)&&(Yaw>-3.14)){
+		currentYaw = Yaw;
+	}
+
 	plannerObject.update_position(currentPosition);
 }
 
@@ -219,45 +236,72 @@ bool systemCallback(nav_planner::systemControl::Request &request, nav_planner::s
 		int index =  1;
 		bool pathFound;
 		double remainingDistance, travelledDistance = 0;
+		double desiredYaw, angle;
 		std::vector<octomap::point3d> path, processedPath;
 
+		//rotate and update the octomap
 		rotate360();
+
+		//calculate new goal
 		requestGoal();
+
+		//build the map for the path calculation
 		plannerObject.buildMap(initialGrid, processedGrid);
 
+		//turn source and goal into points on the grid
 		int srcX = (int) (currentPosition.x()*INVCELL);
 		int srcY = (int) (currentPosition.y()*INVCELL);
 
 		int desX = (int) (goal.x()*INVCELL);
 		int desY = (int) (goal.y()*INVCELL);
 
+		//calculate path
 		pathFound = plannerObject.search(processedGrid, std::make_pair(srcY, srcX), std::make_pair(desY, desX), path);
 
+		//iterate till a path is found
 		while (!pathFound){
+
+			//remove goal if path is not found
 			removeGoal();
+
+			//rerequest the goal
 			requestGoal();
+
+			//calculate new path
 			pathFound = plannerObject.search(processedGrid, std::make_pair(srcY, srcX), std::make_pair(desY, desX), path);
 		}
 
+		//publish the calculated grid and path
 		publish(initialGrid, processedGrid, path);
+
+		//convert grid path into realworld path
 		plannerObject.processPath(path, processedPath);
 
+		//calculate distance to the goal and mark current position as previous position
 		remainingDistance = goal.distance(currentPosition);
-
-		markedPosition = currentPosition;
+		previousPosition = currentPosition;
 		
 		while ((remainingDistance >= 0.1) && pathFound) {
-
+			//update position to be reached
 			nextPosition = processedPath[index];
+			
+			//check whether a large turn is needed. if so recalculation is needed. so exit loop
+			desiredYaw = atan2(nextPosition.y()-currentPosition.y(), nextPosition.x()-currentPosition.x());
+			angle = std::abs(desiredYaw - currentYaw);
 
-			travelledDistance += markedPosition.distance(nextPosition);
+			if ((angle>CLEARENCE_ANGLE)&&(index!=1)) break;
 
+			//if nothing is wrong, move forward
 			drive(nextPosition);
 
-			markedPosition = currentPosition;
+			//check travelled distance and update previous position
+			travelledDistance += previousPosition.distance(nextPosition);
+			previousPosition = currentPosition;
 
+			//exit loop of travelledDistance is over the limit. if not, continue
 			if (travelledDistance < CLEARENCE_DISTANCE) index++; else break;
 			
+			//calculate remaining distance
 			remainingDistance = goal.distance(currentPosition);
 		}
 	}
