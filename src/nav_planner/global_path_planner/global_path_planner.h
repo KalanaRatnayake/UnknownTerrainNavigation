@@ -38,7 +38,6 @@ class global_path_planner{
         octomap::OcTree* tree_oct;
         octomap::point3d currentPosition;
         octomap::point3d goal;
-        std::vector<octomap::point3d> pitPoints;
 
     public:
         typedef std::pair<int, int> Pair; 

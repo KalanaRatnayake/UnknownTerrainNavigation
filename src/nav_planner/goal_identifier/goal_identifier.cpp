@@ -78,11 +78,11 @@ void goal_identifier::find_nearest_cluster(std::vector<octomap::point3d>  &unkno
 
         if (cluster.z()<height) selectedClusters.push_back(cluster);
     }
-    
+
     if (selectedClusters.size()>0){
         octomap::point3d nearestCluster = selectedClusters[0];
 
-        float min_distance = sqrt(pow(position.x() - nearestCluster.x(), 2) + pow(position.y() - nearestCluster.y(), 2) + pow(position.z() - nearestCluster.z(), 2));
+        float min_distance = std::sqrt(std::pow(position.x() - nearestCluster.x(), 2) + std::pow(position.y() - nearestCluster.y(), 2) + pow(position.z() - nearestCluster.z(), 2));
 
         for(int i=0; i<selectedClusters.size(); i++){
             octomap::point3d cluster = selectedClusters[i];

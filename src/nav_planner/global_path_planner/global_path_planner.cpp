@@ -187,36 +187,30 @@ void global_path_planner::buildMap(std::vector<std::vector<int> > &initialGrid, 
                 octomap::OcTreeNode* key = tree_oct->search(xf, yf, zf);
 
 				if(!(tree_oct->isNodeOccupied(key))){
-					octomap::point3d point (xf, yf, 0);
+					octomap::point3d point (xf, yf, zf);
 					float distance = currentPosition.distance(point);
 
 					if ((distance>MINDISTANCE) && (distance<MAXDISTANCE)){
-						pitPoints.push_back(point);
+						int xfN = (int) ((xf + OFFSET)*INVCELL);
+						int yfN = (int) ((yf + OFFSET)*INVCELL);
+
+						initialGrid[yfN][xfN] = 0;
+
+						int xflow = xfN;
+						int xfhigh = xfN+MASKSIDE;
+						int yflow = yfN;
+						int yfhigh = yfN+MASKSIDE;
+
+						for (int af=xflow; af<xfhigh; af++){
+							for (int bf=yflow; bf<yfhigh; bf++){
+								paddedGrid[bf][af] = 0;
+							}
+						}
 					}
 				}
             }
         }
     }
-
-	for (int i=0; i<pitPoints.size(); i++){
-
-		int xfN = (int) ((pitPoints[i].x() + OFFSET)*INVCELL);
-	    int yfN = (int) ((pitPoints[i].y() + OFFSET)*INVCELL);
-
-		initialGrid[yfN][xfN] = 0;
-
-		int xflow = xfN;
-		int xfhigh = xfN+MASKSIDE;
-		int yflow = yfN;
-		int yfhigh = yfN+MASKSIDE;
-
-		for (int af=xflow; af<xfhigh; af++){
-			for (int bf=yflow; bf<yfhigh; bf++){
-				paddedGrid[bf][af] = 0;
-			}
-		}
-	}
-	
 
 	for (int i=0; i<ROW; i++){
 		for (int j=0; j<COL; j++){
