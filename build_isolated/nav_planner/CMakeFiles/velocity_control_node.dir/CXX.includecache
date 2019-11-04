@@ -113,6 +113,8 @@ geometry_msgs/Twist.h
 -
 kobuki_msgs/MotorPower.h
 -
+kobuki_msgs/BumperEvent.h
+-
 nav_planner/baseDrive.h
 -
 nav_planner/baseRotate.h
@@ -287,6 +289,22 @@ geometry_msgs/Twist.h
 -
 
 /opt/ros/kinetic/include/geometry_msgs/Vector3.h
+string
+-
+vector
+-
+map
+-
+ros/types.h
+-
+ros/serialization.h
+-
+ros/builtin_message_traits.h
+-
+ros/message_operations.h
+-
+
+/opt/ros/kinetic/include/kobuki_msgs/BumperEvent.h
 string
 -
 vector

@@ -24,6 +24,7 @@
 		<remap from="motor_power" to="/mobile_base/commands/motor_power"/>
 		<remap from="cmd_vel" to="/mobile_base/commands/velocity"/>
 		<remap from="position" to="/odom" />
+		<remap from="bumper" to="/mobile_base/events/bumper" />
   	</node>
 
 	<node pkg="nav_planner" type="grid_image_creator_node.py" name="Grid_Image_Creator" output="screen">

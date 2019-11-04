@@ -150,7 +150,7 @@ void removeGoal(){
 / message to drive the robot from currentPosition to nextPosition
 */
 
-void drive(octomap::point3d &nextPosition){
+bool drive(octomap::point3d &nextPosition){
 	nav_planner::baseDrive srvDrive;
 
 	srvDrive.request.x = nextPosition.x();
@@ -161,8 +161,14 @@ void drive(octomap::point3d &nextPosition){
 
 	if (forwardClient.call(srvDrive)){
 		ROS_INFO("global_path_planner_node : point reached");
+		if (srvDrive.response.success){
+			return true;
+		} else {
+			return false;
+		}
 	} else {
 		ROS_ERROR("global_path_planner_node : failed to call service goalPosition");
+		return false;
 	}
 }
 
@@ -299,18 +305,21 @@ bool systemCallback(nav_planner::systemControl::Request &request, nav_planner::s
 
 			if ((angle>CLEARENCE_ANGLE)&&(index!=1)) break;
 
-			//if nothing is wrong, move forward
-			drive(nextPosition);
+			//if return false if collided, else true
 
-			//check travelled distance and update previous position
-			travelledDistance += previousPosition.distance(nextPosition);
-			previousPosition = currentPosition;
+			if (drive(nextPosition)){
+				//check travelled distance and update previous position
+				travelledDistance += previousPosition.distance(nextPosition);
+				previousPosition = currentPosition;
 
-			//exit loop of travelledDistance is over the limit. if not, continue
-			if (travelledDistance < CLEARENCE_DISTANCE) index++; else break;
-			
-			//calculate remaining distance
-			remainingDistance = goal.distance(currentPosition);
+				//exit loop of travelledDistance is over the limit. if not, continue
+				if (travelledDistance < CLEARENCE_DISTANCE) index++; else break;
+				
+				//calculate remaining distance
+				remainingDistance = goal.distance(currentPosition);
+			} else {
+				break;
+			}			
 		}
 	}
 

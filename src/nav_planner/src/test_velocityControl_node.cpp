@@ -30,6 +30,25 @@ int main(int argc, char **argv)
   nav_planner::baseDrive forward;
   nav_planner::baseRotate rotate;
 
+  forward.request.x = 4.0;
+  forward.request.y = 1.0;
+  forward.request.z = 0.0;
+  
+  ROS_INFO("test_velocityControl_node : forward requested");
+
+  if (forwardClient.call(forward)){
+    ROS_INFO("test_velocityControl_node : response recieved");
+    if (forward.response.success) {
+      ROS_INFO("test_velocityControl_node : reached successfully");
+    } else {
+      ROS_INFO("test_velocityControl_node : failed to reach");
+    }
+    
+  } else {
+    ROS_ERROR("Failed to call service baseForward");
+    return 1;
+  }
+
   forward.request.x = 2.0;
   forward.request.y = 0.0;
   forward.request.z = 0.0;

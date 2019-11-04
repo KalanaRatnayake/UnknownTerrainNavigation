@@ -18,6 +18,7 @@ CMakeFiles/velocity_control_node.dir/src/velocity_control_node.cpp.o: /opt/ros/k
 CMakeFiles/velocity_control_node.dir/src/velocity_control_node.cpp.o: /opt/ros/kinetic/include/geometry_msgs/Twist.h
 CMakeFiles/velocity_control_node.dir/src/velocity_control_node.cpp.o: /opt/ros/kinetic/include/geometry_msgs/TwistWithCovariance.h
 CMakeFiles/velocity_control_node.dir/src/velocity_control_node.cpp.o: /opt/ros/kinetic/include/geometry_msgs/Vector3.h
+CMakeFiles/velocity_control_node.dir/src/velocity_control_node.cpp.o: /opt/ros/kinetic/include/kobuki_msgs/BumperEvent.h
 CMakeFiles/velocity_control_node.dir/src/velocity_control_node.cpp.o: /opt/ros/kinetic/include/kobuki_msgs/MotorPower.h
 CMakeFiles/velocity_control_node.dir/src/velocity_control_node.cpp.o: /opt/ros/kinetic/include/nav_msgs/Odometry.h
 CMakeFiles/velocity_control_node.dir/src/velocity_control_node.cpp.o: /opt/ros/kinetic/include/octomap/AbstractOcTree.h
