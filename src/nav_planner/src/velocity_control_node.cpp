@@ -16,6 +16,7 @@
 
 #include <geometry_msgs/Twist.h>
 #include <kobuki_msgs/MotorPower.h>
+#include <kobuki_msgs/BumperEvent.h>
 
 #include <nav_planner/baseDrive.h>
 #include <nav_planner/baseRotate.h>
@@ -27,6 +28,7 @@ kobuki_msgs::MotorPower power_cmd;
 
 bool power_status = false;
 bool connected = false;
+bool bumper = false;
 
 int count = 0;
 
@@ -59,6 +61,14 @@ void currentPositionCallback(const nav_msgs::OdometryConstPtr &msg)
 	if ((Yaw<3.14)&&(Yaw>-3.14)){
 		currentYaw = Yaw;
 	}
+}
+
+void bumperCallback(const kobuki_msgs::BumperEventConstPtr &msg)
+{
+    if (msg->state == kobuki_msgs::BumperEvent::PRESSED){
+    	ROS_INFO_STREAM("Bumper pressed. backing up");
+		bumper = true;
+    }
 }
 
 bool driveCallback(nav_planner::baseDrive::Request &request, nav_planner::baseDrive::Response &response)
@@ -95,6 +105,8 @@ bool driveCallback(nav_planner::baseDrive::Request &request, nav_planner::baseDr
 	ros::Duration(0.005).sleep();
 	ROS_INFO("velocity_control_node : successfully rotated");
 
+	response.success = true;
+
 	do{
 		distance = goalPosition.distanceXY(currentPosition);
 		velocity = distance*vel_constant;
@@ -102,6 +114,10 @@ bool driveCallback(nav_planner::baseDrive::Request &request, nav_planner::baseDr
 		cmd.linear.x = velocity;
 		velocity_pub.publish(cmd);
 		ros::Duration(0.005).sleep();
+		if (bumper){
+			response.success = false;
+			break;
+		}
 	} while (std::abs(distance)>=(initDistance*0.1));
 
 	cmd.linear.x = 0;
@@ -114,8 +130,6 @@ bool driveCallback(nav_planner::baseDrive::Request &request, nav_planner::baseDr
 	ros::Duration(0.005).sleep();
 	ROS_INFO("velocity_control_node : successfully powered down.");
 	power_status = false;
-
-	response.success = true;
 
 	ROS_INFO("velocity_control_node : response sent");
 	return true;
@@ -171,6 +185,7 @@ int main(int argc, char **argv)
 	ROS_INFO("Initialized the velocity_control_node");
 
 	ros::Subscriber poition_sub = node.subscribe("position", 1, currentPositionCallback);
+	ros::Subscriber bumper_sub = node.subscribe("bumper", 1, bumperCallback);
 	
 	ROS_INFO("velocity_control_node : created subscribers");
 
