@@ -30,10 +30,10 @@ bool connected = false;
 
 int count = 0;
 
-double linear_vel_max = 1;
-double vel_constant = 1;
-double angular_vel_max = 0.5;
-double ang_constant = 0.5;
+double linear_vel_max = 1.0;
+double vel_constant = 1.5;
+double angular_vel_max = 1;
+double ang_constant = 1;
 
 double Roll, Pitch, Yaw;
 double pi = 3.14159265;

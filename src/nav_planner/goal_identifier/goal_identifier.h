@@ -3,11 +3,13 @@
 #include <octomap/octomap.h>
 #include <octomap/OcTree.h>
 #include <cmath>
+#include <memory>
+#include <mutex>
 
 class goal_identifier
 {
     private:
-        octomap::OcTree* tree;
+        std::shared_ptr<octomap::OcTree> tree;
         octomap::point3d position;
         std::vector<octomap::point3d> ignorePoints;
         int xn, yn, zn;
@@ -15,6 +17,7 @@ class goal_identifier
         float percentage;
         float sideSize;
         float height;
+        std::mutex* identifierMutex;
     
     private:
         void discover_clusters(std::vector<octomap::point3d> &outCenterPointsArray);
@@ -23,7 +26,7 @@ class goal_identifier
     public:
         goal_identifier(float robotHeight, float clusterSize, double inputResolution, float x_distance, float y_distance, float z_distance, float clusterMargin);
         void update_position(octomap::point3d &currentPosition);
-        void update_tree(octomap::OcTree* receivedTree);
+        void update_tree(std::shared_ptr<octomap::OcTree> receivedTree);
         void calculate(std::vector<octomap::point3d> &centerPointsArray, octomap::point3d &goal, bool &completed);
         void remove(octomap::point3d &point);
 };

@@ -78,9 +78,8 @@ CMakeFiles/nav_planner_generate_messages_py: /home/kalana/FYP/devel_isolated/nav
 /home/kalana/FYP/devel_isolated/nav_planner/lib/python2.7/dist-packages/nav_planner/msg/_gridMap.py: /opt/ros/kinetic/lib/genpy/genmsg_py.py
 /home/kalana/FYP/devel_isolated/nav_planner/lib/python2.7/dist-packages/nav_planner/msg/_gridMap.py: /home/kalana/FYP/src/nav_planner/msg/gridMap.msg
 /home/kalana/FYP/devel_isolated/nav_planner/lib/python2.7/dist-packages/nav_planner/msg/_gridMap.py: /home/kalana/FYP/src/nav_planner/msg/gridPoint.msg
-/home/kalana/FYP/devel_isolated/nav_planner/lib/python2.7/dist-packages/nav_planner/msg/_gridMap.py: /home/kalana/FYP/src/nav_planner/msg/pointDataArray.msg
-/home/kalana/FYP/devel_isolated/nav_planner/lib/python2.7/dist-packages/nav_planner/msg/_gridMap.py: /home/kalana/FYP/src/nav_planner/msg/gridRow.msg
 /home/kalana/FYP/devel_isolated/nav_planner/lib/python2.7/dist-packages/nav_planner/msg/_gridMap.py: /home/kalana/FYP/src/nav_planner/msg/pointData.msg
+/home/kalana/FYP/devel_isolated/nav_planner/lib/python2.7/dist-packages/nav_planner/msg/_gridMap.py: /home/kalana/FYP/src/nav_planner/msg/gridRow.msg
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/home/kalana/FYP/build_isolated/nav_planner/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Generating Python from MSG nav_planner/gridMap"
 	catkin_generated/env_cached.sh /usr/bin/python /opt/ros/kinetic/share/genpy/cmake/../../../lib/genpy/genmsg_py.py /home/kalana/FYP/src/nav_planner/msg/gridMap.msg -Inav_planner:/home/kalana/FYP/src/nav_planner/msg -Istd_msgs:/opt/ros/kinetic/share/std_msgs/cmake/../msg -Ioctomap_msgs:/opt/ros/kinetic/share/octomap_msgs/cmake/../msg -Igeometry_msgs:/opt/ros/kinetic/share/geometry_msgs/cmake/../msg -p nav_planner -o /home/kalana/FYP/devel_isolated/nav_planner/lib/python2.7/dist-packages/nav_planner/msg
 

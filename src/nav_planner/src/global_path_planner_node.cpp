@@ -24,6 +24,8 @@
 #include <nav_planner/goalRemove.h>
 #include <nav_planner/systemControl.h>
 
+#include <memory>
+
 #include <global_path_planner.h>
 
 //map
@@ -40,7 +42,7 @@
 #define INVCELL 40  //multiply by 40 instead of dividing by cell size 0.025
 #define UNITOFFSET 0.0125
 
-#define CLEARENCE_DISTANCE 1.5
+#define CLEARENCE_DISTANCE 2.5
 #define CLEARENCE_ANGLE 1.05
 
 // Description of the Grid- {1--> not occupied} {0--> occupied} 
@@ -206,9 +208,8 @@ void publish(std::vector<std::vector<int> > &initGrid, std::vector<std::vector<i
 */
 
 void mapCallback(const octomap_msgs::Octomap::ConstPtr &msg){
-    octomap::AbstractOcTree* tree = octomap_msgs::msgToMap(*msg);
-    octomap::OcTree* tree_oct = dynamic_cast<octomap::OcTree*>(tree);
-	plannerObject.update_tree(tree_oct);
+	std::shared_ptr<octomap::OcTree> tree = std::shared_ptr<octomap::OcTree> (dynamic_cast<octomap::OcTree*> (octomap_msgs::msgToMap(*msg)));
+	plannerObject.update_tree(tree);
 }
 
 void currentPositionCallback(const nav_msgs::OdometryConstPtr &msg){
@@ -266,6 +267,13 @@ bool systemCallback(nav_planner::systemControl::Request &request, nav_planner::s
 
 			//rerequest the goal
 			requestGoal();
+			
+			//turn source and goal into points on the grid
+			int srcX = (int) (currentPosition.x()*INVCELL);
+			int srcY = (int) (currentPosition.y()*INVCELL);
+
+			int desX = (int) (goal.x()*INVCELL);
+			int desY = (int) (goal.y()*INVCELL);
 
 			//calculate new path
 			pathFound = plannerObject.search(processedGrid, std::make_pair(srcY, srcX), std::make_pair(desY, desX), path);

@@ -15,6 +15,8 @@
 #include <nav_planner/goalControl.h>
 #include <nav_planner/goalRemove.h>
 
+#include <memory>
+
 #include <goal_identifier.h>
 
 
@@ -30,9 +32,9 @@ goal_identifier identifierObject = goal_identifier(0.50, 10.0, 0.05, 20.0, 20.0,
 
 void mapCallback(const octomap_msgs::Octomap::ConstPtr &msg)
 {
-    octomap::AbstractOcTree* tree = octomap_msgs::msgToMap(*msg);
-    octomap::OcTree* tree_oct = dynamic_cast<octomap::OcTree*>(tree);
-	identifierObject.update_tree(tree_oct);
+	std::shared_ptr<octomap::OcTree> tree = std::shared_ptr<octomap::OcTree> (dynamic_cast<octomap::OcTree*> (octomap_msgs::msgToMap(*msg)));
+	identifierObject.update_tree(tree);
+	
 }
 
 void currentPositionCallback(const nav_msgs::OdometryConstPtr &msg)

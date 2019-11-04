@@ -10,9 +10,12 @@ goal_identifier::goal_identifier(float robotHeight, float clusterSize, double in
     xn = (int) x_distance/(sideSize*resolution);
     yn = (int) y_distance/(sideSize*resolution);
     zn = (int) z_distance/(sideSize*resolution);
+
+    identifierMutex = new std::mutex();
 }
         
-void goal_identifier::update_tree(octomap::OcTree* receivedTree){
+void goal_identifier::update_tree(std::shared_ptr<octomap::OcTree> receivedTree){
+    std::lock_guard<std::mutex> lock(*identifierMutex);
     tree = receivedTree;
 }
 
@@ -21,6 +24,7 @@ void goal_identifier::update_position(octomap::point3d &currentPosition){
 }
         
 void goal_identifier::discover_clusters(std::vector<octomap::point3d> &outCenterPointsArray){
+    std::lock_guard<std::mutex> lock(*identifierMutex);
 
     octomap::point3d centerPointsArray [xn*yn*zn];
     std::vector<octomap::point3d> unknownPointsArray;

@@ -8,6 +8,9 @@
 
 # modified environment variables
 export CMAKE_PREFIX_PATH="/home/kalana/FYP/devel_isolated/nav_planner:$CMAKE_PREFIX_PATH"
+export LD_LIBRARY_PATH="/home/kalana/FYP/devel_isolated/nav_planner/lib:$LD_LIBRARY_PATH"
+export PKG_CONFIG_PATH="/home/kalana/FYP/devel_isolated/nav_planner/lib/pkgconfig:$PKG_CONFIG_PATH"
 export PWD="/home/kalana/FYP/build_isolated/nav_planner"
+export PYTHONPATH="/home/kalana/FYP/devel_isolated/nav_planner/lib/python2.7/dist-packages:$PYTHONPATH"
 export ROSLISP_PACKAGE_DIRECTORIES="/home/kalana/FYP/devel_isolated/nav_planner/share/common-lisp"
 export ROS_PACKAGE_PATH="/home/kalana/FYP/src/nav_planner:$ROS_PACKAGE_PATH"

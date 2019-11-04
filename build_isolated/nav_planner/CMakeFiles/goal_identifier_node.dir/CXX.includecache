@@ -135,6 +135,10 @@ octomap/OcTree.h
 -
 cmath
 -
+memory
+-
+mutex
+-
 
 /home/kalana/FYP/src/nav_planner/src/goal_identifier_node.cpp
 ros/ros.h
@@ -160,6 +164,8 @@ nav_planner/pointDataArray.h
 nav_planner/goalControl.h
 -
 nav_planner/goalRemove.h
+-
+memory
 -
 goal_identifier.h
 -
