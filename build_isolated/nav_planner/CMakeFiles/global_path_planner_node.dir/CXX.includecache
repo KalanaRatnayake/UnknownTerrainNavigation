@@ -287,6 +287,10 @@ octomap/octomap.h
 -
 octomap/OcTree.h
 -
+memory
+-
+mutex
+-
 ros/console.h
 -
 
@@ -328,6 +332,8 @@ nav_planner/goalControl.h
 nav_planner/goalRemove.h
 -
 nav_planner/systemControl.h
+-
+memory
 -
 global_path_planner.h
 -

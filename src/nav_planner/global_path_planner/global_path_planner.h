@@ -2,6 +2,9 @@
 #include <octomap/octomap.h>
 #include <octomap/OcTree.h>
 
+#include <memory>
+#include <mutex>
+
 #include <ros/console.h>
 
 //map
@@ -27,21 +30,22 @@
 
 //Robot description
 #define HEIGHT 0.35
-#define CLEARENCE_DISTANCE 1.5
+#define CLEARENCE_DISTANCE 2.5
 
 //Pit detection range
 #define MINDISTANCE 0.70
-#define MAXDISTANCE 2.80
+#define MAXDISTANCE 3.50
 
 class global_path_planner{
     private:
-        octomap::OcTree* tree_oct;
+        std::shared_ptr<octomap::OcTree> tree_oct;
         octomap::point3d currentPosition;
         octomap::point3d goal;
+        std::mutex* plannerMutex;
 
     public:
         typedef std::pair<int, int> Pair; 
-        typedef std::pair<double, std::pair<int, int> > pPair; 
+        typedef std::pair<double, std::pair<int, int> > pPair;
 
         struct cell { 
             int parent_i, parent_j;
@@ -51,7 +55,7 @@ class global_path_planner{
         global_path_planner();
         void update_goal(octomap::point3d &position);
         void update_position(octomap::point3d &position);
-        void update_tree(octomap::OcTree* receivedTree);
+        void update_tree(std::shared_ptr<octomap::OcTree> receivedTree);
         bool search(std::vector<std::vector<int> > &grid, global_path_planner::Pair src, global_path_planner::Pair dest, std::vector<octomap::point3d> &outPath);
         void buildMap(std::vector<std::vector<int> > &initialGrid, std::vector<std::vector<int> > &processedGrid);
         void processPath(std::vector<octomap::point3d> &inPath, std::vector<octomap::point3d> &outPath);

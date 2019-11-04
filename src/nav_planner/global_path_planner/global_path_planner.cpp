@@ -6,9 +6,12 @@
 
 // Description of the Grid- {1--> not occupied} {0--> occupied}
 
-global_path_planner::global_path_planner(){}
+global_path_planner::global_path_planner(){
+	plannerMutex = new std::mutex();
+}
 
-void global_path_planner::update_tree(octomap::OcTree* receivedTree){
+void global_path_planner::update_tree(std::shared_ptr<octomap::OcTree> receivedTree){
+	std::lock_guard<std::mutex> lock(*plannerMutex);
     tree_oct = receivedTree;
 }
 
@@ -142,13 +145,16 @@ bool global_path_planner::search(std::vector<std::vector<int> > &grid, global_pa
 */ 
 
 void global_path_planner::buildMap(std::vector<std::vector<int> > &initialGrid, std::vector<std::vector<int> > &processedGrid){
+	std::lock_guard<std::mutex> lock(*plannerMutex);
+	
 	// Description of the Grid- {1--> not occupied} {0--> occupied}
 	std::vector<std::vector<int> > paddedGrid( PADROW, std::vector<int> (PADCOL, 1));
 
 	//inspect surrounding
 	float lower = currentPosition.z() + UNITOFFSET;
 	float upper = currentPosition.z() + HEIGHT;
-
+	
+	ROS_INFO_STREAM("started surrounding analysis");
 	for (float z=lower; z<upper; z+=CELL){
         for (float x=MAPLOW; x<MAPHIGH; x+=CELL){
             for (float y=MAPLOW; y<MAPHIGH; y+=CELL){
@@ -181,6 +187,7 @@ void global_path_planner::buildMap(std::vector<std::vector<int> > &initialGrid, 
 
 	float zf = currentPosition.z() - UNITOFFSET;
 
+	ROS_INFO_STREAM("started floor analysis");
 	for (float xf=MAPLOW; xf<MAPHIGH; xf+=CELL){
         for (float yf=MAPLOW; yf<MAPHIGH; yf+=CELL){
             if (tree_oct->search(xf, yf, zf)){
@@ -212,6 +219,7 @@ void global_path_planner::buildMap(std::vector<std::vector<int> > &initialGrid, 
         }
     }
 
+	ROS_INFO_STREAM("slicing the grid");
 	for (int i=0; i<ROW; i++){
 		for (int j=0; j<COL; j++){
 			processedGrid[i][j] = paddedGrid[i+MASKSIDE-1][j+MASKSIDE-1];
@@ -240,5 +248,6 @@ void global_path_planner::processPath(std::vector<octomap::point3d> &inPath, std
 }
 
 void global_path_planner::saveOctomap(const std::string &filename){
+	std::lock_guard<std::mutex> lock(*plannerMutex);
 	tree_oct->write(filename);
 }
