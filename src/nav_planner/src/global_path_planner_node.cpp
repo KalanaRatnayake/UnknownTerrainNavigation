@@ -29,18 +29,18 @@
 #include <global_path_planner.h>
 
 //map
-#define ROW 800 
-#define COL 800
+#define ROW 400 
+#define COL 400
 
 //map + 2*(padding) 
-#define INITROW 816
-#define INITCOL 816
+#define INITROW 408
+#define INITCOL 408
 
-#define PADDING 8
+#define PADDING 4
 #define OFFSET 0.175
-#define CELL 0.025
-#define INVCELL 40  //multiply by 40 instead of dividing by cell size 0.025
-#define UNITOFFSET 0.0125
+#define CELL (float)0.05
+#define INVCELL 20  //multiply by 40 instead of dividing by cell size 0.025
+#define UNITOFFSET 0.025
 
 #define CLEARENCE_DISTANCE 2.5
 #define CLEARENCE_ANGLE 1.05
@@ -57,6 +57,7 @@ octomap::point3d previousPosition;
 ros::ServiceClient clientGoalPosition;
 ros::ServiceClient clientGoalRemove;
 ros::ServiceClient forwardClient;
+ros::ServiceClient reverseClient;
 ros::ServiceClient rotateClient;
 
 ros::Publisher grid_pub;
@@ -169,6 +170,22 @@ bool drive(octomap::point3d &nextPosition){
 	} else {
 		ROS_ERROR("global_path_planner_node : failed to call service goalPosition");
 		return false;
+	}
+}
+
+void reverse(octomap::point3d &nextPosition){
+	nav_planner::baseDrive srvDrive;
+
+	srvDrive.request.x = nextPosition.x();
+	srvDrive.request.y = nextPosition.y();
+	srvDrive.request.z = nextPosition.z();
+
+	ROS_INFO("global_path_planner_node : requested Control service");
+
+	if (reverseClient.call(srvDrive)){
+		ROS_INFO("global_path_planner_node : reversed");
+	} else {
+		ROS_ERROR("global_path_planner_node : failed to call service goalPosition");
 	}
 }
 
@@ -303,23 +320,24 @@ bool systemCallback(nav_planner::systemControl::Request &request, nav_planner::s
 			desiredYaw = atan2(nextPosition.y()-currentPosition.y(), nextPosition.x()-currentPosition.x());
 			angle = std::abs(desiredYaw - currentYaw);
 
-			if ((angle>CLEARENCE_ANGLE)&&(index!=1)) break;
+			//check travelled distance and update previous position
+			travelledDistance += previousPosition.distance(nextPosition);
 
 			//if return false if collided, else true
-
-			if (drive(nextPosition)){
-				//check travelled distance and update previous position
-				travelledDistance += previousPosition.distance(nextPosition);
-				previousPosition = currentPosition;
-
-				//exit loop of travelledDistance is over the limit. if not, continue
-				if (travelledDistance < CLEARENCE_DISTANCE) index++; else break;
-				
-				//calculate remaining distance
-				remainingDistance = goal.distance(currentPosition);
-			} else {
+			if (!(drive(nextPosition))) {
+				reverse(nextPosition);
 				break;
-			}			
+			};
+
+			if ((angle>CLEARENCE_ANGLE)&&(index!=1)) break;
+
+			//exit loop of travelledDistance is over the limit. if not, continue
+			if (travelledDistance > CLEARENCE_DISTANCE) break;
+				
+			//calculate remaining distance
+			previousPosition = currentPosition;
+			remainingDistance = goal.distance(currentPosition);
+			index++;		
 		}
 	}
 
@@ -357,6 +375,7 @@ int main(int argc, char **argv)
 	clientGoalPosition = node.serviceClient<nav_planner::goalControlRequest, nav_planner::goalControlResponse>("goalPosition");
 	clientGoalRemove = node.serviceClient<nav_planner::goalRemoveRequest, nav_planner::goalRemoveResponse>("goalRemove");
 	forwardClient = node.serviceClient<nav_planner::baseDriveRequest, nav_planner::baseDriveResponse>("baseForword");
+	reverseClient = node.serviceClient<nav_planner::baseDriveRequest, nav_planner::baseDriveResponse>("baseReverse");
     rotateClient = node.serviceClient<nav_planner::baseRotateRequest, nav_planner::baseRotateResponse>("baseRotate");
 	
 	ROS_INFO("global_path_planner_node : created service clients");

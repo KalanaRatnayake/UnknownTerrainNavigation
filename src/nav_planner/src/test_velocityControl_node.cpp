@@ -23,6 +23,7 @@ int main(int argc, char **argv)
 	ros::service::waitForService("baseRotate");
 
   ros::ServiceClient forwardClient = n.serviceClient<nav_planner::baseDriveRequest, nav_planner::baseDriveResponse>("baseForword");
+  ros::ServiceClient reverseClient = n.serviceClient<nav_planner::baseDriveRequest, nav_planner::baseDriveResponse>("baseReverse");
   ros::ServiceClient rotateClient = n.serviceClient<nav_planner::baseRotateRequest, nav_planner::baseRotateResponse>("baseRotate");
   
   ROS_INFO("test_velocityControl_node : client created");
@@ -30,8 +31,8 @@ int main(int argc, char **argv)
   nav_planner::baseDrive forward;
   nav_planner::baseRotate rotate;
 
-  forward.request.x = 4.0;
-  forward.request.y = 1.0;
+  forward.request.x = 2.0;
+  forward.request.y = 0.0;
   forward.request.z = 0.0;
   
   ROS_INFO("test_velocityControl_node : forward requested");
@@ -55,7 +56,7 @@ int main(int argc, char **argv)
   
   ROS_INFO("test_velocityControl_node : forward requested");
 
-  if (forwardClient.call(forward)){
+  if (reverseClient.call(forward)){
     ROS_INFO("test_velocityControl_node : response recieved");
     
   } else {

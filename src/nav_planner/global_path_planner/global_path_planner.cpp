@@ -198,19 +198,33 @@ void global_path_planner::buildMap(std::vector<std::vector<int> > &initialGrid, 
 					float distance = currentPosition.distance(point);
 
 					if ((distance>MINDISTANCE) && (distance<MAXDISTANCE)){
-						int xfN = (int) ((xf + OFFSET)*INVCELL);
-						int yfN = (int) ((yf + OFFSET)*INVCELL);
+						int count = 0;
+						float array [9][2] = {{xf-CELL, yf-CELL}, {xf-CELL, yf}, {xf-CELL, yf+CELL}, 
+											  {xf     , yf-CELL}, {xf     , yf}, {xf     , yf+CELL}, 
+											  {xf+CELL, yf-CELL}, {xf+CELL, yf}, {xf+CELL, yf+CELL}};
 
-						initialGrid[yfN][xfN] = 0;
+						for (int i=0; i<9; i++){
+							octomap::OcTreeNode* key = tree_oct->search(array[i][0], array[i][1], zf);
+							if(!(tree_oct->isNodeOccupied(key))){
+								count++;
+							}
+						}
+						
+						if (count>1){
+							int xfN = (int) ((xf + OFFSET)*INVCELL);
+							int yfN = (int) ((yf + OFFSET)*INVCELL);
 
-						int xflow = xfN;
-						int xfhigh = xfN+MASKSIDE;
-						int yflow = yfN;
-						int yfhigh = yfN+MASKSIDE;
+							initialGrid[yfN][xfN] = 0;
 
-						for (int af=xflow; af<xfhigh; af++){
-							for (int bf=yflow; bf<yfhigh; bf++){
-								paddedGrid[bf][af] = 0;
+							int xflow = xfN;
+							int xfhigh = xfN+MASKSIDE;
+							int yflow = yfN;
+							int yfhigh = yfN+MASKSIDE;
+
+							for (int af=xflow; af<xfhigh; af++){
+								for (int bf=yflow; bf<yfhigh; bf++){
+									paddedGrid[bf][af] = 0;
+								}
 							}
 						}
 					}
@@ -247,7 +261,10 @@ void global_path_planner::processPath(std::vector<octomap::point3d> &inPath, std
 	inPath.clear();
 }
 
-void global_path_planner::saveOctomap(const std::string &filename){
-	std::lock_guard<std::mutex> lock(*plannerMutex);
-	tree_oct->write(filename);
+bool global_path_planner::isBlocked(octomap::point3d &point, std::vector<std::vector<int> > &grid){
+
+	int col = (int) (point.x()*INVCELL);
+	int row = (int) (point.y()*INVCELL);
+
+	if (grid[row][col] == 0) return (true); else return (false); 
 }

@@ -23,7 +23,7 @@
 std::vector<octomap::point3d> centerArray;
 octomap::point3d goal;
 
-goal_identifier identifierObject = goal_identifier(0.50, 10.0, 0.05, 20.0, 20.0, 1.5, 0.95);
+goal_identifier identifierObject = goal_identifier(0.5, 10.0, 0.05, 20.0, 20.0, 1.5, 0.95);
 
 /*
 /  The node subscribe to topics 'Octomap' at (octomap_msgs/Octomap) and 'pose' at (nav_msgs/Odometry)
