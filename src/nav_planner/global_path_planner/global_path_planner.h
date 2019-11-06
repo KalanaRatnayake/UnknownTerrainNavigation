@@ -8,25 +8,25 @@
 #include <ros/console.h>
 
 //map
-#define ROW 400 
-#define COL 400
+#define ROW 800 
+#define COL 800
 
 //map + 2*(padding) 
-#define INITROW 408
-#define INITCOL 408
+#define INITROW 816
+#define INITCOL 816
 
 //map + 4*(padding)
-#define PADROW 416
-#define PADCOL 416
+#define PADROW 832
+#define PADCOL 832
 
 //Map boundries
 #define MAPLOW -0.175
 #define MAPHIGH 20.225
 #define OFFSET 0.175
-#define CELL (float)0.05
-#define INVCELL 20  //multiply by 20 instead of dividing by cell size 0.05
-#define UNITOFFSET 0.025
-#define MASKSIDE 9
+#define CELL (float)0.025
+#define INVCELL 40  //multiply by 20 instead of dividing by cell size 0.05
+#define UNITOFFSET 0.0125
+#define MASKSIDE 17
 
 //Robot description
 #define HEIGHT 0.35

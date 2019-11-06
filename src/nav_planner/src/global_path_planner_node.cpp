@@ -29,18 +29,18 @@
 #include <global_path_planner.h>
 
 //map
-#define ROW 400 
-#define COL 400
+#define ROW 800 
+#define COL 800
 
 //map + 2*(padding) 
-#define INITROW 408
-#define INITCOL 408
+#define INITROW 816
+#define INITCOL 816
 
-#define PADDING 4
+#define PADDING 8
 #define OFFSET 0.175
-#define CELL (float)0.05
-#define INVCELL 20  //multiply by 40 instead of dividing by cell size 0.025
-#define UNITOFFSET 0.025
+#define CELL (float)0.025
+#define INVCELL 40  //multiply by 40 instead of dividing by cell size 0.025
+#define UNITOFFSET 0.0125
 
 #define CLEARENCE_DISTANCE 2.5
 #define CLEARENCE_ANGLE 1.05
@@ -68,7 +68,7 @@ ros::Subscriber pos_sub;
 bool unExplored = true;
 
 double Roll, Pitch, Yaw;
-double currentYaw;
+double currentYaw, previousYaw;
 
 /*
 / once the map is completely explored, this function will be called to save the octomap and execute ros::shutdown()
@@ -162,11 +162,7 @@ bool drive(octomap::point3d &nextPosition){
 
 	if (forwardClient.call(srvDrive)){
 		ROS_INFO("global_path_planner_node : point reached");
-		if (srvDrive.response.success){
-			return true;
-		} else {
-			return false;
-		}
+		if (srvDrive.response.success==true) return true; else return false;
 	} else {
 		ROS_ERROR("global_path_planner_node : failed to call service goalPosition");
 		return false;
@@ -285,8 +281,14 @@ bool systemCallback(nav_planner::systemControl::Request &request, nav_planner::s
 		//iterate till a path is found
 		while (!pathFound){
 
-			//remove goal if path is not found
-			removeGoal();
+			//check whether the path was not calculated due to source being blocked.
+			if (plannerObject.isBlocked(currentPosition, processedGrid)){
+				//reverse the robot if source was blocked
+				reverse(goal);
+			} else {
+				//remove goal if source is not the cause
+				removeGoal();
+			}
 
 			//rerequest the goal
 			requestGoal();
@@ -311,6 +313,7 @@ bool systemCallback(nav_planner::systemControl::Request &request, nav_planner::s
 		//calculate distance to the goal and mark current position as previous position
 		remainingDistance = goal.distance(currentPosition);
 		previousPosition = currentPosition;
+		previousYaw = currentYaw;
 		
 		while ((remainingDistance >= 0.1) && pathFound) {
 			//update position to be reached
@@ -318,7 +321,11 @@ bool systemCallback(nav_planner::systemControl::Request &request, nav_planner::s
 			
 			//check whether a large turn is needed. if so recalculation is needed. so exit loop
 			desiredYaw = atan2(nextPosition.y()-currentPosition.y(), nextPosition.x()-currentPosition.x());
-			angle = std::abs(desiredYaw - currentYaw);
+			angle = std::abs(desiredYaw - previousYaw);
+
+			ROS_INFO_STREAM("current Yaw" << currentYaw );
+			ROS_INFO_STREAM("past Yaw" << previousYaw );
+			ROS_INFO_STREAM("angle" << angle );
 
 			//check travelled distance and update previous position
 			travelledDistance += previousPosition.distance(nextPosition);
@@ -329,7 +336,7 @@ bool systemCallback(nav_planner::systemControl::Request &request, nav_planner::s
 				break;
 			};
 
-			if ((angle>CLEARENCE_ANGLE)&&(index!=1)) break;
+			if ((angle>CLEARENCE_ANGLE)&&(index>1)) break;
 
 			//exit loop of travelledDistance is over the limit. if not, continue
 			if (travelledDistance > CLEARENCE_DISTANCE) break;

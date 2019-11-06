@@ -18,8 +18,8 @@ class grid_image_creator:
         self.gridM_sub = rospy.Subscriber("grid", gridMap, self.callbackGrid)
         self.bridge = CvBridge()
         self.index = 1
-        self.ROW = 400
-        self.COL = 400
+        self.ROW = 800
+        self.COL = 800
         self.dir_image_save = '/home/kalana/FYP/src/nav_planner/gridImages'
 
     def callbackGrid(self, msg):

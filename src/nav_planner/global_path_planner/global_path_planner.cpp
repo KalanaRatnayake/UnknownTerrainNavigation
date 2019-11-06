@@ -199,18 +199,20 @@ void global_path_planner::buildMap(std::vector<std::vector<int> > &initialGrid, 
 
 					if ((distance>MINDISTANCE) && (distance<MAXDISTANCE)){
 						int count = 0;
-						float array [9][2] = {{xf-CELL, yf-CELL}, {xf-CELL, yf}, {xf-CELL, yf+CELL}, 
-											  {xf     , yf-CELL}, {xf     , yf}, {xf     , yf+CELL}, 
-											  {xf+CELL, yf-CELL}, {xf+CELL, yf}, {xf+CELL, yf+CELL}};
+						float arrayM [9][2] = {{xf-CELL, yf-CELL}, {xf-CELL, yf}, {xf-CELL, yf+CELL}, 
+											   {xf     , yf-CELL}, {xf     , yf}, {xf     , yf+CELL}, 
+											   {xf+CELL, yf-CELL}, {xf+CELL, yf}, {xf+CELL, yf+CELL}};
 
 						for (int i=0; i<9; i++){
-							octomap::OcTreeNode* key = tree_oct->search(array[i][0], array[i][1], zf);
-							if(!(tree_oct->isNodeOccupied(key))){
-								count++;
+							if (tree_oct->search(arrayM[i][0], arrayM[i][1], zf)){
+								octomap::OcTreeNode* keyMask = tree_oct->search(arrayM[i][0], arrayM[i][1], zf);
+								if(!(tree_oct->isNodeOccupied(keyMask))){
+									count++;
+								}
 							}
 						}
 						
-						if (count>1){
+						if (count>4){
 							int xfN = (int) ((xf + OFFSET)*INVCELL);
 							int yfN = (int) ((yf + OFFSET)*INVCELL);
 
@@ -263,8 +265,8 @@ void global_path_planner::processPath(std::vector<octomap::point3d> &inPath, std
 
 bool global_path_planner::isBlocked(octomap::point3d &point, std::vector<std::vector<int> > &grid){
 
-	int col = (int) (point.x()*INVCELL);
-	int row = (int) (point.y()*INVCELL);
+	int col = (int) ((point.x()-UNITOFFSET)*INVCELL);
+	int row = (int) ((point.y()-UNITOFFSET)*INVCELL);
 
 	if (grid[row][col] == 0) return (true); else return (false); 
 }

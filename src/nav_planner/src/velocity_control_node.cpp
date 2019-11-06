@@ -101,6 +101,10 @@ bool driveCallback(nav_planner::baseDrive::Request &request, nav_planner::baseDr
 		cmd.angular.z = angularV;
 		velocity_pub.publish(cmd);
 		ros::Duration(0.005).sleep();
+		if (bumper==true){
+			response.success = false;
+			break;
+		}
 	} while (std::abs(angleDiff)>=0.01);
 
 	cmd.angular.z = 0;
@@ -117,7 +121,7 @@ bool driveCallback(nav_planner::baseDrive::Request &request, nav_planner::baseDr
 		cmd.linear.x = velocity;
 		velocity_pub.publish(cmd);
 		ros::Duration(0.005).sleep();
-		if (bumper){
+		if (bumper==true){
 			response.success = false;
 			break;
 		}
