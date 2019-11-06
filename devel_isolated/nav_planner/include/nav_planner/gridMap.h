@@ -126,12 +126,12 @@ struct MD5Sum< ::nav_planner::gridMap_<ContainerAllocator> >
 {
   static const char* value()
   {
-    return "7283370e017ac387872171d01ea443ab";
+    return "1e2dc952130c008ed024ffc4c0c5cfad";
   }
 
   static const char* value(const ::nav_planner::gridMap_<ContainerAllocator>&) { return value(); }
-  static const uint64_t static_value1 = 0x7283370e017ac387ULL;
-  static const uint64_t static_value2 = 0x872171d01ea443abULL;
+  static const uint64_t static_value1 = 0x1e2dc952130c008eULL;
+  static const uint64_t static_value2 = 0xd024ffc4c0c5cfadULL;
 };
 
 template<class ContainerAllocator>
@@ -161,6 +161,7 @@ gridPoint[] row\n\
 MSG: nav_planner/gridPoint\n\
 int8 init\n\
 int8 proc\n\
+int8 disc\n\
 ================================================================================\n\
 MSG: nav_planner/pointData\n\
 float32 x\n\

@@ -58,16 +58,16 @@
   "nav_planner/gridRow")
 (cl:defmethod roslisp-msg-protocol:md5sum ((type (cl:eql '<gridRow>)))
   "Returns md5sum for a message object of type '<gridRow>"
-  "b79fca104e1ff6a6b0cdcd662d07d607")
+  "4077bd51d2ef02451e7ce2c5b9ff044d")
 (cl:defmethod roslisp-msg-protocol:md5sum ((type (cl:eql 'gridRow)))
   "Returns md5sum for a message object of type 'gridRow"
-  "b79fca104e1ff6a6b0cdcd662d07d607")
+  "4077bd51d2ef02451e7ce2c5b9ff044d")
 (cl:defmethod roslisp-msg-protocol:message-definition ((type (cl:eql '<gridRow>)))
   "Returns full string definition for message of type '<gridRow>"
-  (cl:format cl:nil "gridPoint[] row~%~%================================================================================~%MSG: nav_planner/gridPoint~%int8 init~%int8 proc~%~%"))
+  (cl:format cl:nil "gridPoint[] row~%~%================================================================================~%MSG: nav_planner/gridPoint~%int8 init~%int8 proc~%int8 disc~%~%"))
 (cl:defmethod roslisp-msg-protocol:message-definition ((type (cl:eql 'gridRow)))
   "Returns full string definition for message of type 'gridRow"
-  (cl:format cl:nil "gridPoint[] row~%~%================================================================================~%MSG: nav_planner/gridPoint~%int8 init~%int8 proc~%~%"))
+  (cl:format cl:nil "gridPoint[] row~%~%================================================================================~%MSG: nav_planner/gridPoint~%int8 init~%int8 proc~%int8 disc~%~%"))
 (cl:defmethod roslisp-msg-protocol:serialization-length ((msg <gridRow>))
   (cl:+ 0
      4 (cl:reduce #'cl:+ (cl:slot-value msg 'row) :key #'(cl:lambda (ele) (cl:declare (cl:ignorable ele)) (cl:+ (roslisp-msg-protocol:serialization-length ele))))

@@ -27,6 +27,7 @@
 #define INVCELL 40  //multiply by 20 instead of dividing by cell size 0.05
 #define UNITOFFSET 0.0125
 #define MASKSIDE 17
+#define PADDING 8
 
 //Robot description
 #define HEIGHT 0.35
@@ -57,7 +58,7 @@ class global_path_planner{
         void update_position(octomap::point3d &position);
         void update_tree(std::shared_ptr<octomap::OcTree> receivedTree);
         bool search(std::vector<std::vector<int> > &grid, global_path_planner::Pair src, global_path_planner::Pair dest, std::vector<octomap::point3d> &outPath);
-        void buildMap(std::vector<std::vector<int> > &initialGrid, std::vector<std::vector<int> > &processedGrid);
-        void processPath(std::vector<octomap::point3d> &inPath, std::vector<octomap::point3d> &outPath);
+        void buildMap(std::vector<std::vector<int> > &discoveredGrid, std::vector<std::vector<int> > &initialGrid, std::vector<std::vector<int> > &processedGrid);
+        void processPath(std::vector<octomap::point3d> &inPath, std::vector<std::vector<int> > &discoveredGrid, std::vector<octomap::point3d> &outPath);
         bool isBlocked(octomap::point3d &point, std::vector<std::vector<int> > &grid);
 };

@@ -95,7 +95,7 @@
    self)
   )
 
-(setf (get nav_planner::gridMap :md5sum-) "7283370e017ac387872171d01ea443ab")
+(setf (get nav_planner::gridMap :md5sum-) "1e2dc952130c008ed024ffc4c0c5cfad")
 (setf (get nav_planner::gridMap :datatype-) "nav_planner/gridMap")
 (setf (get nav_planner::gridMap :definition-)
       "gridRow[] grid
@@ -109,6 +109,7 @@ gridPoint[] row
 MSG: nav_planner/gridPoint
 int8 init
 int8 proc
+int8 disc
 ================================================================================
 MSG: nav_planner/pointData
 float32 x
@@ -119,6 +120,6 @@ float32 z
 
 
 
-(provide :nav_planner/gridMap "7283370e017ac387872171d01ea443ab")
+(provide :nav_planner/gridMap "1e2dc952130c008ed024ffc4c0c5cfad")
 
 

@@ -3,4 +3,6 @@
           INIT
           PROC-VAL
           PROC
+          DISC-VAL
+          DISC
 ))

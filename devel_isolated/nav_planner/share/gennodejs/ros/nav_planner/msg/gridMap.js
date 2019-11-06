@@ -104,7 +104,7 @@ class gridMap {
 
   static md5sum() {
     //Returns md5sum for a message object
-    return '7283370e017ac387872171d01ea443ab';
+    return '1e2dc952130c008ed024ffc4c0c5cfad';
   }
 
   static messageDefinition() {
@@ -121,6 +121,7 @@ class gridMap {
     MSG: nav_planner/gridPoint
     int8 init
     int8 proc
+    int8 disc
     ================================================================================
     MSG: nav_planner/pointData
     float32 x

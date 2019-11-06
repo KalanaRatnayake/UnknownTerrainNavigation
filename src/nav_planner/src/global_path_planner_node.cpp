@@ -189,7 +189,7 @@ void reverse(octomap::point3d &nextPosition){
 / converts the gridmaps into a 'gridMap' msgs, path into 'pointDataArray and publishes it
 */
 
-void publish(std::vector<std::vector<int> > &initGrid, std::vector<std::vector<int> > &procGrid, std::vector<octomap::point3d> &path){
+void publish(std::vector<std::vector<int> > &discoveredGrid, std::vector<std::vector<int> > &initGrid, std::vector<std::vector<int> > &procGrid, std::vector<octomap::point3d> &path){
 	nav_planner::gridMap gridMap;
 
 	for (int i=0; i<ROW; i++){
@@ -200,6 +200,7 @@ void publish(std::vector<std::vector<int> > &initGrid, std::vector<std::vector<i
 			
 			point.init = initGrid[i+PADDING][j+PADDING];
 			point.proc = procGrid[i][j];
+			point.disc = discoveredGrid[i][j];
 
 			rowArray.row.push_back(point);
 		}
@@ -252,6 +253,7 @@ bool systemCallback(nav_planner::systemControl::Request &request, nav_planner::s
 	while (unExplored && request.activate){
 		std::vector<std::vector<int> > initialGrid( INITROW, std::vector<int> (INITCOL, 1));
 		std::vector<std::vector<int> > processedGrid( ROW, std::vector<int> (COL, 1));
+		std::vector<std::vector<int> > discoveredGrid( ROW, std::vector<int> (COL, 1));
 
 		int index =  1;
 		bool pathFound;
@@ -266,7 +268,7 @@ bool systemCallback(nav_planner::systemControl::Request &request, nav_planner::s
 		requestGoal();
 
 		//build the map for the path calculation
-		plannerObject.buildMap(initialGrid, processedGrid);
+		plannerObject.buildMap(discoveredGrid, initialGrid, processedGrid);
 
 		//turn source and goal into points on the grid
 		int srcX = (int) (currentPosition.x()*INVCELL);
@@ -305,27 +307,30 @@ bool systemCallback(nav_planner::systemControl::Request &request, nav_planner::s
 		}
 
 		//publish the calculated grid and path
-		publish(initialGrid, processedGrid, path);
+		publish(discoveredGrid, initialGrid, processedGrid, path);
 
 		//convert grid path into realworld path
-		plannerObject.processPath(path, processedPath);
+		plannerObject.processPath(path, discoveredGrid, processedPath);
 
 		//calculate distance to the goal and mark current position as previous position
 		remainingDistance = goal.distance(currentPosition);
 		previousPosition = currentPosition;
 		previousYaw = currentYaw;
 		
-		while ((remainingDistance >= 0.1) && pathFound) {
+		while ((remainingDistance >= 0.1) && pathFound && (index<processedPath.size())) {
 			//update position to be reached
 			nextPosition = processedPath[index];
 			
 			//check whether a large turn is needed. if so recalculation is needed. so exit loop
 			desiredYaw = atan2(nextPosition.y()-currentPosition.y(), nextPosition.x()-currentPosition.x());
-			angle = std::abs(desiredYaw - previousYaw);
 
-			ROS_INFO_STREAM("current Yaw" << currentYaw );
-			ROS_INFO_STREAM("past Yaw" << previousYaw );
-			ROS_INFO_STREAM("angle" << angle );
+			if ((desiredYaw>1.57)&&(previousYaw<-1.57)){
+				angle = 6.28 - (desiredYaw - previousYaw);
+			} else if ((desiredYaw<-1.57)&&(previousYaw>1.57)) {
+				angle = 6.28 + (desiredYaw - previousYaw);
+			} else {
+				angle = std::abs(desiredYaw - previousYaw);
+			}
 
 			//check travelled distance and update previous position
 			travelledDistance += previousPosition.distance(nextPosition);

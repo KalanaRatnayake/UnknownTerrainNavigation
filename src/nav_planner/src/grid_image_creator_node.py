@@ -28,10 +28,8 @@ class grid_image_creator:
 
         for i in range(0, self.ROW):
             array = msg.grid[i]
-
             for j in range (0, self.COL):
                 point = array.row[j]
-
                 #processed grid (with padding) is saved as GREEN channel
                 if (point.proc==0):
                     gridImage[i][j][0] = 0
@@ -53,6 +51,16 @@ class grid_image_creator:
 
         for k in range(0, (len(gridPath)-1)):
             cv2.line(gridImage, (gridPath[k][0], gridPath[k][1]), (gridPath[k+1][0], gridPath[k+1][1]), (0,0,255), 2)
+
+        for i in range(0, self.ROW):
+            array = msg.grid[i]
+            for j in range (0, self.COL):
+                point = array.row[j]
+                #processed grid (with padding) is saved as GREEN channel
+                if (point.disc==1):
+                    gridImage[i][j][0] = 0
+                    gridImage[i][j][1] = 0
+                    gridImage[i][j][2] = 0
 
         try:
             gridImageRot = cv2.rotate(gridImage, cv2.ROTATE_90_CLOCKWISE)

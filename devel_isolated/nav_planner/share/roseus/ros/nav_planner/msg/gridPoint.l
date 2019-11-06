@@ -14,17 +14,19 @@
 
 (defclass nav_planner::gridPoint
   :super ros::object
-  :slots (_init _proc ))
+  :slots (_init _proc _disc ))
 
 (defmethod nav_planner::gridPoint
   (:init
    (&key
     ((:init __init) 0)
     ((:proc __proc) 0)
+    ((:disc __disc) 0)
     )
    (send-super :init)
    (setq _init (round __init))
    (setq _proc (round __proc))
+   (setq _disc (round __disc))
    self)
   (:init
    (&optional __init)
@@ -32,12 +34,17 @@
   (:proc
    (&optional __proc)
    (if __proc (setq _proc __proc)) _proc)
+  (:disc
+   (&optional __disc)
+   (if __disc (setq _disc __disc)) _disc)
   (:serialization-length
    ()
    (+
     ;; int8 _init
     1
     ;; int8 _proc
+    1
+    ;; int8 _disc
     1
     ))
   (:serialize
@@ -48,6 +55,8 @@
        (write-byte _init s)
      ;; int8 _proc
        (write-byte _proc s)
+     ;; int8 _disc
+       (write-byte _disc s)
      ;;
      (if (null strm) (get-output-stream-string s))))
   (:deserialize
@@ -58,19 +67,23 @@
    ;; int8 _proc
      (setq _proc (sys::peek buf ptr- :char)) (incf ptr- 1)
      (if (> _proc 127) (setq _proc (- _proc 256)))
+   ;; int8 _disc
+     (setq _disc (sys::peek buf ptr- :char)) (incf ptr- 1)
+     (if (> _disc 127) (setq _disc (- _disc 256)))
    ;;
    self)
   )
 
-(setf (get nav_planner::gridPoint :md5sum-) "38ba4a3cfac6a3fecf591ee30dc4f1b4")
+(setf (get nav_planner::gridPoint :md5sum-) "9c89479da1035ab9eb04a27d7e072480")
 (setf (get nav_planner::gridPoint :datatype-) "nav_planner/gridPoint")
 (setf (get nav_planner::gridPoint :definition-)
       "int8 init
 int8 proc
+int8 disc
 ")
 
 
 
-(provide :nav_planner/gridPoint "38ba4a3cfac6a3fecf591ee30dc4f1b4")
+(provide :nav_planner/gridPoint "9c89479da1035ab9eb04a27d7e072480")
 
 

@@ -8,7 +8,7 @@ import struct
 import nav_planner.msg
 
 class gridMap(genpy.Message):
-  _md5sum = "7283370e017ac387872171d01ea443ab"
+  _md5sum = "1e2dc952130c008ed024ffc4c0c5cfad"
   _type = "nav_planner/gridMap"
   _has_header = False #flag to mark the presence of a Header object
   _full_text = """gridRow[] grid
@@ -22,6 +22,7 @@ gridPoint[] row
 MSG: nav_planner/gridPoint
 int8 init
 int8 proc
+int8 disc
 ================================================================================
 MSG: nav_planner/pointData
 float32 x
@@ -78,7 +79,7 @@ float32 z
         buff.write(_struct_I.pack(length))
         for val2 in val1.row:
           _x = val2
-          buff.write(_get_struct_2b().pack(_x.init, _x.proc))
+          buff.write(_get_struct_3b().pack(_x.init, _x.proc, _x.disc))
       length = len(self.path)
       buff.write(_struct_I.pack(length))
       for val1 in self.path:
@@ -113,8 +114,8 @@ float32 z
           val2 = nav_planner.msg.gridPoint()
           _x = val2
           start = end
-          end += 2
-          (_x.init, _x.proc,) = _get_struct_2b().unpack(str[start:end])
+          end += 3
+          (_x.init, _x.proc, _x.disc,) = _get_struct_3b().unpack(str[start:end])
           val1.row.append(val2)
         self.grid.append(val1)
       start = end
@@ -150,7 +151,7 @@ float32 z
         buff.write(_struct_I.pack(length))
         for val2 in val1.row:
           _x = val2
-          buff.write(_get_struct_2b().pack(_x.init, _x.proc))
+          buff.write(_get_struct_3b().pack(_x.init, _x.proc, _x.disc))
       length = len(self.path)
       buff.write(_struct_I.pack(length))
       for val1 in self.path:
@@ -186,8 +187,8 @@ float32 z
           val2 = nav_planner.msg.gridPoint()
           _x = val2
           start = end
-          end += 2
-          (_x.init, _x.proc,) = _get_struct_2b().unpack(str[start:end])
+          end += 3
+          (_x.init, _x.proc, _x.disc,) = _get_struct_3b().unpack(str[start:end])
           val1.row.append(val2)
         self.grid.append(val1)
       start = end
@@ -212,21 +213,21 @@ _struct_I = genpy.struct_I
 def _get_struct_I():
     global _struct_I
     return _struct_I
-_struct_h = None
-def _get_struct_h():
-    global _struct_h
-    if _struct_h is None:
-        _struct_h = struct.Struct("<h")
-    return _struct_h
+_struct_3b = None
+def _get_struct_3b():
+    global _struct_3b
+    if _struct_3b is None:
+        _struct_3b = struct.Struct("<3b")
+    return _struct_3b
 _struct_3f = None
 def _get_struct_3f():
     global _struct_3f
     if _struct_3f is None:
         _struct_3f = struct.Struct("<3f")
     return _struct_3f
-_struct_2b = None
-def _get_struct_2b():
-    global _struct_2b
-    if _struct_2b is None:
-        _struct_2b = struct.Struct("<2b")
-    return _struct_2b
+_struct_h = None
+def _get_struct_h():
+    global _struct_h
+    if _struct_h is None:
+        _struct_h = struct.Struct("<h")
+    return _struct_h
