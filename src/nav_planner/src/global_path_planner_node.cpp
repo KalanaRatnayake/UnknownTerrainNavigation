@@ -29,15 +29,15 @@
 #include <global_path_planner.h>
 
 //map
-#define ROW 800 
-#define COL 800
+#define ROW 400 
+#define COL 400
 
 //map + 2*(padding) 
-#define INITROW 816
-#define INITCOL 816
+#define INITROW 424
+#define INITCOL 424
 
-#define PADDING 8
-#define OFFSET 0.175
+#define PADDING 12
+#define OFFSET 0.275
 #define CELL (float)0.025
 #define INVCELL 40  //multiply by 40 instead of dividing by cell size 0.025
 #define UNITOFFSET 0.0125
@@ -256,9 +256,9 @@ bool systemCallback(nav_planner::systemControl::Request &request, nav_planner::s
 		std::vector<std::vector<int> > discoveredGrid( ROW, std::vector<int> (COL, 1));
 
 		int index =  1;
-		bool pathFound;
+		bool pathFound = false;
 		double remainingDistance, travelledDistance = 0;
-		double desiredYaw, angle;
+		double desiredYaw, angle = 0;
 		std::vector<octomap::point3d> path, processedPath;
 
 		//rotate and update the octomap
@@ -287,6 +287,8 @@ bool systemCallback(nav_planner::systemControl::Request &request, nav_planner::s
 			if (plannerObject.isBlocked(currentPosition, processedGrid)){
 				//reverse the robot if source was blocked
 				reverse(goal);
+				pathFound = false;
+				break;
 			} else {
 				//remove goal if source is not the cause
 				removeGoal();
@@ -307,10 +309,10 @@ bool systemCallback(nav_planner::systemControl::Request &request, nav_planner::s
 		}
 
 		//publish the calculated grid and path
-		publish(discoveredGrid, initialGrid, processedGrid, path);
+		if (pathFound) publish(discoveredGrid, initialGrid, processedGrid, path);
 
 		//convert grid path into realworld path
-		plannerObject.processPath(path, discoveredGrid, processedPath);
+		if (pathFound) plannerObject.processPath(path, discoveredGrid, processedPath);
 
 		//calculate distance to the goal and mark current position as previous position
 		remainingDistance = goal.distance(currentPosition);
@@ -394,7 +396,7 @@ int main(int argc, char **argv)
 
 	ros::ServiceServer serviceCalculate = node.advertiseService<nav_planner::systemControlRequest, nav_planner::systemControlResponse>("explore", systemCallback);
 
-	ros::AsyncSpinner spinner (5);
+	ros::AsyncSpinner spinner (8);
 	ros::Rate r(100);
 
 	spinner.start();

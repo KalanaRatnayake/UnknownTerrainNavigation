@@ -37,7 +37,7 @@ kobuki_msgs::MotorPower power_cmd;
 
 bool power_status = false;
 bool connected = false;
-bool bumper = false;
+bool bumper = true;
 
 int count = 0;
 
@@ -70,7 +70,7 @@ void bumperCallback(const kobuki_msgs::BumperEventConstPtr &msg)
 {
     if (msg->state == kobuki_msgs::BumperEvent::PRESSED){
     	ROS_INFO_STREAM("Bumper pressed. backing up");
-		bumper = true;
+		bumper = false;
     }
 }
 
@@ -101,11 +101,7 @@ bool driveCallback(nav_planner::baseDrive::Request &request, nav_planner::baseDr
 		cmd.angular.z = angularV;
 		velocity_pub.publish(cmd);
 		ros::Duration(0.005).sleep();
-		if (bumper==true){
-			response.success = false;
-			break;
-		}
-	} while (std::abs(angleDiff)>=0.01);
+	} while ((std::abs(angleDiff)>=0.01) && bumper);
 
 	cmd.angular.z = 0;
 	velocity_pub.publish(cmd);
@@ -121,11 +117,12 @@ bool driveCallback(nav_planner::baseDrive::Request &request, nav_planner::baseDr
 		cmd.linear.x = velocity;
 		velocity_pub.publish(cmd);
 		ros::Duration(0.005).sleep();
-		if (bumper==true){
-			response.success = false;
-			break;
-		}
-	} while (std::abs(distance)>=(initDistance*0.1));
+		
+	} while ((std::abs(distance)>=(initDistance*0.1)) && bumper);
+
+	if (!(bumper)){
+		response.success = false;
+	}
 
 	cmd.linear.x = 0;
 	velocity_pub.publish(cmd);
@@ -307,7 +304,7 @@ int main(int argc, char **argv)
 		ROS_ERROR("velocity_control_node : check remappings for enable/disable topics).");
 	}
 
-	ros::AsyncSpinner spinner (3);
+	ros::AsyncSpinner spinner (6);
 	ros::Rate r(100);
 
 	spinner.start();
