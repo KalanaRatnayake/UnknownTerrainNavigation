@@ -169,6 +169,27 @@ bool drive(octomap::point3d &nextPosition){
 	}
 }
 
+bool drive_unblocked(octomap::point3d &position, std::vector<std::vector<int> > &grid){
+	nav_planner::baseDrive srvDrive;
+	octomap::point3d newPosition;
+
+	plannerObject.nearestUnBlocked(position, grid, newPosition);
+
+	srvDrive.request.x = newPosition.x();
+	srvDrive.request.y = newPosition.y();
+	srvDrive.request.z = newPosition.z();
+
+	ROS_INFO("global_path_planner_node : requested Control service");
+
+	if (forwardClient.call(srvDrive)){
+		ROS_INFO("global_path_planner_node : unblocked point reached");
+		if (srvDrive.response.success==true) return true; else return false;
+	} else {
+		ROS_ERROR("global_path_planner_node : failed to call service goalPosition");
+		return false;
+	}
+}
+
 void reverse(octomap::point3d &nextPosition){
 	nav_planner::baseDrive srvDrive;
 
@@ -286,7 +307,8 @@ bool systemCallback(nav_planner::systemControl::Request &request, nav_planner::s
 			//check whether the path was not calculated due to source being blocked.
 			if (plannerObject.isBlocked(currentPosition, processedGrid)){
 				//reverse the robot if source was blocked
-				reverse(goal);
+				//reverse(goal);
+				drive_unblocked(currentPosition, processedGrid);
 				pathFound = false;
 				break;
 			} else {

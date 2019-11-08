@@ -275,8 +275,41 @@ void global_path_planner::processPath(std::vector<octomap::point3d> &inPath, std
 
 bool global_path_planner::isBlocked(octomap::point3d &point, std::vector<std::vector<int> > &grid){
 
-	int col = (int) ((point.x()-UNITOFFSET)*INVCELL);
-	int row = (int) ((point.y()-UNITOFFSET)*INVCELL);
+	int col = (int) (point.x()*INVCELL);
+	int row = (int) (point.y()*INVCELL);
 
 	if (grid[row][col] == 0) return (true); else return (false); 
+}
+
+void global_path_planner::nearestUnBlocked(octomap::point3d &blockedPoint, std::vector<std::vector<int> > &grid, octomap::point3d &freePoint){
+
+	int col = (int) (blockedPoint.x()*INVCELL);
+	int row = (int) (blockedPoint.y()*INVCELL);
+
+	bool notFound = true;
+	int layer = 1;
+	octomap::point3d point;
+
+	while (notFound){
+		int rowMin = row - layer;
+		int colMin = col - layer;
+		int rowMax = row + layer + 1;
+		int colMax = col + layer + 1;
+
+		for (int i=rowMin; i<rowMax; i++){
+			for (int j=colMin; j<colMax; j++){
+				if (grid[i][j] == 1) {
+					point.x() = j*CELL;
+					point.y() = i*CELL;
+					point.z() = blockedPoint.z();
+					notFound = false;
+					break;
+				}
+			}
+			if (!(notFound)) break;
+		}
+
+		freePoint = point;
+		layer++;
+	}
 }

@@ -154,37 +154,13 @@ bool reverseCallback(nav_planner::baseDrive::Request &request, nav_planner::base
 		ROS_INFO("velocity_control_node : successfully powered up.");
 		power_status = true;
 	}
-	
-	double desiredYaw = atan2(goalPosition.y()-currentPosition.y(), goalPosition.x()-currentPosition.x());
-
-	if (desiredYaw>=0){
-		desiredYaw = desiredYaw - pi;
-	} else {
-		desiredYaw = desiredYaw + pi;
-	}
-	
-
-	do{
-		angleDiff = desiredYaw - currentYaw;
-		angularV = ang_constant*angleDiff;
-
-		if (angularV >= angular_vel_max) angularV = angular_vel_max;
-		cmd.angular.z = angularV;
-		velocity_pub.publish(cmd);
-		ros::Duration(0.005).sleep();
-	} while (std::abs(angleDiff)>=0.01);
-
-	cmd.angular.z = 0;
-	velocity_pub.publish(cmd);
-	ros::Duration(0.005).sleep();
-	ROS_INFO("velocity_control_node : successfully rotated");
 
 	markedPosition = currentPosition;
 
 	do{
 		distance = markedPosition.distanceXY(currentPosition);
-		velocity = (reverseDistance - distance)*vel_constant;
-		if (velocity >= linear_vel_max) velocity = linear_vel_max;
+		velocity = -1*(reverseDistance - distance)*vel_constant;
+		if (velocity >= linear_vel_max) velocity = -1*linear_vel_max;
 		cmd.linear.x = velocity;
 		velocity_pub.publish(cmd);
 		ros::Duration(0.005).sleep();

@@ -61,4 +61,5 @@ class global_path_planner{
         void buildMap(std::vector<std::vector<int> > &discoveredGrid, std::vector<std::vector<int> > &initialGrid, std::vector<std::vector<int> > &processedGrid);
         void processPath(std::vector<octomap::point3d> &inPath, std::vector<std::vector<int> > &discoveredGrid, std::vector<octomap::point3d> &outPath);
         bool isBlocked(octomap::point3d &point, std::vector<std::vector<int> > &grid);
+        void nearestUnBlocked(octomap::point3d &blockedPoint, std::vector<std::vector<int> > &grid, octomap::point3d &freePoint);
 };
