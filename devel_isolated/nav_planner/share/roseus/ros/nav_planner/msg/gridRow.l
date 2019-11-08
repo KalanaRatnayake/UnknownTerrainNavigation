@@ -61,7 +61,7 @@
    self)
   )
 
-(setf (get nav_planner::gridRow :md5sum-) "b79fca104e1ff6a6b0cdcd662d07d607")
+(setf (get nav_planner::gridRow :md5sum-) "4077bd51d2ef02451e7ce2c5b9ff044d")
 (setf (get nav_planner::gridRow :datatype-) "nav_planner/gridRow")
 (setf (get nav_planner::gridRow :definition-)
       "gridPoint[] row
@@ -70,10 +70,11 @@
 MSG: nav_planner/gridPoint
 int8 init
 int8 proc
+int8 disc
 ")
 
 
 
-(provide :nav_planner/gridRow "b79fca104e1ff6a6b0cdcd662d07d607")
+(provide :nav_planner/gridRow "4077bd51d2ef02451e7ce2c5b9ff044d")
 
 

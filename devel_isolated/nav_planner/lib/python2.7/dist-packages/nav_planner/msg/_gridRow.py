@@ -8,7 +8,7 @@ import struct
 import nav_planner.msg
 
 class gridRow(genpy.Message):
-  _md5sum = "b79fca104e1ff6a6b0cdcd662d07d607"
+  _md5sum = "4077bd51d2ef02451e7ce2c5b9ff044d"
   _type = "nav_planner/gridRow"
   _has_header = False #flag to mark the presence of a Header object
   _full_text = """gridPoint[] row
@@ -16,7 +16,8 @@ class gridRow(genpy.Message):
 ================================================================================
 MSG: nav_planner/gridPoint
 int8 init
-int8 proc"""
+int8 proc
+int8 disc"""
   __slots__ = ['row']
   _slot_types = ['nav_planner/gridPoint[]']
 
@@ -58,7 +59,7 @@ int8 proc"""
       buff.write(_struct_I.pack(length))
       for val1 in self.row:
         _x = val1
-        buff.write(_get_struct_2b().pack(_x.init, _x.proc))
+        buff.write(_get_struct_3b().pack(_x.init, _x.proc, _x.disc))
     except struct.error as se: self._check_types(struct.error("%s: '%s' when writing '%s'" % (type(se), str(se), str(locals().get('_x', self)))))
     except TypeError as te: self._check_types(ValueError("%s: '%s' when writing '%s'" % (type(te), str(te), str(locals().get('_x', self)))))
 
@@ -79,8 +80,8 @@ int8 proc"""
         val1 = nav_planner.msg.gridPoint()
         _x = val1
         start = end
-        end += 2
-        (_x.init, _x.proc,) = _get_struct_2b().unpack(str[start:end])
+        end += 3
+        (_x.init, _x.proc, _x.disc,) = _get_struct_3b().unpack(str[start:end])
         self.row.append(val1)
       return self
     except struct.error as e:
@@ -98,7 +99,7 @@ int8 proc"""
       buff.write(_struct_I.pack(length))
       for val1 in self.row:
         _x = val1
-        buff.write(_get_struct_2b().pack(_x.init, _x.proc))
+        buff.write(_get_struct_3b().pack(_x.init, _x.proc, _x.disc))
     except struct.error as se: self._check_types(struct.error("%s: '%s' when writing '%s'" % (type(se), str(se), str(locals().get('_x', self)))))
     except TypeError as te: self._check_types(ValueError("%s: '%s' when writing '%s'" % (type(te), str(te), str(locals().get('_x', self)))))
 
@@ -120,8 +121,8 @@ int8 proc"""
         val1 = nav_planner.msg.gridPoint()
         _x = val1
         start = end
-        end += 2
-        (_x.init, _x.proc,) = _get_struct_2b().unpack(str[start:end])
+        end += 3
+        (_x.init, _x.proc, _x.disc,) = _get_struct_3b().unpack(str[start:end])
         self.row.append(val1)
       return self
     except struct.error as e:
@@ -131,9 +132,9 @@ _struct_I = genpy.struct_I
 def _get_struct_I():
     global _struct_I
     return _struct_I
-_struct_2b = None
-def _get_struct_2b():
-    global _struct_2b
-    if _struct_2b is None:
-        _struct_2b = struct.Struct("<2b")
-    return _struct_2b
+_struct_3b = None
+def _get_struct_3b():
+    global _struct_3b
+    if _struct_3b is None:
+        _struct_3b = struct.Struct("<3b")
+    return _struct_3b

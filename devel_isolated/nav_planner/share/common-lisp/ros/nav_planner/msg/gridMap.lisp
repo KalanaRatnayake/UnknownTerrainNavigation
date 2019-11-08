@@ -103,16 +103,16 @@
   "nav_planner/gridMap")
 (cl:defmethod roslisp-msg-protocol:md5sum ((type (cl:eql '<gridMap>)))
   "Returns md5sum for a message object of type '<gridMap>"
-  "7283370e017ac387872171d01ea443ab")
+  "1e2dc952130c008ed024ffc4c0c5cfad")
 (cl:defmethod roslisp-msg-protocol:md5sum ((type (cl:eql 'gridMap)))
   "Returns md5sum for a message object of type 'gridMap"
-  "7283370e017ac387872171d01ea443ab")
+  "1e2dc952130c008ed024ffc4c0c5cfad")
 (cl:defmethod roslisp-msg-protocol:message-definition ((type (cl:eql '<gridMap>)))
   "Returns full string definition for message of type '<gridMap>"
-  (cl:format cl:nil "gridRow[] grid~%pointData[] path~%int16 pathLength~%================================================================================~%MSG: nav_planner/gridRow~%gridPoint[] row~%~%================================================================================~%MSG: nav_planner/gridPoint~%int8 init~%int8 proc~%================================================================================~%MSG: nav_planner/pointData~%float32 x~%float32 y~%float32 z~%~%~%"))
+  (cl:format cl:nil "gridRow[] grid~%pointData[] path~%int16 pathLength~%================================================================================~%MSG: nav_planner/gridRow~%gridPoint[] row~%~%================================================================================~%MSG: nav_planner/gridPoint~%int8 init~%int8 proc~%int8 disc~%================================================================================~%MSG: nav_planner/pointData~%float32 x~%float32 y~%float32 z~%~%~%"))
 (cl:defmethod roslisp-msg-protocol:message-definition ((type (cl:eql 'gridMap)))
   "Returns full string definition for message of type 'gridMap"
-  (cl:format cl:nil "gridRow[] grid~%pointData[] path~%int16 pathLength~%================================================================================~%MSG: nav_planner/gridRow~%gridPoint[] row~%~%================================================================================~%MSG: nav_planner/gridPoint~%int8 init~%int8 proc~%================================================================================~%MSG: nav_planner/pointData~%float32 x~%float32 y~%float32 z~%~%~%"))
+  (cl:format cl:nil "gridRow[] grid~%pointData[] path~%int16 pathLength~%================================================================================~%MSG: nav_planner/gridRow~%gridPoint[] row~%~%================================================================================~%MSG: nav_planner/gridPoint~%int8 init~%int8 proc~%int8 disc~%================================================================================~%MSG: nav_planner/pointData~%float32 x~%float32 y~%float32 z~%~%~%"))
 (cl:defmethod roslisp-msg-protocol:serialization-length ((msg <gridMap>))
   (cl:+ 0
      4 (cl:reduce #'cl:+ (cl:slot-value msg 'grid) :key #'(cl:lambda (ele) (cl:declare (cl:ignorable ele)) (cl:+ (roslisp-msg-protocol:serialization-length ele))))

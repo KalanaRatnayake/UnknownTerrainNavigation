@@ -29,16 +29,16 @@
 #include <global_path_planner.h>
 
 //map
-#define ROW 800 
-#define COL 800
+#define ROW 400 
+#define COL 400
 
 //map + 2*(padding) 
-#define INITROW 816
-#define INITCOL 816
+#define INITROW 424
+#define INITCOL 424
 
-#define PADDING 8
-#define OFFSET 0.175
-#define CELL 0.025
+#define PADDING 12
+#define OFFSET 0.275
+#define CELL (float)0.025
 #define INVCELL 40  //multiply by 40 instead of dividing by cell size 0.025
 #define UNITOFFSET 0.0125
 
@@ -57,6 +57,7 @@ octomap::point3d previousPosition;
 ros::ServiceClient clientGoalPosition;
 ros::ServiceClient clientGoalRemove;
 ros::ServiceClient forwardClient;
+ros::ServiceClient reverseClient;
 ros::ServiceClient rotateClient;
 
 ros::Publisher grid_pub;
@@ -67,7 +68,7 @@ ros::Subscriber pos_sub;
 bool unExplored = true;
 
 double Roll, Pitch, Yaw;
-double currentYaw;
+double currentYaw, previousYaw;
 
 /*
 / once the map is completely explored, this function will be called to save the octomap and execute ros::shutdown()
@@ -161,14 +162,47 @@ bool drive(octomap::point3d &nextPosition){
 
 	if (forwardClient.call(srvDrive)){
 		ROS_INFO("global_path_planner_node : point reached");
-		if (srvDrive.response.success){
-			return true;
-		} else {
-			return false;
-		}
+		if (srvDrive.response.success==true) return true; else return false;
 	} else {
 		ROS_ERROR("global_path_planner_node : failed to call service goalPosition");
 		return false;
+	}
+}
+
+bool drive_unblocked(octomap::point3d &position, std::vector<std::vector<int> > &grid){
+	nav_planner::baseDrive srvDrive;
+	octomap::point3d newPosition;
+
+	plannerObject.nearestUnBlocked(position, grid, newPosition);
+
+	srvDrive.request.x = newPosition.x();
+	srvDrive.request.y = newPosition.y();
+	srvDrive.request.z = newPosition.z();
+
+	ROS_INFO("global_path_planner_node : requested Control service");
+
+	if (forwardClient.call(srvDrive)){
+		ROS_INFO("global_path_planner_node : unblocked point reached");
+		if (srvDrive.response.success==true) return true; else return false;
+	} else {
+		ROS_ERROR("global_path_planner_node : failed to call service goalPosition");
+		return false;
+	}
+}
+
+void reverse(octomap::point3d &nextPosition){
+	nav_planner::baseDrive srvDrive;
+
+	srvDrive.request.x = nextPosition.x();
+	srvDrive.request.y = nextPosition.y();
+	srvDrive.request.z = nextPosition.z();
+
+	ROS_INFO("global_path_planner_node : requested Control service");
+
+	if (reverseClient.call(srvDrive)){
+		ROS_INFO("global_path_planner_node : reversed");
+	} else {
+		ROS_ERROR("global_path_planner_node : failed to call service goalPosition");
 	}
 }
 
@@ -176,7 +210,7 @@ bool drive(octomap::point3d &nextPosition){
 / converts the gridmaps into a 'gridMap' msgs, path into 'pointDataArray and publishes it
 */
 
-void publish(std::vector<std::vector<int> > &initGrid, std::vector<std::vector<int> > &procGrid, std::vector<octomap::point3d> &path){
+void publish(std::vector<std::vector<int> > &discoveredGrid, std::vector<std::vector<int> > &initGrid, std::vector<std::vector<int> > &procGrid, std::vector<octomap::point3d> &path){
 	nav_planner::gridMap gridMap;
 
 	for (int i=0; i<ROW; i++){
@@ -187,6 +221,7 @@ void publish(std::vector<std::vector<int> > &initGrid, std::vector<std::vector<i
 			
 			point.init = initGrid[i+PADDING][j+PADDING];
 			point.proc = procGrid[i][j];
+			point.disc = discoveredGrid[i][j];
 
 			rowArray.row.push_back(point);
 		}
@@ -239,11 +274,12 @@ bool systemCallback(nav_planner::systemControl::Request &request, nav_planner::s
 	while (unExplored && request.activate){
 		std::vector<std::vector<int> > initialGrid( INITROW, std::vector<int> (INITCOL, 1));
 		std::vector<std::vector<int> > processedGrid( ROW, std::vector<int> (COL, 1));
+		std::vector<std::vector<int> > discoveredGrid( ROW, std::vector<int> (COL, 1));
 
 		int index =  1;
-		bool pathFound;
+		bool pathFound = false;
 		double remainingDistance, travelledDistance = 0;
-		double desiredYaw, angle;
+		double desiredYaw, angle = 0;
 		std::vector<octomap::point3d> path, processedPath;
 
 		//rotate and update the octomap
@@ -253,7 +289,7 @@ bool systemCallback(nav_planner::systemControl::Request &request, nav_planner::s
 		requestGoal();
 
 		//build the map for the path calculation
-		plannerObject.buildMap(initialGrid, processedGrid);
+		plannerObject.buildMap(discoveredGrid, initialGrid, processedGrid);
 
 		//turn source and goal into points on the grid
 		int srcX = (int) (currentPosition.x()*INVCELL);
@@ -268,8 +304,17 @@ bool systemCallback(nav_planner::systemControl::Request &request, nav_planner::s
 		//iterate till a path is found
 		while (!pathFound){
 
-			//remove goal if path is not found
-			removeGoal();
+			//check whether the path was not calculated due to source being blocked.
+			if (plannerObject.isBlocked(currentPosition, processedGrid)){
+				//reverse the robot if source was blocked
+				//reverse(goal);
+				drive_unblocked(currentPosition, processedGrid);
+				pathFound = false;
+				break;
+			} else {
+				//remove goal if source is not the cause
+				removeGoal();
+			}
 
 			//rerequest the goal
 			requestGoal();
@@ -286,40 +331,49 @@ bool systemCallback(nav_planner::systemControl::Request &request, nav_planner::s
 		}
 
 		//publish the calculated grid and path
-		publish(initialGrid, processedGrid, path);
+		if (pathFound) publish(discoveredGrid, initialGrid, processedGrid, path);
 
 		//convert grid path into realworld path
-		plannerObject.processPath(path, processedPath);
+		if (pathFound) plannerObject.processPath(path, discoveredGrid, processedPath);
 
 		//calculate distance to the goal and mark current position as previous position
 		remainingDistance = goal.distance(currentPosition);
 		previousPosition = currentPosition;
+		previousYaw = currentYaw;
 		
-		while ((remainingDistance >= 0.1) && pathFound) {
+		while ((remainingDistance >= 0.1) && pathFound && (index<processedPath.size())) {
 			//update position to be reached
 			nextPosition = processedPath[index];
 			
 			//check whether a large turn is needed. if so recalculation is needed. so exit loop
 			desiredYaw = atan2(nextPosition.y()-currentPosition.y(), nextPosition.x()-currentPosition.x());
-			angle = std::abs(desiredYaw - currentYaw);
 
-			if ((angle>CLEARENCE_ANGLE)&&(index!=1)) break;
+			if ((desiredYaw>1.57)&&(previousYaw<-1.57)){
+				angle = 6.28 - (desiredYaw - previousYaw);
+			} else if ((desiredYaw<-1.57)&&(previousYaw>1.57)) {
+				angle = 6.28 + (desiredYaw - previousYaw);
+			} else {
+				angle = std::abs(desiredYaw - previousYaw);
+			}
+
+			//check travelled distance and update previous position
+			travelledDistance += previousPosition.distance(nextPosition);
 
 			//if return false if collided, else true
-
-			if (drive(nextPosition)){
-				//check travelled distance and update previous position
-				travelledDistance += previousPosition.distance(nextPosition);
-				previousPosition = currentPosition;
-
-				//exit loop of travelledDistance is over the limit. if not, continue
-				if (travelledDistance < CLEARENCE_DISTANCE) index++; else break;
-				
-				//calculate remaining distance
-				remainingDistance = goal.distance(currentPosition);
-			} else {
+			if (!(drive(nextPosition))) {
+				reverse(nextPosition);
 				break;
-			}			
+			};
+
+			if ((angle>CLEARENCE_ANGLE)&&(index>1)) break;
+
+			//exit loop of travelledDistance is over the limit. if not, continue
+			if (travelledDistance > CLEARENCE_DISTANCE) break;
+				
+			//calculate remaining distance
+			previousPosition = currentPosition;
+			remainingDistance = goal.distance(currentPosition);
+			index++;		
 		}
 	}
 
@@ -357,13 +411,14 @@ int main(int argc, char **argv)
 	clientGoalPosition = node.serviceClient<nav_planner::goalControlRequest, nav_planner::goalControlResponse>("goalPosition");
 	clientGoalRemove = node.serviceClient<nav_planner::goalRemoveRequest, nav_planner::goalRemoveResponse>("goalRemove");
 	forwardClient = node.serviceClient<nav_planner::baseDriveRequest, nav_planner::baseDriveResponse>("baseForword");
+	reverseClient = node.serviceClient<nav_planner::baseDriveRequest, nav_planner::baseDriveResponse>("baseReverse");
     rotateClient = node.serviceClient<nav_planner::baseRotateRequest, nav_planner::baseRotateResponse>("baseRotate");
 	
 	ROS_INFO("global_path_planner_node : created service clients");
 
 	ros::ServiceServer serviceCalculate = node.advertiseService<nav_planner::systemControlRequest, nav_planner::systemControlResponse>("explore", systemCallback);
 
-	ros::AsyncSpinner spinner (5);
+	ros::AsyncSpinner spinner (8);
 	ros::Rate r(100);
 
 	spinner.start();

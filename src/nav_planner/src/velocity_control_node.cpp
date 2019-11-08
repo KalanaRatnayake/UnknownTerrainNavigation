@@ -21,24 +21,27 @@
 #include <nav_planner/baseDrive.h>
 #include <nav_planner/baseRotate.h>
 
+double linear_vel_max = 1.0;
+double vel_constant = 1.5;
+double angular_vel_max = 1;
+double ang_constant = 1;
+double angVelocity = 0.3;
+double reverseDistance = 0.1;
+double pi = 3.14159265;
+
 octomap::point3d currentPosition;
 octomap::point3d goalPosition;
+octomap::point3d markedPosition;
 geometry_msgs::Twist cmd;
 kobuki_msgs::MotorPower power_cmd;
 
 bool power_status = false;
 bool connected = false;
-bool bumper = false;
+bool bumper = true;
 
 int count = 0;
 
-double linear_vel_max = 1.0;
-double vel_constant = 1.5;
-double angular_vel_max = 1;
-double ang_constant = 1;
-
 double Roll, Pitch, Yaw;
-double pi = 3.14159265;
 ros::Publisher velocity_pub;
 ros::Publisher motpower_pub;
 
@@ -67,7 +70,7 @@ void bumperCallback(const kobuki_msgs::BumperEventConstPtr &msg)
 {
     if (msg->state == kobuki_msgs::BumperEvent::PRESSED){
     	ROS_INFO_STREAM("Bumper pressed. backing up");
-		bumper = true;
+		bumper = false;
     }
 }
 
@@ -98,7 +101,7 @@ bool driveCallback(nav_planner::baseDrive::Request &request, nav_planner::baseDr
 		cmd.angular.z = angularV;
 		velocity_pub.publish(cmd);
 		ros::Duration(0.005).sleep();
-	} while (std::abs(angleDiff)>=0.01);
+	} while ((std::abs(angleDiff)>=0.01) && bumper);
 
 	cmd.angular.z = 0;
 	velocity_pub.publish(cmd);
@@ -114,15 +117,60 @@ bool driveCallback(nav_planner::baseDrive::Request &request, nav_planner::baseDr
 		cmd.linear.x = velocity;
 		velocity_pub.publish(cmd);
 		ros::Duration(0.005).sleep();
-		if (bumper){
-			response.success = false;
-			break;
-		}
-	} while (std::abs(distance)>=(initDistance*0.1));
+		
+	} while ((std::abs(distance)>=(initDistance*0.1)) && bumper);
+
+	if (!(bumper)){
+		response.success = false;
+	}
 
 	cmd.linear.x = 0;
 	velocity_pub.publish(cmd);
 	ROS_INFO("velocity_control_node : successfully moved");
+
+	ROS_INFO("velocity_control_node : reached goal. turning motors off...");
+	power_cmd.state = kobuki_msgs::MotorPower::OFF;
+	motpower_pub.publish(power_cmd);
+	ros::Duration(0.005).sleep();
+	ROS_INFO("velocity_control_node : successfully powered down.");
+	power_status = false;
+
+	ROS_INFO("velocity_control_node : response sent");
+	return true;
+}
+
+bool reverseCallback(nav_planner::baseDrive::Request &request, nav_planner::baseDrive::Response &response)
+{
+	ROS_INFO("velocity_control_node : drive request received");
+
+    goalPosition.x() = request.x;
+	goalPosition.y() = request.y;
+	goalPosition.z() = request.z;
+
+	if (!power_status){
+		ROS_INFO("velocity_control_node : motor was powered down. turning on now....");
+		power_cmd.state = kobuki_msgs::MotorPower::ON;
+		motpower_pub.publish(power_cmd);
+		ROS_INFO("velocity_control_node : successfully powered up.");
+		power_status = true;
+	}
+
+	markedPosition = currentPosition;
+
+	do{
+		distance = markedPosition.distanceXY(currentPosition);
+		velocity = -1*(reverseDistance - distance)*vel_constant;
+		if (velocity >= linear_vel_max) velocity = -1*linear_vel_max;
+		cmd.linear.x = velocity;
+		velocity_pub.publish(cmd);
+		ros::Duration(0.005).sleep();
+	} while (std::abs(reverseDistance - distance)>=(reverseDistance*0.1));
+
+	cmd.linear.x = 0;
+	velocity_pub.publish(cmd);
+	ROS_INFO("velocity_control_node : successfully moved");
+
+	response.success = true;
 
 	ROS_INFO("velocity_control_node : reached goal. turning motors off...");
 	power_cmd.state = kobuki_msgs::MotorPower::OFF;
@@ -156,7 +204,7 @@ bool rotateCallback(nav_planner::baseRotate::Request &request, nav_planner::base
 	do{
 		angleDiff = angle - currentYaw;
 
-		cmd.angular.z = 0.1;
+		cmd.angular.z = angVelocity;
 		velocity_pub.publish(cmd);
 		ros::Duration(0.005).sleep();
 		} while (std::abs(angleDiff)>=0.01);
@@ -190,6 +238,7 @@ int main(int argc, char **argv)
 	ROS_INFO("velocity_control_node : created subscribers");
 
 	ros::ServiceServer serviceDrive = node.advertiseService<nav_planner::baseDriveRequest, nav_planner::baseDriveResponse>("baseForword", driveCallback);
+	ros::ServiceServer serviceReverse = node.advertiseService<nav_planner::baseDriveRequest, nav_planner::baseDriveResponse>("baseReverse", reverseCallback);
 	ros::ServiceServer serviceRotate = node.advertiseService<nav_planner::baseRotateRequest, nav_planner::baseRotateResponse>("baseRotate", rotateCallback);
 	
 	ROS_INFO("velocity_control_node : created service");
@@ -231,7 +280,7 @@ int main(int argc, char **argv)
 		ROS_ERROR("velocity_control_node : check remappings for enable/disable topics).");
 	}
 
-	ros::AsyncSpinner spinner (3);
+	ros::AsyncSpinner spinner (6);
 	ros::Rate r(100);
 
 	spinner.start();

@@ -16,6 +16,11 @@
     :reader proc
     :initarg :proc
     :type cl:fixnum
+    :initform 0)
+   (disc
+    :reader disc
+    :initarg :disc
+    :type cl:fixnum
     :initform 0))
 )
 
@@ -36,12 +41,20 @@
 (cl:defmethod proc-val ((m <gridPoint>))
   (roslisp-msg-protocol:msg-deprecation-warning "Using old-style slot reader nav_planner-msg:proc-val is deprecated.  Use nav_planner-msg:proc instead.")
   (proc m))
+
+(cl:ensure-generic-function 'disc-val :lambda-list '(m))
+(cl:defmethod disc-val ((m <gridPoint>))
+  (roslisp-msg-protocol:msg-deprecation-warning "Using old-style slot reader nav_planner-msg:disc-val is deprecated.  Use nav_planner-msg:disc instead.")
+  (disc m))
 (cl:defmethod roslisp-msg-protocol:serialize ((msg <gridPoint>) ostream)
   "Serializes a message object of type '<gridPoint>"
   (cl:let* ((signed (cl:slot-value msg 'init)) (unsigned (cl:if (cl:< signed 0) (cl:+ signed 256) signed)))
     (cl:write-byte (cl:ldb (cl:byte 8 0) unsigned) ostream)
     )
   (cl:let* ((signed (cl:slot-value msg 'proc)) (unsigned (cl:if (cl:< signed 0) (cl:+ signed 256) signed)))
+    (cl:write-byte (cl:ldb (cl:byte 8 0) unsigned) ostream)
+    )
+  (cl:let* ((signed (cl:slot-value msg 'disc)) (unsigned (cl:if (cl:< signed 0) (cl:+ signed 256) signed)))
     (cl:write-byte (cl:ldb (cl:byte 8 0) unsigned) ostream)
     )
 )
@@ -53,6 +66,9 @@
     (cl:let ((unsigned 0))
       (cl:setf (cl:ldb (cl:byte 8 0) unsigned) (cl:read-byte istream))
       (cl:setf (cl:slot-value msg 'proc) (cl:if (cl:< unsigned 128) unsigned (cl:- unsigned 256))))
+    (cl:let ((unsigned 0))
+      (cl:setf (cl:ldb (cl:byte 8 0) unsigned) (cl:read-byte istream))
+      (cl:setf (cl:slot-value msg 'disc) (cl:if (cl:< unsigned 128) unsigned (cl:- unsigned 256))))
   msg
 )
 (cl:defmethod roslisp-msg-protocol:ros-datatype ((msg (cl:eql '<gridPoint>)))
@@ -63,18 +79,19 @@
   "nav_planner/gridPoint")
 (cl:defmethod roslisp-msg-protocol:md5sum ((type (cl:eql '<gridPoint>)))
   "Returns md5sum for a message object of type '<gridPoint>"
-  "38ba4a3cfac6a3fecf591ee30dc4f1b4")
+  "9c89479da1035ab9eb04a27d7e072480")
 (cl:defmethod roslisp-msg-protocol:md5sum ((type (cl:eql 'gridPoint)))
   "Returns md5sum for a message object of type 'gridPoint"
-  "38ba4a3cfac6a3fecf591ee30dc4f1b4")
+  "9c89479da1035ab9eb04a27d7e072480")
 (cl:defmethod roslisp-msg-protocol:message-definition ((type (cl:eql '<gridPoint>)))
   "Returns full string definition for message of type '<gridPoint>"
-  (cl:format cl:nil "int8 init~%int8 proc~%~%"))
+  (cl:format cl:nil "int8 init~%int8 proc~%int8 disc~%~%"))
 (cl:defmethod roslisp-msg-protocol:message-definition ((type (cl:eql 'gridPoint)))
   "Returns full string definition for message of type 'gridPoint"
-  (cl:format cl:nil "int8 init~%int8 proc~%~%"))
+  (cl:format cl:nil "int8 init~%int8 proc~%int8 disc~%~%"))
 (cl:defmethod roslisp-msg-protocol:serialization-length ((msg <gridPoint>))
   (cl:+ 0
+     1
      1
      1
 ))
@@ -83,4 +100,5 @@
   (cl:list 'gridPoint
     (cl:cons ':init (init msg))
     (cl:cons ':proc (proc msg))
+    (cl:cons ':disc (disc msg))
 ))
