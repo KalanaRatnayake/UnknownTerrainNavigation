@@ -288,27 +288,19 @@ void global_path_planner::nearestUnBlocked(octomap::point3d &blockedPoint, std::
 
 	bool notFound = true;
 	int layer = 1;
-	octomap::point3d point;
+	octomap::point3d point = blockedPoint;
 
-	while (notFound){
-		int rowMin = row - layer;
-		int colMin = col - layer;
-		int rowMax = row + layer + 1;
-		int colMax = col + layer + 1;
+	while ((notFound) && (row-layer>=0) && (row+layer<ROW)){
+		int array [4][2] = {{row-layer, col-layer}, {row-layer, col+layer}, {row+layer, col-layer}, {row+layer, col+layer}};
 
-		for (int i=rowMin; i<rowMax; i++){
-			for (int j=colMin; j<colMax; j++){
-				if (grid[i][j] == 1) {
-					point.x() = j*CELL;
-					point.y() = i*CELL;
-					point.z() = blockedPoint.z();
-					notFound = false;
-					break;
-				}
+		for (int i = 0; i < 4; i++){
+			if (grid[array[i][0]][array[i][1]] == 1){
+				point.x() = array[i][1]*CELL;
+				point.y() = array[i][0]*CELL;
+				notFound = false;
+				break;
 			}
-			if (!(notFound)) break;
 		}
-
 		freePoint = point;
 		layer++;
 	}

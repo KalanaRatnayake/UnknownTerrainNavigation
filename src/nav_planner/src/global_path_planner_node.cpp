@@ -407,6 +407,7 @@ int main(int argc, char **argv)
 	ros::service::waitForService("goalRemove");
 	ros::service::waitForService("baseForword");
 	ros::service::waitForService("baseRotate");
+	ros::service::waitForService("baseReverse");
 
 	clientGoalPosition = node.serviceClient<nav_planner::goalControlRequest, nav_planner::goalControlResponse>("goalPosition");
 	clientGoalRemove = node.serviceClient<nav_planner::goalRemoveRequest, nav_planner::goalRemoveResponse>("goalRemove");

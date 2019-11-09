@@ -61,9 +61,9 @@ void currentPositionCallback(const nav_msgs::OdometryConstPtr &msg)
 
 	m.getRPY(Roll, Pitch, Yaw);
 
-	if ((Yaw<3.14)&&(Yaw>-3.14)){
+	if (std::abs(Yaw)<3.14){
 		currentYaw = Yaw;
-	}
+	} 
 }
 
 void bumperCallback(const kobuki_msgs::BumperEventConstPtr &msg)
@@ -95,6 +95,7 @@ bool driveCallback(nav_planner::baseDrive::Request &request, nav_planner::baseDr
 
 	do{
 		angleDiff = desiredYaw - currentYaw;
+		if (std::abs(angleDiff)>6.2) angleDiff = 0;
 		angularV = ang_constant*angleDiff;
 
 		if (angularV >= angular_vel_max) angularV = angular_vel_max;
