@@ -309,8 +309,6 @@ bool systemCallback(nav_planner::systemControl::Request &request, nav_planner::s
 				//reverse the robot if source was blocked
 				//reverse(goal);
 				drive_unblocked(currentPosition, processedGrid);
-				pathFound = false;
-				break;
 			} else {
 				//remove goal if source is not the cause
 				removeGoal();
@@ -331,10 +329,10 @@ bool systemCallback(nav_planner::systemControl::Request &request, nav_planner::s
 		}
 
 		//publish the calculated grid and path
-		if (pathFound) publish(discoveredGrid, initialGrid, processedGrid, path);
+		publish(discoveredGrid, initialGrid, processedGrid, path);
 
 		//convert grid path into realworld path
-		if (pathFound) plannerObject.processPath(path, discoveredGrid, processedPath);
+		plannerObject.processPath(path, discoveredGrid, processedPath);
 
 		//calculate distance to the goal and mark current position as previous position
 		remainingDistance = goal.distance(currentPosition);
