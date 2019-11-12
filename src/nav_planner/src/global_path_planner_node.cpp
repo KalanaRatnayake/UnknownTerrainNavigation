@@ -337,7 +337,13 @@ bool systemCallback(nav_planner::systemControl::Request &request, nav_planner::s
 		//calculate distance to the goal and mark current position as previous position
 		remainingDistance = goal.distance(currentPosition);
 		previousPosition = currentPosition;
-		previousYaw = currentYaw;
+
+		if (processedPath.size()>0){
+			nextPosition = processedPath[index];
+			previousYaw = atan2(nextPosition.y()-currentPosition.y(), nextPosition.x()-currentPosition.x());
+		} else {
+			previousYaw = currentYaw;
+		}
 		
 		while ((remainingDistance >= 0.1) && pathFound && (index<processedPath.size())) {
 			//update position to be reached
