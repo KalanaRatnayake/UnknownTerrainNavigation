@@ -280,7 +280,7 @@ bool systemCallback(nav_planner::systemControl::Request &request, nav_planner::s
 		bool pathFound = false;
 		double remainingDistance, travelledDistance = 0;
 		double desiredYaw, angle = 0;
-		std::vector<octomap::point3d> path, processedPath;
+		std::vector<octomap::point3d> path, processedPath, intermediatePath;
 
 		//rotate and update the octomap
 		rotate360();
@@ -331,8 +331,11 @@ bool systemCallback(nav_planner::systemControl::Request &request, nav_planner::s
 		//publish the calculated grid and path
 		publish(discoveredGrid, initialGrid, processedGrid, path);
 
+		//remove intermediate points in path
+		plannerObject.reducePath(path, intermediatePath);
+
 		//convert grid path into realworld path
-		plannerObject.processPath(path, discoveredGrid, processedPath);
+		plannerObject.processPath(intermediatePath, discoveredGrid, processedPath);
 
 		//calculate distance to the goal and mark current position as previous position
 		remainingDistance = goal.distance(currentPosition);

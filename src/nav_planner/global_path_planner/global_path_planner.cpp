@@ -273,6 +273,49 @@ void global_path_planner::processPath(std::vector<octomap::point3d> &inPath, std
 	inPath.clear();
 }
 
+void global_path_planner::reducePath(std::vector<octomap::point3d> &inPath, std::vector<octomap::point3d> &outPath){
+	outPath.clear();
+
+	ROS_INFO_STREAM("inlist size");
+	ROS_INFO_STREAM(inPath.size());
+
+	if (inPath.size()>2){
+
+		float distance = 0;
+		std::vector<octomap::point3d> path;
+		
+		path.push_back(inPath[0]);
+
+		double markedYaw = atan2(inPath[1].y()-inPath[0].y(), inPath[1].x()-inPath[0].x());
+		distance += inPath[0].distanceXY(inPath[1]);
+
+		for (int i=1; i<(inPath.size()-1); i++){
+
+			double yaw = atan2(inPath[i+1].y()-inPath[i].y(), inPath[i+1].x()-inPath[i].x());
+
+			if ((std::abs(markedYaw-yaw)>0.2) || (distance>CLEARENCE_DISTANCE)){
+				path.push_back(inPath[i]);
+				distance = 0;
+				markedYaw = yaw;
+			}
+
+			distance += inPath[i].distanceXY(inPath[i+1]);
+		}
+
+		path.push_back(inPath[inPath.size()-1]);
+
+		outPath = path;
+
+	} else {
+		outPath = inPath;
+	}
+
+	ROS_INFO_STREAM("outList size");
+	ROS_INFO_STREAM(outPath.size());
+	
+	inPath.clear();
+}
+
 bool global_path_planner::isBlocked(octomap::point3d &point, std::vector<std::vector<int> > &grid){
 
 	int col = (int) (point.x()*INVCELL);
