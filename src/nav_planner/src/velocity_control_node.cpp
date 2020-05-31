@@ -21,9 +21,9 @@
 #include <nav_planner/baseDrive.h>
 #include <nav_planner/baseRotate.h>
 
-double linear_vel_max = 1.0;
-double vel_constant = 1.5;
-double angular_vel_max = 1;
+double linear_vel_max = 0.5;
+double vel_constant = 2;
+double angular_vel_max = 0.3;
 double ang_constant = 1;
 double angVelocity = 0.3;
 double reverseDistance = 0.1;

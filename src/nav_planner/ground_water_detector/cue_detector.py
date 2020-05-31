@@ -136,3 +136,16 @@ def analyze(image, depthImage)
     right = right_count/full
 
     return left, middle, right
+
+path = r'test_images/1.jpg'
+  
+# Using cv2.imread() method 
+img = cv2.imread(path)
+
+maskColor = cueColor(img)
+maskTextu = cueTexture(img)
+
+mask = maskColor & maskTexture
+  
+# Displaying the image 
+cv2.imshow('image', img) 

@@ -75,6 +75,7 @@ add_service_files(
   waterDetect.srv
   systemControl.srv
   mapSave.srv
+  localize.srv
 )
 
 ## Generate actions in the 'action' folder

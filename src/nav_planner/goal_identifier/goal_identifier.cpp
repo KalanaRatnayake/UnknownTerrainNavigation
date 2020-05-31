@@ -7,9 +7,9 @@ goal_identifier::goal_identifier(float robotHeight, float clusterSize, double in
     sideSize = clusterSize;
     height = robotHeight;
 
-    xn = (int) x_distance/(sideSize*resolution);
-    yn = (int) y_distance/(sideSize*resolution);
-    zn = (int) z_distance/(sideSize*resolution);
+    xn = (int) (x_distance/(sideSize*resolution));
+    yn = (int) (y_distance/(sideSize*resolution));
+    zn = (int) (z_distance/(sideSize*resolution));
 
     identifierMutex = new std::mutex();
 }

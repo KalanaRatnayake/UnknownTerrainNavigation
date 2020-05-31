@@ -8,20 +8,20 @@
 #include <ros/console.h>
 
 //map
-#define ROW 400
-#define COL 400
+#define ROW 200
+#define COL 200
 
 //map + 2*(padding) 
-#define INITROW 424
-#define INITCOL 424
+#define INITROW 224
+#define INITCOL 224
 
 //map + 4*(padding)
-#define PADROW 448
-#define PADCOL 448
+#define PADROW 248
+#define PADCOL 248
 
 //Map boundries
 #define MAPLOW -0.275
-#define MAPHIGH 10.325
+#define MAPHIGH 5.325
 #define OFFSET 0.275
 #define CELL (float)0.025
 #define INVCELL 40  //multiply by 20 instead of dividing by cell size 0.05

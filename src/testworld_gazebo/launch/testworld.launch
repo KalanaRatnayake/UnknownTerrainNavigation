@@ -7,7 +7,7 @@
   <arg name="3d_sensor" value="$(optenv TURTLEBOT_3D_SENSOR kinect)"/>  <!-- kinect, asus_xtion_pro --> 
   
   <include file="$(find gazebo_ros)/launch/empty_world.launch">
-    <arg name="world_name" value="$(find testworld_gazebo)/worlds/test_wall_less.world"/>
+    <arg name="world_name" value="$(find testworld_gazebo)/worlds/test_small.world"/>
   </include>
   
   <include file="$(find turtlebot_gazebo)/launch/includes/$(arg base).launch.xml">
@@ -30,4 +30,6 @@
     <remap from="image" to="/camera/depth/image_raw"/>
     <remap from="scan" to="/scan"/>
   </node>
+
+  <node pkg="tf" type="static_transform_publisher" name="odom_to_map" args="0 0 0 0 0 0 /map /odom 100"/>      
 </launch>

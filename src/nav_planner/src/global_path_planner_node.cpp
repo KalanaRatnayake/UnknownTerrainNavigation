@@ -29,12 +29,12 @@
 #include <global_path_planner.h>
 
 //map
-#define ROW 400 
-#define COL 400
+#define ROW 200 
+#define COL 200
 
 //map + 2*(padding) 
-#define INITROW 424
-#define INITCOL 424
+#define INITROW 224
+#define INITCOL 224
 
 #define PADDING 12
 #define OFFSET 0.275
@@ -42,7 +42,7 @@
 #define INVCELL 40  //multiply by 40 instead of dividing by cell size 0.025
 #define UNITOFFSET 0.0125
 
-#define CLEARENCE_DISTANCE 2.5
+#define STRAIGHT_DISTANCE 2.5
 #define CLEARENCE_ANGLE 1.05
 
 // Description of the Grid- {1--> not occupied} {0--> occupied} 
@@ -76,6 +76,7 @@ double currentYaw, previousYaw;
 
 void exit(){
 	unExplored = false;
+	ROS_INFO("-------------------------------------- Exploration Complete ------------------------------------");
 }
 
 /*
@@ -375,7 +376,7 @@ bool systemCallback(nav_planner::systemControl::Request &request, nav_planner::s
 			if ((angle>CLEARENCE_ANGLE)&&(index>1)) break;
 
 			//exit loop of travelledDistance is over the limit. if not, continue
-			if (travelledDistance > CLEARENCE_DISTANCE) break;
+			if (travelledDistance > STRAIGHT_DISTANCE) break;
 				
 			//calculate remaining distance
 			previousPosition = currentPosition;

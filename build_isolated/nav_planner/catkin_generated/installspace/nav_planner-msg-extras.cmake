@@ -1,2 +1,0 @@
-set(nav_planner_MESSAGE_FILES "msg/pointData.msg;msg/pointDataArray.msg;msg/gridPoint.msg;msg/gridRow.msg;msg/gridMap.msg")
-set(nav_planner_SERVICE_FILES "srv/goalControl.srv;srv/goalRemove.srv;srv/baseDrive.srv;srv/baseRotate.srv;srv/waterDetect.srv;srv/systemControl.srv;srv/mapSave.srv")
